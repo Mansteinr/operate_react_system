@@ -1,0 +1,31 @@
+@import './default.less';
+@import './loading.less';
+
+.container {
+  color: @colorM;
+  min-width: 780px;
+  .nav-left {
+    height    : calc(100vh);
+    background: #001529;
+  }
+
+  .main {
+    height    : calc(100vh);
+    background: @colorL;
+    overflow  : auto;
+  }
+
+  .content {
+    position: relative;
+    padding : 20px;
+  }
+}
+
+.clearfix {
+  &::after {
+    content   : '';
+    clear     : both;
+    display   : none;
+    visibility: hidden;
+  }
+}
