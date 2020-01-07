@@ -1,15 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
+@import '~antd/dist/antd.css'
+
+export default class App extends React.Component{
+  render () {
+    return (
+      <div>
+        {/* 路由 可以接受菜单也可以接受详情页面 */}
+        {this.props.children}
+      </div>
+    )
+  }
 }
-
-export default App;
