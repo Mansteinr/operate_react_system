@@ -1,58 +1,108 @@
 @import './default.less';
 
-
-.ant-layout-has-sider{
+/*侧边栏*/
+.ant-layout-has-sider {
   height: calc(100vh);
-  .icon-tubiaozhizuomoban{
-    width: 30px;
+  color : #ced4e2;
+
+  .ant-layout-header {
+    padding    : 0;
     line-height: 30px;
-    height: 30px;
-    transform: rotate(0);
-    -webkit-transform: rotate(0);
-    transition: transform .6s;
-    -webkit-transition: -webkit-transform .6s;
-    &::before{
-      width: 20px;
+    height     : 30px;
+    text-align : center;
+    color      : white;
+  }
+  .ant-menu-root {
+    height: calc(100vh - 30px);
+    overflow: auto;
+  }
+
+  .ant-menu {
+    .ant-menu-item{
+      margin: 0;
+    }
+
+    .iconfont {
+      min-width         : 14px;
+      margin-right      : 10px;
+      opacity           : 1;
+      filter            : alpha(opacity=1);
+      transition        : opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      -webkit-transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+  }
+  .ant-menu-inline-collapsed {
+    .menu-itme-text {
+      display  : inline-block;
+      max-width: 0;
+      opacity  : 0;
+      filter   : alpha(opacity=0);
+    }
+  }
+
+  .icon-tubiaozhizuomoban {
+    display           : inline-block;
+    width             : 30px;
+    line-height       : 30px;
+    height            : 30px;
+    transform         : rotate(0);
+    -webkit-transform : rotate(0);
+    transition        : transform .5s;
+    -webkit-transition: -webkit-transform .5s;
+
+    &::before {
+      width : 20px;
       height: 20px;
+    }
+
+    &.active {
+      transform        : rotate(90deg);
+      -webkit-transform: rotate(90deg);
     }
   }
 }
 
 
 
+
+
 /** load **/
-.ajax-loading{
+.ajax-loading {
   display: none;
-  .loading{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    padding:0 40px;
-    height: 80px;
-    line-height: 80px;
-    background: rgba(0, 0, 0, 0.75);
+
+  .loading {
+    position     : fixed;
+    top          : 50%;
+    left         : 50%;
+    transform    : translate(-50%, -50%);
+    padding      : 0 40px;
+    height       : 80px;
+    line-height  : 80px;
+    background   : rgba(0, 0, 0, 0.75);
     border-radius: 6px;
-    text-align: center;
-    z-index: 9999;
-    font-size:@fontD;
-    color:#fff;
-    img{
-      width: 32px;
+    text-align   : center;
+    z-index      : 9999;
+    font-size    : @fontD;
+    color        : #fff;
+
+    img {
+      width         : 32px;
       vertical-align: middle;
     }
-    span{
-      margin-left:12px;
+
+    span {
+      margin-left: 12px;
     }
   }
-  .overlay{
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 9998;
+
+  .overlay {
+    position  : fixed;
+    left      : 0;
+    right     : 0;
+    top       : 0;
+    bottom    : 0;
+    z-index   : 9998;
     background: rgb(255, 255, 255);
-    opacity: 0.1;
+    opacity   : 0.1;
   }
 }
