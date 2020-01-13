@@ -26,6 +26,10 @@ export default class NavLeft extends Component {
     }
   }
 
+  handleClick = item => {
+    console.log(item.resourceUrl)
+  }
+
   // 渲染菜单
   renderMenu = (data) => {
     return data.map(v => {
@@ -46,8 +50,8 @@ export default class NavLeft extends Component {
           </SubMenu>
         )
       }
-      return <Menu.Item title={v.name} key={v.id}>
-          <i className={`iconfont ` + v.icon}></i>
+      return <Menu.Item title={v.name} key={v.id} onClick={() => this.handleClick(v)}>
+          <i className={`iconfont ` + v.icon}></i> 
           <span className="menu-itme-text">{ v.name }</span>
       </Menu.Item>
     })
@@ -79,7 +83,6 @@ export default class NavLeft extends Component {
       this.setState({
         openKeys: [res.resData[0].id+'']
       })
-      console.log(this.state.openKeys)
       this.setState({
         menuTreeNode
       })

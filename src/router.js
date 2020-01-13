@@ -3,6 +3,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 // import App from './App'
 import Admin from './admin'
 import Login from './pages/login'
+import NotMatch from './pages/notMatch'
 
 export default class Router extends React.Component {
   render() {
@@ -13,8 +14,9 @@ export default class Router extends React.Component {
           <Route path="/" render={() =>
             <Admin>
               <Switch>
-                {/* <Route path="/admin/ui/buttons" component={Admin}></Route> */}
-                {/* <Route component={Admin}></Route> */}
+
+              <Route path="/admin/ui/buttons" component={NotMatch}></Route>
+              <Route component={NotMatch}></Route>
               </Switch>
             </Admin>
           } />
