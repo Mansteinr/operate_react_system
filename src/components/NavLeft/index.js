@@ -2,7 +2,9 @@
 import { Menu } from 'antd'
 import API from '../../config'
 import Axios from '../../axios'
+import store from '../../store'
 import React, { Component } from 'react'
+import { getMenuItemAction } from '../../store/actionCreators'
 import './index.less'
 
 const { SubMenu } = Menu
@@ -10,24 +12,27 @@ const { SubMenu } = Menu
 export default class NavLeft extends Component {
 
   rootSubmenuKeys = []
-
   state = {
     openKeys: []
   }
-
   onOpenChange = openKeys => {
     const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1)
     if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      this.setState({ openKeys });
+      this.setState({ openKeys })
     } else {
       this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : [],
+        openKeys: latestOpenKey ? [latestOpenKey] : []
       })
     }
   }
 
   handleClick = item => {
-    console.log(item.resourceUrl)
+    const action = getMenuItemAction({
+      url: item.resourceUrl,
+      key: item.id + '', // 转为string类型 antd框架要求的
+      title: item.name
+    })
+    store.dispatch(action)
   }
 
   // 渲染菜单
@@ -49,6 +54,13 @@ export default class NavLeft extends Component {
             {this.renderMenu(v.childResource)}
           </SubMenu>
         )
+      }
+      if(!store.getState().title) {
+        store.dispatch(getMenuItemAction({
+          url: v.resourceUrl,
+          key: v.id + '',  //转为string类型 antd框架要求的
+          title: v.name
+        }))
       }
       return <Menu.Item title={v.name} key={v.id} onClick={() => this.handleClick(v)}>
           <i className={`iconfont ` + v.icon}></i> 
