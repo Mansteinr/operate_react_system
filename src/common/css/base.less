@@ -67,12 +67,39 @@
 /** main **/
 .ant-layout{
   .ant-layout-content{
-    border-radius: 10px;
     margin-top: 0 !important;
+    .card-space{
+      display: block;
+      margin: 5px;
+      padding: 10px 10px 10px 20px;
+      margin-bottom: 10px;
+      background-color: #FFF;
+      border: 1px solid #d5dde0;
+      box-shadow: 0 4px 8px rgba(0,0,0,.1);
+      border-radius: 10px;
+      .search-space{
+        display: block;
+        text-align: right;
+      }
+      .card-title{
+        height: 40px;
+        line-height: 40px;
+        font-size: @font-size-medium-x;
+        font-weight: 700;
+        color: #ced4e2;
+        &:before {
+          display: inline-block;
+          content: '';
+          width: 2px;
+          height: 20px;
+          background-color: #00c2de;
+          vertical-align: -5px;
+          margin-right: 10px;
+        }
+      }
+    }
   }
 }
-
-
 
 /** load **/
 .ajax-loading {

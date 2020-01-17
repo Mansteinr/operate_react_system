@@ -2,7 +2,9 @@ import React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import Admin from './admin'
 import Login from './pages/login'
+import QueryIndex from './pages/query_index'
 import NotMatch from './pages/notMatch'
+import Demo from './pages/demo'
 
 export default class Router extends React.Component {
   render() {
@@ -13,7 +15,8 @@ export default class Router extends React.Component {
           <Route path="/" render={() =>
             <Admin>
               <Switch>
-                <Route path="/admin/ui/buttons" component={NotMatch}></Route>
+                <Route path="/query_index" component={ QueryIndex }></Route>
+                <Route path="/demo" component={ Demo }></Route>
                 <Route component={NotMatch}></Route>
               </Switch>
             </Admin>

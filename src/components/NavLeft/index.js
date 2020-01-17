@@ -1,9 +1,13 @@
 
+/**
+ * 左侧组件
+ */
 import { Menu } from 'antd'
 import API from '../../config'
 import Axios from '../../axios'
 import store from '../../store'
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
 import { getMenuItemAction } from '../../store/actionCreators'
 import './index.less'
 
@@ -42,7 +46,6 @@ export default class NavLeft extends Component {
         if(v.id !== 331 && v.id !== 339) {
           this.rootSubmenuKeys.push(v.id+'')
         }
-        
         return (
           <SubMenu key={v.id}
             title={
@@ -62,9 +65,10 @@ export default class NavLeft extends Component {
           title: v.name
         }))
       }
+      // 拼接路由i地址
+      let trueUrl = v.resourceUrl.split('/')[v.resourceUrl.split('/').length - 1].split('.html')[0]
       return <Menu.Item title={v.name} key={v.id} onClick={() => this.handleClick(v)}>
-          <i className={`iconfont ` + v.icon}></i> 
-          <span className="menu-itme-text">{ v.name }</span>
+        <NavLink to={ trueUrl }><i className={`iconfont ` + v.icon}></i> { v.name}</NavLink>
       </Menu.Item>
     })
   }

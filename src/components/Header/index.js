@@ -1,3 +1,6 @@
+/**
+ * 头部组件
+*/
 import React, { Component } from 'react'
 import { Tabs, message } from 'antd'
 import store from '../../store'
@@ -66,7 +69,6 @@ export default class Header extends Component {
   }
 
   render() {
-    console.log('render')
     return (
       <div>
         <Tabs

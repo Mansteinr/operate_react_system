@@ -29,13 +29,7 @@ export default class Admin extends Component {
         </Sider>
         <Layout>
           <CustomerHeader></CustomerHeader>
-          <Content
-            style={{
-              margin: '24px 16px',
-              padding: 24,
-              background: '#fff'
-            }}
-          >
+          <Content>
             {this.props.children}
           </Content>
         </Layout>
