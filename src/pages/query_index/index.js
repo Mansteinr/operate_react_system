@@ -1,7 +1,8 @@
 import API from '../../config'
 import Axios from '../../axios'
-import React, { Component, Fragment } from 'react'
 import InquiryUI from '../../components/Inquiry'
+import ContnentUI from '../../components/Content'
+import React, { Component, Fragment } from 'react'
 
 export default class QueryIndex extends Component{
 
@@ -26,8 +27,7 @@ export default class QueryIndex extends Component{
           <InquiryUI formList ={this.formList} filterSubmit={this.handleFilter}/>
         </div>
         <div className="card-space">
-          <div className="card-title"> 查询结果 </div>
-
+          <ContnentUI data = {[1]}></ContnentUI>
         </div>
       </Fragment>
     )
