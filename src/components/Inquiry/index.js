@@ -31,7 +31,7 @@ class Inquiry extends Component {
   }
 
   onChange = (date, dateString) => {
-    console.log(dateString, date)
+    // console.log(dateString, date)
   }
 
   // 渲染查询条件
@@ -61,7 +61,7 @@ class Inquiry extends Component {
                 />
               )
             }
-          </FormItem>;
+          </FormItem>
           formItemList.push(DateRange)
         }
       })

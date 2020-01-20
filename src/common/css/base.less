@@ -1,6 +1,13 @@
 @import './variable.less';
 
 
+/*重写滚动条样式 for webkit浏览器*/
+/*滚动条整体部分，可以设置宽度啥的*/
+::-webkit-scrollbar {
+  width : 4px;
+  height: 6px;
+}
+
 /*侧边栏*/
 .ant-layout-has-sider {
   height: calc(100vh);
@@ -13,13 +20,14 @@
     text-align : center;
     color      : white;
   }
+
   .ant-menu-root {
-    height: calc(100vh - 30px);
+    height  : calc(100vh - 30px);
     overflow: auto;
   }
 
   .ant-menu {
-    .ant-menu-item{
+    .ant-menu-item {
       margin: 0;
     }
 
@@ -32,6 +40,7 @@
       -webkit-transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     }
   }
+
   .ant-menu-inline-collapsed {
     .menu-itme-text {
       display  : inline-block;
@@ -65,74 +74,93 @@
 
 
 /** main **/
-.ant-layout{
-  .ant-layout-content{
+.ant-layout {
+  .ant-layout-content {
     margin-top: 0 !important;
-    .card-space{
-      display: block;
-      margin: 5px;
-      padding: 10px 10px 10px 20px;
-      margin-bottom: 10px;
+
+    .card-space {
+      display         : block;
+      margin          : 5px;
+      padding         : 10px 10px 10px 20px;
+      margin-bottom   : 10px;
       background-color: #FFF;
-      border: 1px solid #d5dde0;
-      box-shadow: 0 4px 8px rgba(0,0,0,.1);
-      border-radius: 10px;
-      .search-space{
-        display: block;
+      border          : 1px solid #d5dde0;
+      box-shadow      : 0 4px 8px rgba(0, 0, 0, .1);
+      border-radius   : 10px;
+
+      .search-space {
+        display   : block;
         text-align: right;
       }
-      .card-title{
-        height: 40px;
+
+      .card-title {
+        height     : 40px;
         line-height: 40px;
-        font-size: @font-size-medium-x;
+        font-size  : @font-size-medium-x;
         font-weight: 700;
-        color: #ced4e2;
+        color      : #ced4e2;
+
         &:before {
-          display: inline-block;
-          content: '';
-          width: 2px;
-          height: 20px;
+          display         : inline-block;
+          content         : '';
+          width           : 2px;
+          height          : 20px;
           background-color: #00c2de;
-          vertical-align: -5px;
-          margin-right: 10px;
+          vertical-align  : -5px;
+          margin-right    : 10px;
         }
       }
 
-      .card-content{
+      .card-content {
         min-height: 300px;
-        overflow: hidden;
-        .ant-empty{
+
+        .ant-empty {
           margin-top: 50px;
         }
-        .ant-tabs-bar{
-          padding: 0px !important;
-          height: 36px;
-          .ant-tabs-nav-container{
-            height: 36px !important;
-            .ant-tabs-nav{
-              position: absolute;
-              right: 0px;
-              .ant-tabs-tab {
-                margin: 0px !important;
-                height: 36px !important;
-                line-height: 36px;
-                width: 80px;
-                text-align: center;
-                &.ant-tabs-tab-active{
-                  color: #fff;
-                  background-color: #1890ff;
-                  border-color: #1890ff;
-                }
-                &:first-child{
-                  border-radius: 4px  0 0 4px;
-                }
-                &:last-child{
-                  border-radius: 0 4px 4px 0;
+
+        .ant-tabs {
+          overflow: visible;
+          .ant-tabs-bar {
+            position: absolute;
+            min-width: 300px;
+            padding: 0px !important;
+            height : 36px;
+            right: 0;
+            top: -36px;
+
+            .ant-tabs-nav-container {
+              height: 36px !important;
+
+              .ant-tabs-nav {
+                position: absolute;
+                right   : 0px;
+
+                .ant-tabs-tab {
+                  margin     : 0px !important;
+                  height     : 36px !important;
+                  line-height: 36px;
+                  width      : 80px;
+                  text-align : center;
+
+                  &.ant-tabs-tab-active {
+                    color           : #fff;
+                    background-color: #1890ff;
+                    border-color    : #1890ff;
+                  }
+
+                  &:first-child {
+                    border-radius: 4px 0 0 4px;
+                  }
+
+                  &:last-child {
+                    border-radius: 0 4px 4px 0;
+                  }
                 }
               }
             }
           }
         }
+
       }
     }
   }

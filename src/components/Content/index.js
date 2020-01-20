@@ -1,5 +1,7 @@
-import React, { Component, Fragment } from 'react'
+
 import { Empty, Tabs } from 'antd'
+import React, { Component, Fragment } from 'react'
+
 const { TabPane } = Tabs
 
 function callback(key) {
@@ -8,22 +10,20 @@ function callback(key) {
 
 export default class Content extends Component {
   renderFun = () => {
-    let data = this.props.data
-    if (data.length) {
+    if(this.props.data.length) {
       return (
-        <Tabs onChange={callback} type="card" size={'small'}>
+        <Tabs onChange={callback} type="card">
           <TabPane tab="图标" key="1">
-            Content of Tab Pane 1
+            {this.props.renderChartFun()}
           </TabPane>
           <TabPane tab="数据" key="2">
-            Content of Tab Pane 2
-         </TabPane>
+            {this.props.renderTableFun()}
+          </TabPane>
         </Tabs>
       )
     } else {
-      return <Empty />
+      return <Empty/>
     }
-
   }
   render() {
     return (

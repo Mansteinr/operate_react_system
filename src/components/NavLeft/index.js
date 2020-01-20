@@ -58,7 +58,7 @@ export default class NavLeft extends Component {
           </SubMenu>
         )
       }
-      if(!store.getState().title) {
+      if(!store.getState().menuActive.title) {
         store.dispatch(getMenuItemAction({
           url: v.resourceUrl,
           key: v.id + '',  //转为string类型 antd框架要求的

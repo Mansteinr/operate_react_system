@@ -37,7 +37,6 @@ const protocol = 'http', mode = 'production',
     imageapi: 'http://120.55.241.117:10777/file/show'	/* ! 图片接口 */
   }
 }
-console.log(process.env.NODE_ENV)
 /*设置api转换*/
 let apiFormat = (api = '', hostkey = 'upapi', pt = protocol) => {
   return baseConfig.protocols[pt] + baseConfig[mode][hostkey] + api
@@ -52,7 +51,7 @@ const api = {
     projectchoose: apiFormat('boss2-0-web/rbac-web/choose.html', 'rbacweb', mode === 'production' ? 'https' : 'http'),
     loginchannel: apiFormat('boss2-0-web/rbac-web/loginChannel.html', 'rbacweb', mode === 'production' ? 'https' : 'http'),
     imageapi: baseConfig[mode].imageapi,
-    localMTK: 'd772c6c9-5ee0-42d5-b2e3-b89c96c86ca5'
+    localMTK: '19cdf959-bfca-447b-a5c2-6c600a6076a9'
   },
   upApi: {
     /*！能力域api*/
