@@ -1,27 +1,15 @@
 import store from '../../store'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import Charts from '../../components/Charts'
 import InquiryUI from '../../components/Inquiry'
 import ContnentUI from '../../components/Content'
 import React, { Component, Fragment } from 'react'
-// import { setLineOpt } from '.../../common/js/myCharts'
 import { initQueryindexList } from '../../store/actionCreators'
 
-export default class QueryIndex extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      UsageByDateList: []
-    }
-    // 监听state变化，新增tab标签栏
-    store.subscribe(() => {
-      let state = store.getState()
-      console.log('subscribe')
-      this.setState({
-        UsageByDateList: state.UsageByDateList
-      })
-    })
-  }
+class QueryIndex extends Component {
+
   // 查询表单
   formList = [{
     type: 'DateRange',
@@ -34,8 +22,7 @@ export default class QueryIndex extends Component {
   }]
 
   // 渲染dom
-  renderUsageByDateChart = () => {
-    console.log('按日期统计')
+  renderUsageByDateChart = (UsageByDateList) => {
     let option = {
       title: '总体情况-按日期统计',
       xAxisData: [],
@@ -53,7 +40,8 @@ export default class QueryIndex extends Component {
         data: []
       }]
     }
-    this.state.UsageByDateList.forEach(v => {
+    // 组装参数
+    this.props.UsageByDateList.forEach(v => {
       option.xAxisData.push(v.dayTime)
       option.series[0].data.push(v.usedCount)
       option.series[1].data.push(v.downChargedCount)
@@ -61,6 +49,7 @@ export default class QueryIndex extends Component {
     })
     return <Charts option={option} />
   }
+  
   // 渲染dom
   renderUsageByDateTable = () => {
     return <Charts />
@@ -68,24 +57,38 @@ export default class QueryIndex extends Component {
 
   // 确认提交表单数据 子组件传递上来的
   handleFilter = (params) => {
-    const action = initQueryindexList(params)
-    store.dispatch(action)
+    this.props.initQueryindexList(params)
   }
 
   render() {
+    const { UsageByDateList } = this.props
     return (
       <Fragment>
         <div className="card-space">
-          <InquiryUI formList={this.formList} filterSubmit={this.handleFilter} />
+          <InquiryUI formList={ this.formList } filterSubmit={ this.handleFilter } />
         </div>
         {/* 渲染UsageByDate数据 */}
         <div className="card-space">
           <ContnentUI
-            data={this.state.UsageByDateList}
-            renderChartFun={this.renderUsageByDateChart}
-            renderTableFun={this.renderUsageByDateTable} />
+            data={ UsageByDateList }
+            renderChartFun={ this.renderUsageByDateChart }
+            renderTableFun={ this.renderUsageByDateTable } />
         </div>
       </Fragment>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    UsageByDateList: state.UsageByDateList
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    initQueryindexList: bindActionCreators(initQueryindexList, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QueryIndex)
