@@ -1,7 +1,9 @@
 import store from '../../store'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { renderTableFooter } from '@/utils'
 import Charts from '../../components/Charts'
+import TableUI from '../../components/Table'
 import InquiryUI from '../../components/Inquiry'
 import ContnentUI from '../../components/Content'
 import React, { Component, Fragment } from 'react'
@@ -49,10 +51,62 @@ class QueryIndex extends Component {
     })
     return <Charts option={option} />
   }
-  
+
   // 渲染dom
   renderUsageByDateTable = () => {
-    return <Charts />
+    const arr = this.props.UsageByDateList,
+      columns = [{
+        title: '使用日期',
+        dataIndex: 'dayTime',
+        render: (value, record, index) => {
+          if (this.props.UsageByDateList.length - 1 === index) {
+            return '合计'
+          } else {
+            return value
+          }
+        }
+      }, {
+        title: '共计使用量',
+        dataIndex: 'usedCount',
+        render: (value, record, index) => {
+          let sum = 0
+          if (arr.length - 1 === index) {
+            return sum = arr.reduce((total, currentValue) => {
+              return total + currentValue.usedCount
+            }, 0)
+          } else {
+            return value
+          }
+        }
+      }, {
+        title: '计费使用量',
+        dataIndex: 'downChargedCount',
+        render: (value, record, index) => {
+          let sum = 0
+          if (arr.length - 1 === index) {
+            return sum = arr.reduce((total, currentValue) => {
+              return total + currentValue.downChargedCount
+            }, 0)
+          } else {
+            return value
+          }
+        }
+      }, {
+        title: '消费金额',
+        dataIndex: 'downCost',
+        render: (value, record, index) => {
+          let sum = 0
+          if (arr.length - 1 === index) {
+             sum = arr.reduce((total, currentValue) => {
+              return total + currentValue.downCost
+            }, 0)
+            return sum.toFixed(4)
+          } else {
+            return value.toFixed(4)
+          }
+        }
+      }]
+    return <TableUI rowKey={'dayTime'} dataSource={this.props.UsageByDateList} columns={columns} />
   }
 
   // 确认提交表单数据 子组件传递上来的
@@ -65,14 +119,14 @@ class QueryIndex extends Component {
     return (
       <Fragment>
         <div className="card-space">
-          <InquiryUI formList={ this.formList } filterSubmit={ this.handleFilter } />
+          <InquiryUI formList={this.formList} filterSubmit={this.handleFilter} />
         </div>
         {/* 渲染UsageByDate数据 */}
         <div className="card-space">
           <ContnentUI
-            data={ UsageByDateList }
-            renderChartFun={ this.renderUsageByDateChart }
-            renderTableFun={ this.renderUsageByDateTable } />
+            data={UsageByDateList}
+            renderChartFun={this.renderUsageByDateChart}
+            renderTableFun={this.renderUsageByDateTable} />
         </div>
       </Fragment>
     )

@@ -9,7 +9,6 @@ export default class Charts extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(prevProps, prevState,snapshot )
     let echarts = require('echarts'), options = this.props.option
     // 绘制图表
     return  renderChart(document.getElementById('chart'), setLineData(options))
