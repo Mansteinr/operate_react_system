@@ -13,13 +13,14 @@ export function isEmpty(obj) {
 }
 
 // table合并栏
-export function renderTableFooter(value, record, index, target, data) {
+export function renderTableFooter(option) {
   let sum = 0
-  if (data.length - 1 === index) {
-    return sum = data.reduce((total, currentValue) => {
-      return total + currentValue[target]
+  if (option.data.length - 1 === option.index) {
+    sum = option.data.reduce((total, currentValue) => {
+      return total + currentValue[option.target]
     }, 0)
+    return sum.toFixed(option.toFixed || 0)
   } else {
-    return value
+    return option.value.toFixed(option.toFixed || 0)
   }
 }

@@ -54,7 +54,7 @@ class QueryIndex extends Component {
 
   // 渲染dom
   renderUsageByDateTable = () => {
-    const arr = this.props.UsageByDateList,
+    const data = this.props.UsageByDateList,
       columns = [{
         title: '使用日期',
         dataIndex: 'dayTime',
@@ -69,41 +69,35 @@ class QueryIndex extends Component {
         title: '共计使用量',
         dataIndex: 'usedCount',
         render: (value, record, index) => {
-          let sum = 0
-          if (arr.length - 1 === index) {
-            return sum = arr.reduce((total, currentValue) => {
-              return total + currentValue.usedCount
-            }, 0)
-          } else {
-            return value
-          }
+          return renderTableFooter({
+            value,
+            data,
+            index,
+            target: 'usedCount'
+          })
         }
       }, {
         title: '计费使用量',
         dataIndex: 'downChargedCount',
         render: (value, record, index) => {
-          let sum = 0
-          if (arr.length - 1 === index) {
-            return sum = arr.reduce((total, currentValue) => {
-              return total + currentValue.downChargedCount
-            }, 0)
-          } else {
-            return value
-          }
+          return renderTableFooter({
+            value,
+            data,
+            index,
+            target: 'downChargedCount'
+          })
         }
       }, {
         title: '消费金额',
         dataIndex: 'downCost',
         render: (value, record, index) => {
-          let sum = 0
-          if (arr.length - 1 === index) {
-             sum = arr.reduce((total, currentValue) => {
-              return total + currentValue.downCost
-            }, 0)
-            return sum.toFixed(4)
-          } else {
-            return value.toFixed(4)
-          }
+          return renderTableFooter({
+            value,
+            data,
+            index,
+            target: 'downCost',
+            toFixed: 4
+          })
         }
       }]
     return <TableUI rowKey={'dayTime'} dataSource={this.props.UsageByDateList} columns={columns} />
