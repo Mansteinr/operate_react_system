@@ -1,12 +1,12 @@
 import store from '../../store'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { renderTableFooter } from '@/utils'
 import Charts from '../../components/Charts'
 import TableUI from '../../components/Table'
 import InquiryUI from '../../components/Inquiry'
 import ContnentUI from '../../components/Content'
 import React, { Component, Fragment } from 'react'
+import { renderTableFooter, sortOrderTable } from '@/utils'
 import { initQueryindexList } from '../../store/actionCreators'
 
 
@@ -59,7 +59,7 @@ class QueryIndex extends Component {
         title: '使用日期',
         dataIndex: 'dayTime',
         render: (value, record, index) => {
-          if (this.props.UsageByDateList.length - 1 === index) {
+          if (data.length - 1 === index) {
             return '合计'
           } else {
             return value
@@ -68,6 +68,9 @@ class QueryIndex extends Component {
       }, {
         title: '共计使用量',
         dataIndex: 'usedCount',
+        sorter: (a, b) => {
+          return sortOrderTable(a, b, 'usedCount')
+        },
         render: (value, record, index) => {
           return renderTableFooter({
             value,
@@ -79,7 +82,11 @@ class QueryIndex extends Component {
       }, {
         title: '计费使用量',
         dataIndex: 'downChargedCount',
+        sorter: (a, b) => {
+          return sortOrderTable(a, b, 'downChargedCount')
+        },
         render: (value, record, index) => {
+          console.log(index, data.length)
           return renderTableFooter({
             value,
             data,
@@ -90,6 +97,9 @@ class QueryIndex extends Component {
       }, {
         title: '消费金额',
         dataIndex: 'downCost',
+        sorter: (a, b) => {
+          return sortOrderTable(a, b, 'downCost')
+        },
         render: (value, record, index) => {
           return renderTableFooter({
             value,

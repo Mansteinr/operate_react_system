@@ -15,7 +15,7 @@ export function isEmpty(obj) {
 // table合并栏
 export function renderTableFooter(option) {
   let sum = 0
-  if (option.data.length - 1 === option.index) {
+  if (option.data.length - 1  === option.index) {
     sum = option.data.reduce((total, currentValue) => {
       return total + currentValue[option.target]
     }, 0)
@@ -23,4 +23,9 @@ export function renderTableFooter(option) {
   } else {
     return option.value.toFixed(option.toFixed || 0)
   }
+}
+
+// table合并栏
+export function sortOrderTable(a, b, target) {
+  return a[target] - b[target]
 }
