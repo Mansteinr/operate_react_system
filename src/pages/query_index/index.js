@@ -1,4 +1,4 @@
-import store from '../../store'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Charts from '../../components/Charts'
@@ -59,11 +59,13 @@ class QueryIndex extends Component {
         title: '使用日期',
         dataIndex: 'dayTime',
         render: (value, record, index) => {
-          if (data.length - 1 === index) {
-            return '合计'
-          } else {
-            return value
-          }
+          return renderTableFooter({
+            value: value,
+            data,
+            index,
+            firstColumns: '总计',
+            target: 'dayTime'
+          })
         }
       }, {
         title: '共计使用量',
@@ -86,7 +88,6 @@ class QueryIndex extends Component {
           return sortOrderTable(a, b, 'downChargedCount')
         },
         render: (value, record, index) => {
-          console.log(index, data.length)
           return renderTableFooter({
             value,
             data,

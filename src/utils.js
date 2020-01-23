@@ -1,7 +1,6 @@
-
 // 判断是否为空  是空返回true 不为空则返回false
 export function isEmpty(obj) {
-  if (!obj || obj == "" || obj == '--') {
+  if (!obj || obj === "") {
     return true
   } else if (typeof obj === "object") {
     for (let prop in obj) {
@@ -15,13 +14,17 @@ export function isEmpty(obj) {
 // table合并栏
 export function renderTableFooter(option) {
   let sum = 0
-  if (option.data.length - 1  === option.index) {
-    sum = option.data.reduce((total, currentValue) => {
-      return total + currentValue[option.target]
-    }, 0)
-    return sum.toFixed(option.toFixed || 0)
+  if (option.index / 9 === 1) {
+    if (option.firstColumns) {
+      return option.firstColumns
+    } else {
+      sum = option.data.reduce((total, currentValue) => {
+        return total + currentValue[option.target]
+      }, 0)
+      return sum.toFixed(option.toFixed || 0)
+    }
   } else {
-    return option.value.toFixed(option.toFixed || 0)
+    return typeof option.value === 'number' ? option.value.toFixed(option.toFixed || 0) : option.value
   }
 }
 

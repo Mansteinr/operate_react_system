@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Divider, Tag, pagination } from 'antd'
+import { Table } from 'antd'
 export default class TableUI extends Component {
 
   state = {
@@ -7,19 +7,11 @@ export default class TableUI extends Component {
   }
 
   render() {
-    // let pageSizeNum = 10
-
-    
-
-    // onShowSizeChange = (current, size) => {
-    //   console.log(current, size)
-    // }
     return (
       <Table
         pagination={{
           pageSize: this.state.pageSizeNum,
           showSizeChanger: true,
-          showQuickJumper: true,
           position: 'bottom',
           onShowSizeChange: (current, size) => {
             this.setState({
