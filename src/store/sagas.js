@@ -1,23 +1,11 @@
-// 处理异步请求
+import { all } from 'redux-saga/effects'
+import { queryIndexSagas } from '@/pages/query_index/store'
+import { navLeftSagas } from '@/components/NavLeft/store'
 
-import { put, takeEvery } from 'redux-saga/effects'
-import API from '../config'
-import Axios from '../axios'
-import { getQueryindexListAction } from './actionCreators'
-import { INIT_QERYINDEX_LIST } from './actionTypes'
 
-function* getQueryindexList(prama) {
-  const res = yield Axios.ajax({
-    url: API.downApi.UsageByDate,
-    data: prama.data
-  })
-  yield put(getQueryindexListAction(res.resData))
+export default function* sagas() {
+  yield all([
+    ...queryIndexSagas,
+    ...navLeftSagas
+  ])
 }
-
-
-// generator 函数
-function* mySaga() {
-  yield takeEvery(INIT_QERYINDEX_LIST, getQueryindexList)
-}
-
-export default mySaga

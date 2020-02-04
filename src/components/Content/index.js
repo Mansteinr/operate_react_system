@@ -10,6 +10,7 @@ function callback(key) {
 
 export default class Content extends Component {
   renderFun = () => {
+    console.log(this.props.data)
     if(this.props.data.length) {
       return (
         <Tabs onChange={callback} type="card">

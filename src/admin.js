@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Layout } from 'antd'
 import NavLeft from './components/NavLeft'
-import CustomerHeader from './components/Header'
+// import CustomerHeader from './components/Header'
 import './common/css/index.less'
 
 const { Header, Sider, Content } = Layout;
@@ -28,7 +28,7 @@ export default class Admin extends Component {
           <NavLeft></NavLeft>
         </Sider>
         <Layout>
-          <CustomerHeader></CustomerHeader>
+          {/* <CustomerHeader></CustomerHeader> */}
           <Content>
             {this.props.children}
           </Content>

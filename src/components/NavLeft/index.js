@@ -2,18 +2,20 @@
 /**
  * 左侧组件
  */
+import { connect } from 'react-redux'
 import { Menu } from 'antd'
-import API from '../../config'
-import Axios from '../../axios'
+// import API from '../../config'
+// import Axios from '../../axios'
 import store from '../../store'
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import { getMenuItemAction } from '../../store/actionCreators'
+import { initMenusList, getMenuItemAction } from './store/actionCreators'
+import { INIT_MENUS_LIST } from './store/actionTypes'
 import './index.less'
 
 const { SubMenu } = Menu
 
-export default class NavLeft extends Component {
+class NavLeft extends Component {
 
   rootSubmenuKeys = []
   state = {
@@ -41,6 +43,7 @@ export default class NavLeft extends Component {
 
   // 渲染菜单
   renderMenu = (data) => {
+    console.log(this.props.menuTreeList, 'pp[p[p[')
     return data.map(v => {
       if (v.childResource.length) {
         if(v.id !== 331 && v.id !== 339) {
@@ -58,7 +61,8 @@ export default class NavLeft extends Component {
           </SubMenu>
         )
       }
-      if(!store.getState().menuActive.title) {
+      const { menuActive } = this.props
+      if(menuActive && menuActive.title) {
         store.dispatch(getMenuItemAction({
           url: v.resourceUrl,
           key: v.id + '',  //转为string类型 antd框架要求的
@@ -82,26 +86,30 @@ export default class NavLeft extends Component {
         theme="dark"
         onOpenChange={this.onOpenChange}
       >
-        {this.state.menuTreeNode}
+        {this.renderMenu(this.props.menuTreeList)}
       </Menu>
     )
   }
 
   // 请求数据
-  componentDidMount() {
-    Axios.ajax({
-      url: API.base.querymenus,
-      data: {
-        systemName: '服务平台'
-      }
-    }).then(res => {
-      const menuTreeNode = this.renderMenu(res.resData)
-      this.setState({
-        openKeys: [res.resData[0].id+'']
-      })
-      this.setState({
-        menuTreeNode
-      })
-    })
+  componentDidMount () {
+    this.props.initMenusList()
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    menuActive: state.navLeft.menuActive,
+    menuTreeList: state.navLeft.menuTreeList,
+  }
+}
+const mapDispatchToProps=(dispatch)=>{
+  return {
+    initMenusList:()=>{
+      dispatch({type:'INIT_MENUS_LIST'})
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavLeft)

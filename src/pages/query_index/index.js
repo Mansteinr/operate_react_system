@@ -7,7 +7,7 @@ import InquiryUI from '../../components/Inquiry'
 import ContnentUI from '../../components/Content'
 import React, { Component, Fragment } from 'react'
 import { renderTableFooter, sortOrderTable } from '@/utils'
-import { initQueryindexList } from '../../store/actionCreators'
+import { initQueryindexList } from './store/actionCreators'
 
 
 class QueryIndex extends Component {
@@ -133,14 +133,21 @@ class QueryIndex extends Component {
             renderChartFun={this.renderUsageByDateChart}
             renderTableFun={this.renderUsageByDateTable} />
         </div>
+        {/* 渲染UsageByCustomer数据 */}
+        <div className="card-space">
+          <ContnentUI
+            data={UsageByDateList}
+            renderChartFun={this.renderUsageByDateChart}
+            renderTableFun={this.renderUsageByDateTable} />
+        </div>
       </Fragment>
     )
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
-    UsageByDateList: state.UsageByDateList
+    UsageByDateList: state.queryIndex.UsageByDateList
   }
 }
 
