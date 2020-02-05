@@ -1,11 +1,11 @@
 
 // 处理异步请求
 
-import { put, takeEvery, fork } from 'redux-saga/effects'
+import { put, fork, takeEvery } from 'redux-saga/effects'
 import API from '@/config'
 import Axios from '@/axios'
-import { initMenusList } from './actionCreators'
 import { INIT_MENUS_LIST } from './actionTypes'
+import { initMenusListAction } from './actionCreators'
 
 function* queryMenusList () {
   const res = yield Axios.ajax({
@@ -14,14 +14,13 @@ function* queryMenusList () {
       systemName: '服务平台'
     }
   })
-  
-  yield put({
-    type: INIT_MENUS_LIST,
-    data: res.resData
-  })
+  yield put(initMenusListAction(res.resData))
 }
 
+function* queryMenusListSaga () {
+  yield takeEvery(INIT_MENUS_LIST, queryMenusList)
+}
 
 export const navLeftSagas = [
-  fork(queryMenusList)
+  fork(queryMenusListSaga)
 ]

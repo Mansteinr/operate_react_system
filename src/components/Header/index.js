@@ -20,7 +20,6 @@ export default class Header extends Component {
     // 监听state变化，新增tab标签栏
     store.subscribe(() => {
       let state = store.getState(), hash = {}
-      console.log(state, 'headeer')
       panes.push(state.menuActive)
       // 删选 防止重复增加
       panes.forEach((v, k) => {
