@@ -15,23 +15,17 @@ export function navLeftReducer (state = defaultState, action) {
     case INIT_MENUS_LIST_ACTION:
       return {
         ...state,
-        menuTreeList: action.data,
-        menuActive: {
-          url: action.data[0].resourceUrl,
-          key: action.data[0].id + '',
-          title: action.data[0].name,
-        }
+        menuTreeList: action.data
       }
     case CHANGE_MENU_ITEM:
-      const newState =  {
+      return {
         ...state,
         menuActive: {
-          url: action.data.resourceUrl,
-          key: action.data.id + '',
-          title: action.data.name,
+          url: action.url,
+          key: action.key,
+          title: action.title
         }
       }
-      return newState
     default:
       return state
   }

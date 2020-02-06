@@ -2,16 +2,17 @@
 /**
  * 左侧组件
  */
-import { connect } from 'react-redux'
 import { Menu } from 'antd'
+import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import { INIT_MENUS_LIST, CHANGE_MENU_ITEM } from './store/actionTypes'
-// import { getMenuItemAction } from './store/actionCreators'
+import { withRouter  } from 'react-router'
+import { INIT_MENUS_LIST } from './store/actionTypes'
+import { getMenuItemAction } from './store/actionCreators'
 
 import './index.less'
 
-const { SubMenu } = Menu
+let { SubMenu } = Menu, flag = true
 
 class NavLeft extends Component {
 
@@ -31,18 +32,33 @@ class NavLeft extends Component {
   }
 
   handleClick = item => {
-    this.props.getMenuItemAction({
-      url: item.resourceUrl,
-      key: item.id + '',  //转为string类型 antd框架要求的
-      title: item.name
-    })
+    this.props.getMenuItemAction(item)
   }
 
   // 渲染菜单
   renderMenu = (data) => {
+  //  console.log(this.props.location.pathname.length)
+    let { getMenuItemAction } = this.props
     if (data) {
-      return data.map(v => {
-        
+      return data.map((v, k) => {
+        // 拼接路由i地址
+        let trueUrl = v.resourceUrl.split('/')[v.resourceUrl.split('/').length - 1].split('.html')[0],
+            routerName = this.props.location.pathname
+
+        if (flag && routerName.length === 1) {
+          getMenuItemAction(v)
+          flag = false
+        } else if (routerName.length > 1) {
+          
+          if (flag && trueUrl === routerName.split('/')[1]) {
+            getMenuItemAction(v)
+            this.props.history.push({
+              routerName
+            })
+            flag = false
+          }
+          
+        }
         if (v.childResource.length) {
           if(v.id !== 331 && v.id !== 339) {
             this.rootSubmenuKeys.push(v.id+'')
@@ -59,8 +75,6 @@ class NavLeft extends Component {
             </SubMenu>
           )
         }
-        // 拼接路由i地址
-        let trueUrl = v.resourceUrl.split('/')[v.resourceUrl.split('/').length - 1].split('.html')[0]
         return <Menu.Item title={v.name} key={v.id} onClick={() => this.handleClick(v)}>
           <NavLink to={ trueUrl }><i className={`iconfont ` + v.icon}></i> { v.name}</NavLink>
         </Menu.Item>
@@ -102,13 +116,10 @@ const mapDispatchToProps=(dispatch)=>{
       dispatch({type:INIT_MENUS_LIST})
     },
     getMenuItemAction: (data) => {
-      dispatch({
-        type: CHANGE_MENU_ITEM,
-        data
-      })
+      dispatch(getMenuItemAction(data))
     }
   }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavLeft)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavLeft))

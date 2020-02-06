@@ -18,6 +18,7 @@ function* queryMenusList () {
 }
 
 function* queryMenusListSaga () {
+
   yield takeEvery(INIT_MENUS_LIST, queryMenusList)
 }
 

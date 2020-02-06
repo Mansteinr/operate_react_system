@@ -15,6 +15,7 @@ export default class Router extends React.Component {
           <Route path="/" render={() =>
             <Admin>
               <Switch>
+                <Route exact path="/" component={ QueryIndex }></Route>
                 <Route path="/query_index" component={ QueryIndex }></Route>
                 <Route path="/demo" component={ Demo }></Route>
                 <Route component={NotMatch}></Route>
