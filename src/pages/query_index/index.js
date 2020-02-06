@@ -147,7 +147,7 @@ class QueryIndex extends Component {
 
 function mapStateToProps (state) {
   return {
-    UsageByDateList: state.queryIndex.UsageByDateList
+    UsageByDateList: state.getIn(['queryIndex', 'UsageByDateList'])
   }
 }
 

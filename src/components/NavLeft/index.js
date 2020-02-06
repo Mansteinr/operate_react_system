@@ -49,7 +49,7 @@ class NavLeft extends Component {
           getMenuItemAction(v)
           flag = false
         } else if (routerName.length > 1) {
-          
+
           if (flag && trueUrl === routerName.split('/')[1]) {
             getMenuItemAction(v)
             this.props.history.push({
@@ -105,8 +105,11 @@ class NavLeft extends Component {
 
 function mapStateToProps (state) {
   return {
-    menuActive: state.navLeft.menuActive,
-    menuTreeList: state.navLeft.menuTreeList,
+    menuActive: state.getIn(['navLeft', 'menuActive']), // // 引入redux-immutable后写法
+    // menuActive: state.get('navLeft').get('menuActive'), // // 引入redux-immutable后写法
+    // menuActive: state.navLeft.get('menuActive'), // // 引入immutable后写法
+    // menuActive: state.navLeft.menuActive, //// 引入immutable前写法
+    menuTreeList: state.getIn(['navLeft', 'menuTreeList'])
   }
 }
 

@@ -75,8 +75,8 @@ class Header extends Component {
 }
 
 function mapStateToProps (state) {
-  let { menuActive } = state.navLeft, hash = {}
-  console.log(menuActive, 'kjjyt567890-=789089')
+  let menuActive  = state.getIn(['navLeft', 'menuActive']), hash = {}
+  console.log(state, 'kjjyt567890-=789089')
   if (menuActive.title) {
     panes.push(menuActive)
     panes.forEach((v, k) => {
@@ -93,7 +93,7 @@ function mapStateToProps (state) {
   }
     
   return {
-    menuActive: state.navLeft.menuActive
+    menuActive
   }
 }
 
