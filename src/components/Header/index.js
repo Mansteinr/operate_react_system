@@ -54,9 +54,16 @@ class Header extends Component {
     this.setState({ panes, activeKey })
   }
 
+  renderTabPane = data => {
+   return data.map(pane => (
+      // 用@分割， 到时候容易取地址
+      <TabPane tab={pane.title} key={`${pane.key}@${pane.url}`} /> 
+    ))
+  }
+
   render() {
     return (
-      <div>
+      // <div>
         <Tabs
           hideAdd
           onChange={this.onChange}
@@ -64,19 +71,18 @@ class Header extends Component {
           type="editable-card"
           onEdit={this.onEdit}
         >
-          {this.state.panes.map(pane => (
-            // 用@分割， 到时候容易取地址
-            <TabPane tab={pane.title} key={`${pane.key}@${pane.url}`} /> 
-          ))}
+          { this.renderTabPane(this.state.panes) }
         </Tabs>
-      </div>
+      // </div>
     )
   }
 }
 
+
+
 function mapStateToProps (state) {
-  let menuActive  = state.getIn(['navLeft', 'menuActive']), hash = {}
-  console.log(state, 'kjjyt567890-=789089')
+  let menuActive = state.getIn(['navLeft', 'menuActive']), hash = {}
+  
   if (menuActive.title) {
     panes.push(menuActive)
     panes.forEach((v, k) => {

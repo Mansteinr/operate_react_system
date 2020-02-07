@@ -14,7 +14,7 @@ export default class Axios {
       responseType: options.responseType || 'json', // 默认返回类型为json
       method: options.method || 'post', // 默认post请求
       headers: {
-        'mtk': localStorage.getItem('mtk') || API.base.localMTK,
+        mtk: localStorage.getItem('mtk') || API.base.localMTK,
         'Content-Type': 'application/json;charset=UTF-8'
       }
     }
@@ -29,8 +29,8 @@ export default class Axios {
         if(res.data.resCode) {
           reslove(res.data)
         } else {  //失败
-          if(res.data.resMsg[0].msgCode === '10005') { // 未登陆强制登陆
-            window.location.href = window.location.origin + '/Login' // 跳转页面
+          if (res.data.resMsg[0].msgCode === '10005') { // 未登陆强制登陆
+            window.location.href = window.location.origin + '/#/Login' // 跳转页面
           } else if (res.data.resMsg[0].msgCode === '40001005') {
             message.warning(res.data.resMsg[0].msgText)
           } else {

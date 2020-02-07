@@ -91,7 +91,7 @@ class NavLeft extends Component {
         theme="dark"
         onOpenChange={this.onOpenChange}
       >
-        {this.renderMenu(this.props.menuTreeList)}
+        { this.renderMenu(this.props.menuTreeList) }
       </Menu>
     )
   }
