@@ -220,16 +220,16 @@ class QueryIndex extends Component {
         {/* 渲染UsageByDate数据 */}
         <div className="card-space">
           <ContnentUI
-            data={UsageByDateList}
-            renderChartFun={this.renderUsageByDateChart}
-            renderTableFun={this.renderUsageByDateTable} />
+            data={ UsageByDateList }
+            renderChartFun={ this.renderUsageByDateChart }
+            renderTableFun={ this.renderUsageByDateTable } />
         </div>
         {/* 渲染UsageByCustomer数据 */}
         <div className="card-space">
           <ContnentUI
             data={ UsageByCustomerList }
-            renderChartFun={this.renderUsageByCustomerChart}
-            renderTableFun={this.renderUsageByCustomerTable} />
+            renderChartFun={ this.renderUsageByCustomerChart }
+            renderTableFun={ this.renderUsageByCustomerTable } />
         </div>
       </Fragment>
     )

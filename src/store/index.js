@@ -9,6 +9,7 @@ const logger = createLogger()
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
+// const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware))
 const enhancer = composeEnhancers(applyMiddleware(logger, sagaMiddleware))
 
 const store = createStore(reducer, enhancer)

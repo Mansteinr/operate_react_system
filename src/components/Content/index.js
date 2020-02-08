@@ -4,23 +4,30 @@ import React, { Component, Fragment } from 'react'
 
 const { TabPane } = Tabs
 
-function callback(key) {
-  console.log(key)
-}
-
 export default class Content extends Component {
   renderFun = () => {
-    if(this.props.data.length) {
-      return (
-        <Tabs onChange={callback} type="card">
-          <TabPane tab="图标" key="1">
-            {this.props.renderChartFun()}
-          </TabPane>
-          <TabPane tab="数据" key="2">
-            {this.props.renderTableFun()}
-          </TabPane>
-        </Tabs>
-      )
+    let { data, renderChartFun, renderTableFun } = this.props
+    if (data && data.length) {
+      if (renderChartFun && renderTableFun) {
+        return (
+          <Tabs type="card">
+            <TabPane tab="图标" key="1">
+              { renderChartFun() }
+            </TabPane>
+            <TabPane tab="数据" key="2">
+              { renderTableFun() }
+            </TabPane>
+          </Tabs>
+        )
+      } else if (renderChartFun) {
+        return <div>
+          { renderChartFun() }
+        </div>
+      } else if (renderTableFun) {
+        return <div>
+          { renderTableFun() }
+        </div>
+      }
     } else {
       return <Empty/>
     }
@@ -28,9 +35,9 @@ export default class Content extends Component {
   render() {
     return (
       <Fragment>
-        <div className="card-title"> 查询结果 </div>
+        <div className="card-title"> { this.props.title || '查询结果' } </div>
         <div className="card-content">
-          {this.renderFun()}
+          { this.renderFun() }
         </div>
       </Fragment>
     )

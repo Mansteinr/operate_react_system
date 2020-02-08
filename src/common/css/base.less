@@ -113,9 +113,25 @@
 
       .card-content {
         min-height: 300px;
+        .ant-table-column-title{
+          font-weight: 400;
+          color: #6F7479;
+          font-size: 12px;
+        }
         .ant-table-thead > tr > th, 
         .ant-table-tbody > tr > td {
           padding: 10px 10px !important;
+          .span-link{
+            color: @color-bule;
+            cursor: pointer;
+            margin-right: 4px;
+            font-size: 12px;
+          }
+          img {
+            max-width: 100%;
+            max-height: 100;
+            vertical-align: middle;
+          }
         }
         .ant-empty {
           margin-top: 50px;
@@ -215,4 +231,19 @@
 
 .ant-table-pagination.ant-pagination {
   float: left !important;
+  .ant-select-selection-selected-value,
+  .ant-pagination-total-text{
+    font-size: 13px;
+  }
+  .ant-pagination-prev, 
+  .ant-pagination-item,
+  .ant-pagination-next {
+    min-width: 28px;
+    height: 28px;
+    line-height: 28px;
+  }
+  .ant-select-selection-selected-value{
+    height: 30px;
+    line-height: 24px;
+  }
 }

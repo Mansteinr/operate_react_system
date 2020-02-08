@@ -5,7 +5,6 @@
 import { Menu } from 'antd'
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
 import { withRouter  } from 'react-router'
 import { INIT_MENUS_LIST } from './store/actionTypes'
 import { getMenuItemAction } from './store/actionCreators'
@@ -31,33 +30,41 @@ class NavLeft extends Component {
     }
   }
 
-  handleClick = item => {
-    this.props.getMenuItemAction(item)
+  handleClick = (item, trueUrl) => {
+    console.log(item)
+    let { getMenuItemAction, history } = this.props
+    getMenuItemAction(item)
+    history.push({ pathname: `/${trueUrl}`})
   }
 
   // 渲染菜单
   renderMenu = (data) => {
-  //  console.log(this.props.location.pathname.length)
-    let { getMenuItemAction } = this.props
+    let { getMenuItemAction, history } = this.props
     if (data) {
       return data.map((v, k) => {
         // 拼接路由i地址
         let trueUrl = v.resourceUrl.split('/')[v.resourceUrl.split('/').length - 1].split('.html')[0],
-            routerName = this.props.location.pathname
-
+          routerName = this.props.location.pathname
+        
         if (flag && routerName.length === 1) {
           getMenuItemAction(v)
           flag = false
         } else if (routerName.length > 1) {
 
-          if (flag && trueUrl === routerName.split('/')[1]) {
+          if (flag && routerName.indexOf('oneClickLoginDetail') > 0) {
+            getMenuItemAction({
+              resourceUrl: `${routerName}.html`,
+              name: `${routerName.split('/')[2]}详情`,
+              key: +new Date()
+            })
+            flag = false
+          }else if (flag && trueUrl === routerName.split('/')[1]) {
             getMenuItemAction(v)
-            this.props.history.push({
+            history.push({
               routerName
             })
             flag = false
           }
-          
         }
         if (v.childResource.length) {
           if(v.id !== 331 && v.id !== 339) {
@@ -71,12 +78,12 @@ class NavLeft extends Component {
                   <span className="menu-itme-text">{ v.name }</span>
                 </span>
               } >
-              {this.renderMenu(v.childResource)}
+              { this.renderMenu(v.childResource) }
             </SubMenu>
           )
         }
-        return <Menu.Item title={v.name} key={v.id} onClick={() => this.handleClick(v)}>
-          <NavLink to={ trueUrl }><i className={`iconfont ` + v.icon}></i> { v.name}</NavLink>
+        return <Menu.Item title={v.name} key={v.id} onClick={() => this.handleClick(v, trueUrl)}>
+          <i className={`iconfont ` + v.icon}></i> { v.name}
         </Menu.Item>
       })
     }
@@ -103,6 +110,8 @@ class NavLeft extends Component {
 
 }
 
+
+// 这一部分是 react-redux的内容
 function mapStateToProps (state) {
   return {
     menuActive: state.getIn(['navLeft', 'menuActive']), // // 引入redux-immutable后写法

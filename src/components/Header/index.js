@@ -29,26 +29,26 @@ class Header extends Component {
   }
 
   onEdit = (targetKey, action) => {
-    this[action](targetKey)
+    this[action](targetKey.split('@')[1])
   }
 
   remove = targetKey => {
-    let { activeKey } = this.state, lastIndex
+    let activeKey = this.state.activeKey.split('@')[1], lastIndex
     if(this.state.panes.length === 1) {
       message.warning('最后一个啦！')
       return
     }
     this.state.panes.forEach((pane, i) => {
-      if (pane.key === targetKey) {
+      if (pane.url === targetKey) {
         lastIndex = i - 1
       }
     })
-    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+    const panes = this.state.panes.filter(pane => pane.url !== targetKey);
     if (panes.length && activeKey === targetKey) {
       if (lastIndex >= 0) {
-        activeKey = panes[lastIndex].key
+        activeKey = panes[lastIndex].url
       } else {
-        activeKey = panes[0].key
+        activeKey = panes[0].url
       }
     }
     this.setState({ panes, activeKey })
@@ -63,17 +63,15 @@ class Header extends Component {
 
   render() {
     return (
-      // <div>
-        <Tabs
-          hideAdd
-          onChange={this.onChange}
-          activeKey={this.state.activeKey}
-          type="editable-card"
-          onEdit={this.onEdit}
-        >
-          { this.renderTabPane(this.state.panes) }
-        </Tabs>
-      // </div>
+      <Tabs
+        hideAdd
+        onChange={this.onChange}
+        activeKey={this.state.activeKey}
+        type="editable-card"
+        onEdit={this.onEdit}
+      >
+        { this.renderTabPane(this.state.panes) }
+      </Tabs>
     )
   }
 }

@@ -23,7 +23,7 @@ export default class TableUI extends Component {
           }
         }}
 
-        rowKey={this.props.rowKey}
+        rowKey={ `${this.props.rowKey}${ +new Date() }` }
         columns={this.props.columns}
         dataSource={this.props.dataSource}
       />

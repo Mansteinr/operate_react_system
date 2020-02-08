@@ -1,5 +1,6 @@
 
 // 处理异步请求
+// redux-saga是redux的插件  不是react的插件
 
 import { put, fork, takeEvery } from 'redux-saga/effects'
 import API from '@/config'
