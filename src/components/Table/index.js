@@ -19,13 +19,13 @@ export default class TableUI extends Component {
             })
           },
           showTotal: (total, range) => {
-            return `显示第 ${range[0]} 到第 ${range[1]} 条记录，总共 ${total} 条记录，每页显示 ${this.state.pageSizeNum}  条记录            `
+            return `显示第 ${range[0]} 到第 ${range[1]} 条记录，总共 ${total} 条记`
           }
         }}
 
-        rowKey={ `${this.props.rowKey}${ +new Date() }` }
-        columns={this.props.columns}
-        dataSource={this.props.dataSource}
+        rowKey={ `${this.props.rowKey}` }
+        columns={ this.props.columns }
+        dataSource={ this.props.dataSource }
       />
     )
   }

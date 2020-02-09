@@ -1,25 +1,24 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 
 import { connect } from 'react-redux'
 import TableUI from '@/components/Table'
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import { Button, Modal, List, Typography } from 'antd'
+import { Button, Modal, Popconfirm } from 'antd'
 import ContnentUI from '@/components/Content'
 
 import { getMenuItemAction } from '@/components/NavLeft/store/actionCreators'
-import { getLightSignInAppInfoAction, getAppInfoDetailAction } from '@/pages/one_click_login/store/actionCreators'
+import {
+  getLightSignInAppInfoAction,
+  getAppInfoDetailAction,
+  delAppNewsAction
+} from '@/pages/one_click_login/store/actionCreators'
+import './index.less'
 
 class oneClickLoginDetail extends Component{
 
   state = {
     modalVisible: false,
-    appNewsObj : {
-      appId: '小视_appId',
-      appKey: '小视_appKey',
-      packageName: '包名',
-      packageSign: '包签名',
-      bundleId: 'bundleId'
-    },
     appDetailNews: {}
   }
 
@@ -41,8 +40,8 @@ class oneClickLoginDetail extends Component{
 
   }
   // 删除
-  delFun = () => {
-
+  delFun = (param) => {
+    this.props.delAppNewsAction(param)
   }
 
     // 渲染dom
@@ -78,24 +77,18 @@ class oneClickLoginDetail extends Component{
       },{
         title: '操作',
         render: (value, record, index) => {
-        console.log(record)
         return <div className="operate-button">
           <Button size='small' onClick={() => this.lookFun(value.appId, record)} className="span-link">查看</Button>
           <Button size='small' onClick={() => this.editorFun(value)} className="span-link">编辑</Button>
-          <Button size='small' onClick={() => this.delFun(value)} className="span-link">删除</Button>
+          <Button size='small'  className="span-link">
+            <Popconfirm title="确定删除?" onConfirm={() => this.delFun(value.appId)}>
+              <a>删除</a>
+            </Popconfirm>
+          </Button>
         </div>
         }
       }]
     return <TableUI rowKey={'appName'} dataSource={ lightSignInAppInfoList } columns={ columns } />
-  }
-  
-  renderAppNewFun = () => {
-    const { appNewsObj, appDetailNews } = this.state
-    return Object.keys(appNewsObj).forEach(v => {
-      return <span>
-       { `${appNewsObj[v]}:${appDetailNews[v]}` } 
-      </span>
-    })
   }
 
   renderAppInfoDetailTable = () => {
@@ -113,7 +106,7 @@ class oneClickLoginDetail extends Component{
         title: '供应商',
         dataIndex: 'provider',
         render: (value, record, index) => value === '0' ? '创蓝' : '电信'
-      }]
+        }]
     return <TableUI rowKey={'appId'} dataSource={ appInfoNews } columns={columns} />
   }
 
@@ -133,7 +126,23 @@ class oneClickLoginDetail extends Component{
           onOk={() => this.setModalVisible(false)}
           onCancel={() => this.setModalVisible(false)}
         >
-          { this.renderAppNewFun() }
+          <div className="appNew-wrapper">
+            <div className="appNew-item">
+              <span>小视_appId:</span> {this.state.appDetailNews.appId}
+            </div>
+            <div className="appNew-item">
+              <span>小视_appKey:</span> {this.state.appDetailNews.appKey}
+            </div>
+            <div className="appNew-item">
+              <span>包名:</span> {this.state.appDetailNews.packageName}
+            </div>
+            <div className="appNew-item">
+              <span>包签名:</span> {this.state.appDetailNews.packageSign}
+            </div>
+            <div className="appNew-item">
+              <span>bundleId:</span> {this.state.appDetailNews.bundleId}
+            </div>
+          </div>
           { this.renderAppInfoDetailTable() }
         </Modal>
       </div>
@@ -165,6 +174,9 @@ const mapDispatchToProps=(dispatch)=>{
     },
     getAppInfoDetailAction: (data) => {
       dispatch(getAppInfoDetailAction(data))
+    },
+    delAppNewsAction: (data) => {
+      dispatch(delAppNewsAction(data))
     }
   }
 }

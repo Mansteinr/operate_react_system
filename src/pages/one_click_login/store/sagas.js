@@ -11,12 +11,14 @@ import { put, takeEvery, fork } from 'redux-saga/effects'
 import {
   GET_LIGHTSIGNIN_CUSTOMERS_ACTION,
   GET_LIGHTSIGNIN_APPINFO_ACTION,
-  GET_APPINFODETAIL_ACTION
+  GET_APPINFODETAIL_ACTION,
+  del_APPNEWS_ACTION,
 } from './actionTypes'
 import {
   getLightSignInCustomersListAction,
   getLightSignInAppInfoListAction,
-  getAppInfoDetailNewsAction
+  getAppInfoDetailNewsAction,
+  getLightSignInAppInfoAction
 } from './actionCreators'
 
 function* getLightSignInCustomers (prama) {
@@ -34,9 +36,9 @@ function* LightSignInCustomers () {
 }
 
 function* getLightSignInAppInfo (prama) {
+  console.log(prama, 'getLightSignInAppInfogetLightSignInAppInfogetLightSignInAppInfogetLightSignInAppInfo')
   const res = yield Axios.ajax({
     url: `${API.lightSignIn.appInfo}/${prama.data}`,
-    data: prama.data,
     method: 'get'
   })
   yield put(getLightSignInAppInfoListAction(res.resData))
@@ -62,8 +64,23 @@ function* getAppInfoNews () {
   yield takeEvery(GET_APPINFODETAIL_ACTION, getAppInfoDetail)
 }
 
+function* deleteFun (prama) {
+  console.log(prama)
+  const res = yield Axios.ajax({
+    url: `${API.lightSignIn.appInfo}/${prama.data}`,
+    method: 'delete'
+  })
+  yield put(getLightSignInAppInfoAction(prama.data))
+}
+
+// generator 函数
+function* deleteAppFun () {
+  yield takeEvery(del_APPNEWS_ACTION, deleteFun)
+}
+
 export const oneClickLoginSagas = [
   fork(LightSignInCustomers),
   fork(LightSignInAppInfoAction),
   fork(getAppInfoNews),
+  fork(deleteAppFun),
 ]

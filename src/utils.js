@@ -12,9 +12,14 @@ export function isEmpty(obj) {
 }
 
 // table合并栏
-export function renderTableFooter(option) {
-  let sum = 0
-  if (option.index / 9 === 1) {
+export function renderTableFooter (option) {
+  console.log(option.index)
+  let sum = 0, pageSize = 9
+  if (option.data.length < 10) {
+    pageSize = option.data.length - 1
+  }
+  console.log(pageSize, option.index, option.data.length)
+  if (option.index / pageSize === 1) {
     if (option.firstColumns) {
       return option.firstColumns
     } else {
