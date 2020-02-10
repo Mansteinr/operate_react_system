@@ -15,6 +15,7 @@ class queryUsage extends Component{
   }, {
     type: 'Select',
     label: '行业类型',
+    showSearch: false,
     field: 'businessType',
     placeholder: '请选择行业类型',
     data:[{
@@ -36,8 +37,13 @@ class queryUsage extends Component{
       lable: '其他',
       value: '4'
     }]
-  },]
-
+    }]
+  
+     // 确认提交表单数据 子组件传递上来的
+  handleFilter = (params) => {
+    console.log(params)
+  }
+  
   render () {
     return (
       <Fragment>

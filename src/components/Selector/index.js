@@ -5,8 +5,12 @@ import pinyin from 'js-pinyin'
 const { Option } = Select
 
 export default class Selector extends Component{
-   handleChange = (value) => {
-    console.log(`selected ${value}`)
+
+ 
+
+  handleChange = (value) => {
+    let { id, formSelctorChange } = this.props
+    formSelctorChange(id, value)
   }
 
   // 筛选
@@ -15,17 +19,25 @@ export default class Selector extends Component{
     return  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
 
+  renderOption = (data) => {
+    let optionList = []
+    data.map(v => {
+      optionList.push(<Option key ={ v.value || v.lable } value={ v.value }> { v.lable } </Option>)
+    })
+    return optionList
+  }
+
   render () {
+    let { data, showSearch } =  this.props
     return (
       <Select
-        defaultValue="lucy"
-        showSearch
+        onChange = { this.handleChange }
+        defaultValue= { data[2].value }
+        showSearch = { showSearch || true }
         optionFilterProp="children"
         filterOption={ (input, option) => this.filterOption(input, option) }
       >
-        { this.props.data.map(v => {
-         return <Option value={ v.value }> { v.label } </Option>
-        }) }
+      { this.renderOption(data) }
       </Select>
     )
   }

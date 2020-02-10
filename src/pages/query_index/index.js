@@ -203,6 +203,7 @@ class QueryIndex extends Component {
   return <TableUI rowKey={'customerTypeZh'} dataSource={ data } columns={columns} />
 
   }
+
   // 确认提交表单数据 子组件传递上来的
   handleFilter = (params) => {
     let { getUsageByDateAction,  getUsageByCustomerAction } = this.props
@@ -215,7 +216,7 @@ class QueryIndex extends Component {
     return (
       <Fragment>
         <div className="card-space">
-          <InquiryUI formList={ this.formList } filterSubmit={this.handleFilter} />
+          <InquiryUI formList={ this.formList } filterSubmit={ this.handleFilter } />
         </div>
         {/* 渲染UsageByDate数据 */}
         <div className="card-space">

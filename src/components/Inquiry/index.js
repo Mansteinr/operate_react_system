@@ -18,17 +18,23 @@ class Inquiry extends Component {
 
     this.props.formList.forEach(v => {
       if(v.type === 'DateRange') {
-        let params = fieldsValue[v.type]
-        values[v.firstName] = params[0].format(v.formatter)
-        values[v.lastName] = params[1].format(v.formatter)
+        fieldsValue[v.firstName] = fieldsValue[v.type][0].format(v.formatter)
+        fieldsValue[v.lastName] = fieldsValue[v.type][1].format(v.formatter)
+        delete fieldsValue[v.type]
       }
     })
-    this.props.filterSubmit(values)
+    this.props.filterSubmit(fieldsValue)
   }
 
   // 重置form表单
   reset = () => {
     this.props.form.resetFields()
+  }
+
+  selctorChange = (key, data) => {
+    this.props.form.setFieldsValue({
+      [key]: data
+    })
   }
 
   onChange = (date, dateString) => {
@@ -40,10 +46,9 @@ class Inquiry extends Component {
     const { getFieldDecorator } = this.props.form, // 解构
           formList = this.props.formList,
           formItemList = [] //定义参数
-    console.log(formList, 'formListformListformList')
+    
     if (formList && formList.length > 0) {
       formList.forEach(v => {
-        let FormItem = null
         if (v.type === 'DateRange') {
           formItemList.push(<FormItem label={v.label} key={v.field}>
             {
@@ -66,19 +71,21 @@ class Inquiry extends Component {
             </FormItem>)
           
         } else if (v.type === 'Select') {
-          formItemList.push(<FormItem label={ v.label } key= { v.field }>
+          formItemList.push(<FormItem label={v.label} key={v.field}>
             {
               getFieldDecorator( `${v.field}` , {
                 initialValue: v.data[0].value
               })(
-                <Select data={ v.data } lable={ v.lable } value = { v.field }></Select>
+                <Select
+                  data={ v.data }
+                  showSearch={v.showSearch}
+                  formSelctorChange={this.selctorChange}></Select>
               )
             }
             </FormItem>)
         }
       })
     }
-    console.log(formItemList, 'formItemListformItemListformItemList')
     return formItemList
   }
 

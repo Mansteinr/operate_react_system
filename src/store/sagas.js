@@ -1,5 +1,7 @@
 import { all } from 'redux-saga/effects'
-import { navLeftSagas } from '@/components/NavLeft/store'
+
+import { navLeftSagas } from '@/components/NavLeft/store' // 左侧
+import { baseSagas } from '@/common/js/store' // 基础请求
 
 import { queryIndexSagas } from '@/pages/query_index/store' // 总量统计
 import { oneClickLoginSagas } from '@/pages/one_click_login/store' // 一键登录
@@ -8,6 +10,7 @@ import { dosageStatisticsSagas } from '@/pages/dosage_statistics/store' // 用�
 
 export default function* sagas() {
   yield all([
+    ...baseSagas,
     ...queryIndexSagas,
     ...navLeftSagas,
     ...oneClickLoginSagas,
