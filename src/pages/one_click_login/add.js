@@ -4,14 +4,9 @@ import ContnentUI from '@/components/Content'
 import {
   Form,
   Input,
-  Tooltip,
   Icon,
   Upload,
   Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
   message,
   Radio
 } from 'antd'
