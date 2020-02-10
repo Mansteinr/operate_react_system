@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import TableUI from '@/components/Table'
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import { Button, Modal, Popconfirm } from 'antd'
 import ContnentUI from '@/components/Content'
+import { Button, Modal, Popconfirm } from 'antd'
 
 import { getMenuItemAction } from '@/components/NavLeft/store/actionCreators'
 import {
@@ -153,8 +153,6 @@ class oneClickLoginDetail extends Component{
     this.props.getLightSignInAppInfoAction(this.props.match.params.id)
   }
 }
-
-
 
 function mapStateToProps (state) {
   return {

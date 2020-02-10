@@ -6,7 +6,7 @@ const { TabPane } = Tabs
 
 export default class Content extends Component {
   renderFun = () => {
-    let { data, renderChartFun, renderTableFun } = this.props
+    let { data, renderChartFun, renderTableFun,renderDomFun } = this.props
     if (data && data.length) {
       if (renderChartFun && renderTableFun) {
         return (
@@ -28,6 +28,10 @@ export default class Content extends Component {
           { renderTableFun() }
         </div>
       }
+    } else if (renderDomFun) {
+      return <div>
+        { renderDomFun() }
+      </div>
     } else {
       return <Empty/>
     }

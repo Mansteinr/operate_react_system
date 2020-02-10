@@ -5,6 +5,7 @@ import Login from './pages/login'
 import QueryIndex from './pages/query_index'
 import oneClickLogin from './pages/one_click_login'
 import oneClickLoginDetail from './pages/one_click_login/detail'
+import oneClickLoginAdd from './pages/one_click_login/add'
 import NotMatch from './pages/notMatch'
 import Demo from './pages/demo'
 
@@ -21,6 +22,7 @@ export default class Router extends React.Component {
                 <Route path="/query_index" component={ QueryIndex }></Route>
                 <Route path="/one_click_login" component={ oneClickLogin }></Route>
                 <Route path="/oneClickLoginDetail/:id" component={ oneClickLoginDetail }></Route>
+                <Route path="/oneClickLoginAdd/:id" component={ oneClickLoginAdd }></Route>
                 <Route path="/demo" component={ Demo }></Route>
                 <Route component={NotMatch}></Route>
               </Switch>

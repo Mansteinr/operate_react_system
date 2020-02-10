@@ -7,6 +7,7 @@
 
 import API from '@/config'
 import Axios from '@/axios'
+import { message } from 'antd'
 import { put, takeEvery, fork } from 'redux-saga/effects'
 import {
   GET_LIGHTSIGNIN_CUSTOMERS_ACTION,
@@ -36,7 +37,6 @@ function* LightSignInCustomers () {
 }
 
 function* getLightSignInAppInfo (prama) {
-  console.log(prama, 'getLightSignInAppInfogetLightSignInAppInfogetLightSignInAppInfogetLightSignInAppInfo')
   const res = yield Axios.ajax({
     url: `${API.lightSignIn.appInfo}/${prama.data}`,
     method: 'get'
@@ -65,11 +65,14 @@ function* getAppInfoNews () {
 }
 
 function* deleteFun (prama) {
-  console.log(prama)
   const res = yield Axios.ajax({
     url: `${API.lightSignIn.appInfo}/${prama.data}`,
     method: 'delete'
   })
+  if (res.resCode) {
+    message.info('删除成功')
+  }
+  message.info('This is a normal message')
   yield put(getLightSignInAppInfoAction(prama.data))
 }
 

@@ -24,7 +24,6 @@ export const getLightSignInCustomersListAction = (data) => {
 }
 
 export const getLightSignInAppInfoAction = (data) => {
-  console.log('GET_LIGHTSIGNIN_APPINFO_ACTION', data)
   return {
     type: GET_LIGHTSIGNIN_APPINFO_ACTION,
     data

@@ -1,4 +1,5 @@
 
+import { Button } from 'antd'
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import TableUI from '@/components/Table'
@@ -7,7 +8,7 @@ import { getLightSignInCustomersAction } from './store/actionCreators'
 import { getMenuItemAction } from '@/components/NavLeft/store/actionCreators'
 
 class oneClickLogin extends Component {
-  
+
   handleClick = value => {
     let { getMenuItemAction, history } = this.props
     history.push({ pathname: `/oneClickLoginDetail/${value.loginName}`})
@@ -17,6 +18,7 @@ class oneClickLogin extends Component {
       key: +new Date()
     })
   }
+
   // 渲染dom
   renderOneCLickLoginTable = () => {
     const { lightSignInCustomersList } = this.props, data = [],
@@ -36,15 +38,29 @@ class oneClickLogin extends Component {
     return <TableUI rowKey={'loginName'} dataSource={ data } columns={ columns } />
   }
 
+  // 新增
+  addFun = () => {
+    let { getMenuItemAction, history } = this.props
+    history.push({ pathname: `/oneClickLoginAdd/add`})
+    getMenuItemAction({
+      resourceUrl: `/oneClickLoginAdd/add.html`,
+      name: `新增`,
+      key: +new Date()
+    })
+  }
+
   render() {
     const { lightSignInCustomersList } = this.props
     return (
       <div className="card-space">
-          <ContnentUI
-            title = '一键登录管理 '
-            data={ lightSignInCustomersList }
-            renderTableFun={ this.renderOneCLickLoginTable } />
+        <div className="button-group">
+          <Button onClick={ () => this.addFun() } type="primary">新增</Button>
         </div>
+        <ContnentUI
+          title = '一键登录管理 '
+          data={ lightSignInCustomersList }
+          renderTableFun={ this.renderOneCLickLoginTable } />
+      </div>
     )
   }
 

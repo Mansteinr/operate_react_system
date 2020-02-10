@@ -79,6 +79,7 @@
     margin-top: 0 !important;
 
     .card-space {
+      position: relative;
       display         : block;
       margin          : 5px;
       padding         : 10px 10px 10px 20px;
@@ -87,7 +88,10 @@
       border          : 1px solid #d5dde0;
       box-shadow      : 0 4px 8px rgba(0, 0, 0, .1);
       border-radius   : 10px;
-
+      .button-group{
+        position: absolute;
+        right: 10px;
+      }
       .search-space {
         display   : block;
         text-align: right;
@@ -113,6 +117,9 @@
 
       .card-content {
         min-height: 300px;
+        .ant-col{
+          text-align: start;
+        }
         .ant-table-column-title{
           font-weight: 400;
           color: #6F7479;
