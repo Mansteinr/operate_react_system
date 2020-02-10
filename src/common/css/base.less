@@ -4,25 +4,25 @@
 /*重写滚动条样式 for webkit浏览器*/
 /*滚动条整体部分，可以设置宽度啥的*/
 ::-webkit-scrollbar {
-  width : 4px;
+  width: 4px;
   height: 6px;
 }
 
 /*侧边栏*/
 .ant-layout-has-sider {
   height: calc(100vh);
-  color : #ced4e2;
+  color: #ced4e2;
 
   .ant-layout-header {
-    padding    : 0;
+    padding: 0;
     line-height: 30px;
-    height     : 30px;
-    text-align : center;
-    color      : white;
+    height: 30px;
+    text-align: center;
+    color: white;
   }
 
   .ant-menu-root {
-    height  : calc(100vh - 30px);
+    height: calc(100vh - 30px);
     overflow: auto;
   }
 
@@ -32,41 +32,41 @@
     }
 
     .iconfont {
-      min-width         : 14px;
-      margin-right      : 10px;
-      opacity           : 1;
-      filter            : alpha(opacity=1);
-      transition        : opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      min-width: 14px;
+      margin-right: 10px;
+      opacity: 1;
+      filter: alpha(opacity=1);
+      transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       -webkit-transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     }
   }
 
   .ant-menu-inline-collapsed {
     .menu-itme-text {
-      display  : inline-block;
+      display: inline-block;
       max-width: 0;
-      opacity  : 0;
-      filter   : alpha(opacity=0);
+      opacity: 0;
+      filter: alpha(opacity=0);
     }
   }
 
   .icon-tubiaozhizuomoban {
-    display           : inline-block;
-    width             : 30px;
-    line-height       : 30px;
-    height            : 30px;
-    transform         : rotate(0);
-    -webkit-transform : rotate(0);
-    transition        : transform .5s;
+    display: inline-block;
+    width: 30px;
+    line-height: 30px;
+    height: 30px;
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    transition: transform .5s;
     -webkit-transition: -webkit-transform .5s;
 
     &::before {
-      width : 20px;
+      width: 20px;
       height: 20px;
     }
 
     &.active {
-      transform        : rotate(90deg);
+      transform: rotate(90deg);
       -webkit-transform: rotate(90deg);
     }
   }
@@ -75,82 +75,106 @@
 
 /** main **/
 .ant-layout {
+  min-width: 1000px;
+  height: auto;
   .ant-layout-content {
     margin-top: 0 !important;
 
     .card-space {
       position: relative;
-      display         : block;
-      margin          : 5px;
-      padding         : 10px 10px 10px 20px;
-      margin-bottom   : 10px;
+      display: block;
+      margin: 5px;
+      padding: 10px 10px 10px 20px;
+      margin-bottom: 10px;
       background-color: #FFF;
-      border          : 1px solid #d5dde0;
-      box-shadow      : 0 4px 8px rgba(0, 0, 0, .1);
-      border-radius   : 10px;
-      .button-group{
+      border: 1px solid #d5dde0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+      border-radius: 10px;
+
+      .button-group {
         position: absolute;
         right: 10px;
       }
+
       .search-space {
-        display   : block;
+        display: block;
         text-align: right;
       }
 
+      .inquiry-wrapper{
+        .ant-form-item{
+          width: 31.5%;
+          margin: 5px 0;
+          .ant-form-item-label{
+            width: 30%;
+          }
+          .ant-form-item-control-wrapper{
+            width: 70%;
+          }
+        }
+      }
+
       .card-title {
-        height     : 40px;
+        height: 40px;
         line-height: 40px;
-        font-size  : @font-size-medium-x;
+        font-size: @font-size-medium-x;
         font-weight: 700;
-        color      : #ced4e2;
+        color: #ced4e2;
 
         &:before {
-          display         : inline-block;
-          content         : '';
-          width           : 2px;
-          height          : 20px;
+          display: inline-block;
+          content: '';
+          width: 2px;
+          height: 20px;
           background-color: #00c2de;
-          vertical-align  : -5px;
-          margin-right    : 10px;
+          vertical-align: -5px;
+          margin-right: 10px;
         }
       }
 
       .card-content {
         min-height: 300px;
-        .ant-col{
+
+        .ant-col {
           text-align: start;
         }
-        .ant-table-column-title{
+
+        .ant-table-column-title {
           font-weight: 400;
           color: #6F7479;
           font-size: 12px;
         }
-        .ant-table-thead > tr > th, 
-        .ant-table-tbody > tr > td {
+
+        .ant-table-thead>tr>th,
+        .ant-table-tbody>tr>td {
           padding: 10px 10px !important;
-          .span-link{
+
+          .span-link {
             color: @color-bule;
             cursor: pointer;
             margin-right: 4px;
             font-size: 12px;
           }
+
           img {
             max-width: 100%;
             max-height: 100;
             vertical-align: middle;
           }
         }
+
         .ant-empty {
           margin-top: 50px;
         }
 
         .ant-tabs {
           overflow: visible;
+
           .ant-tabs-bar {
             position: absolute;
             min-width: 300px;
             padding: 0px !important;
-            height : 36px;
+            height: 36px;
             right: 0;
             top: -42px;
 
@@ -159,19 +183,19 @@
 
               .ant-tabs-nav {
                 position: absolute;
-                right   : 0px;
+                right: 0px;
 
                 .ant-tabs-tab {
-                  margin     : 0px !important;
-                  height     : 34px !important;
+                  margin: 0px !important;
+                  height: 34px !important;
                   line-height: 32px;
-                  width      : 80px;
-                  text-align : center;
+                  width: 80px;
+                  text-align: center;
 
                   &.ant-tabs-tab-active {
-                    color           : #fff;
+                    color: #fff;
                     background-color: #1890ff;
-                    border-color    : #1890ff;
+                    border-color: #1890ff;
                   }
 
                   &:first-child {
@@ -197,22 +221,22 @@
   display: none;
 
   .loading {
-    position     : fixed;
-    top          : 50%;
-    left         : 50%;
-    transform    : translate(-50%, -50%);
-    padding      : 0 40px;
-    height       : 80px;
-    line-height  : 80px;
-    background   : rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 40px;
+    height: 80px;
+    line-height: 80px;
+    background: rgba(0, 0, 0, 0.75);
     border-radius: 6px;
-    text-align   : center;
-    z-index      : 9999;
-    font-size    : @font-size-small;
-    color        : #fff;
+    text-align: center;
+    z-index: 9999;
+    font-size: @font-size-small;
+    color: #fff;
 
     img {
-      width         : 32px;
+      width: 32px;
       vertical-align: middle;
     }
 
@@ -222,14 +246,14 @@
   }
 
   .overlay {
-    position  : fixed;
-    left      : 0;
-    right     : 0;
-    top       : 0;
-    bottom    : 0;
-    z-index   : 9998;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9998;
     background: rgb(255, 255, 255);
-    opacity   : 0.1;
+    opacity: 0.1;
   }
 }
 
@@ -238,18 +262,21 @@
 
 .ant-table-pagination.ant-pagination {
   float: left !important;
+
   .ant-select-selection-selected-value,
-  .ant-pagination-total-text{
+  .ant-pagination-total-text {
     font-size: 13px;
   }
-  .ant-pagination-prev, 
+
+  .ant-pagination-prev,
   .ant-pagination-item,
   .ant-pagination-next {
     min-width: 28px;
     height: 28px;
     line-height: 28px;
   }
-  .ant-select-selection-selected-value{
+
+  .ant-select-selection-selected-value {
     height: 30px;
     line-height: 24px;
   }

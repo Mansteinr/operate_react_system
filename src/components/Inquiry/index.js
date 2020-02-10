@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { Form, Button, DatePicker } from 'antd'
 import moment from 'moment'
+import Select from '../Selector'
 
 let FormItem = Form.Item, { RangePicker } = DatePicker
 class Inquiry extends Component {
@@ -39,11 +40,12 @@ class Inquiry extends Component {
     const { getFieldDecorator } = this.props.form, // 解构
           formList = this.props.formList,
           formItemList = [] //定义参数
-
+    console.log(formList, 'formListformListformList')
     if (formList && formList.length > 0) {
       formList.forEach(v => {
+        let FormItem = null
         if (v.type === 'DateRange') {
-          const DateRange = <FormItem label={ v.label } key={ v.field }>
+          formItemList.push(<FormItem label={v.label} key={v.field}>
             {
               getFieldDecorator('DateRange', {
                 initialValue: v.initialValue || [moment(+new Date() - 7 * 1000 * 24 * 3600), moment()]
@@ -61,21 +63,34 @@ class Inquiry extends Component {
                 />
               )
             }
-          </FormItem>
-          formItemList.push(DateRange)
+            </FormItem>)
+          
+        } else if (v.type === 'Select') {
+          formItemList.push(<FormItem label={ v.label } key= { v.field }>
+            {
+              getFieldDecorator( `${v.field}` , {
+                initialValue: v.data[0].value
+              })(
+                <Select data={ v.data } lable={ v.lable } value = { v.field }></Select>
+              )
+            }
+            </FormItem>)
         }
       })
     }
+    console.log(formItemList, 'formItemListformItemListformItemList')
     return formItemList
   }
 
-  render() {
+  render () {
     return (
       <Form layout="inline">
-        <div className="card-title"> { this.props.cardTitle || '查询条件' } </div>
-        {this.initFormList()}
+        <div className="card-title"> {this.props.cardTitle || '查询条件'} </div>
+        <div className="inquiry-wrapper">
+          { this.initFormList() }
+        </div>
         <FormItem className="search-space">
-          <Button type="primary" style={{ margin: '0 20px' }} onClick={this.handleFilterSubmit}>查询</Button>
+          <Button type="primary" style={{ margin: '0 20px' }} onClick={ this.handleFilterSubmit }>查询</Button>
           <Button onClick={this.reset}>重置</Button>
         </FormItem>
       </Form>

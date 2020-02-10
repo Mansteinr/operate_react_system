@@ -1,9 +1,9 @@
 
 import { connect } from 'react-redux'
-import Charts from '../../components/Charts'
-import TableUI from '../../components/Table'
-import InquiryUI from '../../components/Inquiry'
-import ContnentUI from '../../components/Content'
+import Charts from '@/components/Charts'
+import TableUI from '@/components/Table'
+import InquiryUI from '@/components/Inquiry'
+import ContnentUI from '@/components/Content'
 import React, { Component, Fragment } from 'react'
 import { renderTableFooter, sortOrderTable } from '@/utils'
 import { getUsageByDateAction, getUsageByCustomerAction } from './store/actionCreators'
@@ -215,7 +215,7 @@ class QueryIndex extends Component {
     return (
       <Fragment>
         <div className="card-space">
-          <InquiryUI formList={this.formList} filterSubmit={this.handleFilter} />
+          <InquiryUI formList={ this.formList } filterSubmit={this.handleFilter} />
         </div>
         {/* 渲染UsageByDate数据 */}
         <div className="card-space">
