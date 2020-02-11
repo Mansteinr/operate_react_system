@@ -3,7 +3,8 @@ import React, { Component, Fragment } from 'react'
 import InquiryUI from '@/components/Inquiry'
 import {
   getBaseCustomersAction,
-  getBaseBusinessTypesAction
+  getBaseBusinessTypesAction,
+  getBaseServicesAction
 } from '@/common/js/store/actionCreators'
 
 class queryUsage extends Component{
@@ -36,6 +37,13 @@ class queryUsage extends Component{
     selectDefault: 'customerId',
     selectText: 'customerName',
     placeholder: '请选择客户名称'
+  }, {
+    type: 'Select',
+    label: '接口类型',
+    field: 'serviceName',
+    selectDefault: 'serviceName',
+    selectText: 'serviceNameZh',
+    placeholder: '请选择接口类型'
   }]
   
      // 确认提交表单数据 子组件传递上来的
@@ -53,9 +61,14 @@ class queryUsage extends Component{
     )
   }
   componentDidMount () {
-    let { getBaseCustomersAction, getBaseBusinessTypesAction } = this.props
+    let {
+      getBaseCustomersAction,
+      getBaseBusinessTypesAction,
+      getBaseServicesAction
+    } = this.props
     getBaseBusinessTypesAction()
     getBaseCustomersAction()
+    getBaseServicesAction()
   }
 }
 
@@ -73,6 +86,9 @@ function mapDispatchToProps(dispatch) {
     },
     getBaseCustomersAction:  () => {
       dispatch(getBaseCustomersAction())
+    },
+    getBaseServicesAction:  () => {
+      dispatch(getBaseServicesAction())
     },
   }
     

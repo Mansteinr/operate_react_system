@@ -1,9 +1,9 @@
 // 查询组件
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Form, Button, DatePicker } from 'antd'
 import moment from 'moment'
 import Select from '../Selector'
+import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import { Form, Button, DatePicker } from 'antd'
 
 let FormItem = Form.Item, { RangePicker } = DatePicker
 class Inquiry extends Component {
@@ -120,6 +120,7 @@ function mapStateToProps (state) {
   return {
     loginNameList: state.getIn(['base', 'baseCustomersList']),
     businessTypeList: state.getIn(['base', 'baseBusinessTypesList']),
+    serviceNameList: state.getIn(['base', 'baseServiceList']),
   }
 }
 

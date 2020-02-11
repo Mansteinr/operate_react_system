@@ -23,7 +23,6 @@ export default class Axios {
     } else {
       opt = Object.assign(opt, {params: options.data})
     }
-    console.log(opt)
     return new Promise((reslove, reject) => {
       // 成功
       axios(opt).then(res => { // 成功并且返回码为1
