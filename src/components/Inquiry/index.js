@@ -74,13 +74,21 @@ class Inquiry extends Component {
         } else if (v.type === 'Select') {
           let data = this.props[`${v.field}List`] || []
 
+          if (v.isAll) {
+            data = [...[{
+              [ v.selectText ]: '全部',
+              [ v.selectLable ]: '',
+              [ v.selectDefault ]: '',
+            }], ...data]
+          }
+
           formItemList.push(<FormItem label={v.label} key={v.field}>
             {
               getFieldDecorator( `${v.field}` , {
                 initialValue:  data[0] ? data[0][v.selectDefault] : ''
               })(
                 <Select
-                  data={data}
+                  data={ data }
                   isAll = { v.isAll || false }
                   selectLable = { v.selectLable }
                   selectDefault = { v.selectDefault }

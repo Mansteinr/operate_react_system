@@ -37,7 +37,7 @@ class queryUsage extends Component{
     selectDefault: 'customerId',
     selectText: 'customerName',
     placeholder: '请选择客户名称'
-  }, {
+    }, {
     type: 'Select',
     label: '接口类型',
     field: 'serviceName',

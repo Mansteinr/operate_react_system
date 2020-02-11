@@ -35,15 +35,9 @@ class Selector extends Component{
 
   renderOption = (data) => {
     if(!data.length) return 
-    let { selectLable, selectDefault, selectText, isAll } =  this.props,
+    let { selectLable, selectDefault, selectText } =  this.props,
       optionList = []
-    if (isAll) {
-      data = [...[{
-            [selectText]: '全部',
-            [selectLable]: '',
-            [selectDefault]: '',
-          }], ...data]
-    }
+    
     data.map(v => {
       optionList.push(<Option title={ `${v[selectText]}(${v[selectLable] ||  v[selectDefault] })` } key ={ v[selectDefault] } value={ v[selectDefault] || v[selectLable] }> { v[selectText] } </Option>)
     })
@@ -51,11 +45,13 @@ class Selector extends Component{
   }
 
   render () {
-    let { data, showSearch, selectText } = this.props
+    let { data, showSearch, selectDefault } = this.props
+    
     return (
       <Select
-        onChange = { this.handleChange }
-        defaultValue= { data[0] ? data[0][selectText] : '' }
+        onChange={this.handleChange}
+        key = { data[0] ? data[0][selectDefault] : '' }
+        defaultValue= { data[0] ? data[0][selectDefault] : '' }
         showSearch = { showSearch || true }
         optionFilterProp="children"
         filterOption={ (input, option) => this.filterOption(input, option) }
