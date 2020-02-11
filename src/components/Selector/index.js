@@ -20,9 +20,16 @@ export default class Selector extends Component{
   }
 
   renderOption = (data) => {
-    let { selectLable, selectDefault, selectText } =  this.props
     if(!data.length) return 
-    let optionList = []
+    let { selectLable, selectDefault, selectText, isAll } =  this.props,
+      optionList = []
+    if (isAll) {
+      data = [...[{
+            [selectText]: '全部',
+            [selectLable]: '',
+            [selectDefault]: '',
+          }], ...data]
+    }
     data.map(v => {
       optionList.push(<Option title={ `${v[selectText]}(${v[selectLable] ||  v[selectDefault] })` } key ={ v[selectDefault] } value={ v[selectLable] || v[selectDefault] }> { v[selectText] } </Option>)
     })
@@ -31,7 +38,6 @@ export default class Selector extends Component{
 
   render () {
     let { data, showSearch, selectText } = this.props
-    console.log(data[0] ? data[0][selectText] : '')
     return (
       <Select
         onChange = { this.handleChange }

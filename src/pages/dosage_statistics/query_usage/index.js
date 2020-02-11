@@ -19,6 +19,7 @@ class queryUsage extends Component{
     lastName: 'end',
     formatter: 'YYYY-MM-DD'
   }, {
+    isAll: true,
     type: 'Select',
     label: '行业类型',
     showSearch: false,
@@ -27,6 +28,7 @@ class queryUsage extends Component{
     selectText: 'typeName',
     placeholder: '请选择行业类型'
   }, {
+    isAll: true,
     type: 'Select',
     label: '客户名称',
     field: 'loginName',
@@ -45,7 +47,7 @@ class queryUsage extends Component{
     return (
       <Fragment>
         <div className="card-space">
-          <InquiryUI testData = { this.props.baseBusinessTypesList } formList={ this.formList } filterSubmit={ this.handleFilter } />
+          <InquiryUI formList={ this.formList } filterSubmit={ this.handleFilter } />
         </div>
       </Fragment>
     )

@@ -80,7 +80,8 @@ class Inquiry extends Component {
                 initialValue:  data[0] ? data[0][v.selectDefault] : ''
               })(
                 <Select
-                  data={ data }
+                  data={data}
+                  isAll = { v.isAll || false }
                   selectLable = { v.selectLable }
                   selectDefault = { v.selectDefault }
                   selectText = { v.selectText }
