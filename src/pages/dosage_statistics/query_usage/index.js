@@ -1,9 +1,15 @@
 import { connect } from 'react-redux'
 import React, { Component, Fragment } from 'react'
 import InquiryUI from '@/components/Inquiry'
+import {
+  getBaseCustomersAction,
+  getBaseBusinessTypesAction
+} from '@/common/js/store/actionCreators'
 
 class queryUsage extends Component{
-  // 查询表单
+ 
+
+    // 查询表单
   formList = [{
     type: 'DateRange',
     label: '选择日期',
@@ -17,27 +23,18 @@ class queryUsage extends Component{
     label: '行业类型',
     showSearch: false,
     field: 'businessType',
-    placeholder: '请选择行业类型',
-    data:[{
-      lable: '全部',
-      value: ''
-    }, {
-      lable: '金融公司',
-      value: '0'
-    }, {
-      lable: '数据公司',
-      value: '1'
-    }, {
-      lable: '租车',
-      value: '2'
-    }, {
-      lable: '婚恋',
-      value: '3'
-    }, {
-      lable: '其他',
-      value: '4'
-    }]
-    }]
+    selectDefault: 'typeId',
+    selectText: 'typeName',
+    placeholder: '请选择行业类型'
+  }, {
+    type: 'Select',
+    label: '客户名称',
+    field: 'loginName',
+    selectLable: 'loginName',
+    selectDefault: 'customerId',
+    selectText: 'customerName',
+    placeholder: '请选择客户名称'
+  }]
   
      // 确认提交表单数据 子组件传递上来的
   handleFilter = (params) => {
@@ -48,21 +45,33 @@ class queryUsage extends Component{
     return (
       <Fragment>
         <div className="card-space">
-          <InquiryUI formList={ this.formList } filterSubmit={ this.handleFilter } />
+          <InquiryUI testData = { this.props.baseBusinessTypesList } formList={ this.formList } filterSubmit={ this.handleFilter } />
         </div>
       </Fragment>
-      
     )
+  }
+  componentDidMount () {
+    let { getBaseCustomersAction, getBaseBusinessTypesAction } = this.props
+    getBaseBusinessTypesAction()
+    getBaseCustomersAction()
   }
 }
 
 function mapStateToProps (state) {
   return {
+    baseCustomersList: state.getIn(['base', 'baseCustomersList']),
+    baseBusinessTypesList: state.getIn(['base', 'baseBusinessTypesList']),
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    getBaseBusinessTypesAction:  () => {
+      dispatch(getBaseBusinessTypesAction())
+    },
+    getBaseCustomersAction:  () => {
+      dispatch(getBaseCustomersAction())
+    },
   }
     
 }

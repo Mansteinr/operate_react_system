@@ -20,19 +20,22 @@ export default class Selector extends Component{
   }
 
   renderOption = (data) => {
+    let { selectLable, selectDefault, selectText } =  this.props
+    if(!data.length) return 
     let optionList = []
     data.map(v => {
-      optionList.push(<Option key ={ v.value || v.lable } value={ v.value }> { v.lable } </Option>)
+      optionList.push(<Option title={ `${v[selectText]}(${v[selectLable] ||  v[selectDefault] })` } key ={ v[selectDefault] } value={ v[selectLable] || v[selectDefault] }> { v[selectText] } </Option>)
     })
     return optionList
   }
 
   render () {
-    let { data, showSearch } =  this.props
+    let { data, showSearch, selectText } = this.props
+    console.log(data[0] ? data[0][selectText] : '')
     return (
       <Select
         onChange = { this.handleChange }
-        defaultValue= { data[2].value }
+        defaultValue= { data[0] ? data[0][selectText] : '' }
         showSearch = { showSearch || true }
         optionFilterProp="children"
         filterOption={ (input, option) => this.filterOption(input, option) }

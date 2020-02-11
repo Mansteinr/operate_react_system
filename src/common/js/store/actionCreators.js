@@ -1,20 +1,34 @@
 // 纯函数 直接在组件中调用
 
 import {
-  GET_CURSTOMERS_ACTION,
-  GET_CURSTOMERSLIST_ACTION
+  GET_BASEBUSINESSTYPES_ACTION,
+  GET_BASEBUSINESSTYPESLIST_ACTION,
+  GET_BASECURSTOMERS_ACTION,
+  GET_BASECURSTOMERSLIST_ACTION
 } from './actionTypes'
 
-export const getCustomersAction = (data) => {
+export const getBaseBusinessTypesAction = (data) => {
   return {
-    type: GET_CURSTOMERS_ACTION,
+    type: GET_BASEBUSINESSTYPES_ACTION
+  }
+}
+
+export const getBaseBusinessTypesListAction = (data) => {
+  return {
+    type: GET_BASEBUSINESSTYPESLIST_ACTION,
     data
   }
 }
 
-export const getCustomersListAction = (data) => {
+export const getBaseCustomersAction = () => {
   return {
-    type: GET_CURSTOMERSLIST_ACTION,
+    type: GET_BASECURSTOMERS_ACTION
+  }
+}
+
+export const getCBaseCustomersListAction = (data) => {
+  return {
+    type: GET_BASECURSTOMERSLIST_ACTION,
     data
   }
 }

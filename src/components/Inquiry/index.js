@@ -1,5 +1,6 @@
 // 查询组件
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Form, Button, DatePicker } from 'antd'
 import moment from 'moment'
 import Select from '../Selector'
@@ -14,7 +15,7 @@ class Inquiry extends Component {
 
   // 提交form表单参数
   handleFilterSubmit = () => {
-    let fieldsValue = this.props.form.getFieldsValue(), values = {}
+    let fieldsValue = this.props.form.getFieldsValue()
 
     this.props.formList.forEach(v => {
       if(v.type === 'DateRange') {
@@ -71,15 +72,20 @@ class Inquiry extends Component {
             </FormItem>)
           
         } else if (v.type === 'Select') {
+          let data = this.props[`${v.field}List`] || []
+
           formItemList.push(<FormItem label={v.label} key={v.field}>
             {
               getFieldDecorator( `${v.field}` , {
-                initialValue: v.data[0].value
+                initialValue:  data[0] ? data[0][v.selectDefault] : ''
               })(
                 <Select
-                  data={ v.data }
-                  showSearch={v.showSearch}
-                  formSelctorChange={this.selctorChange}></Select>
+                  data={ data }
+                  selectLable = { v.selectLable }
+                  selectDefault = { v.selectDefault }
+                  selectText = { v.selectText }
+                  showSearch={ v.showSearch }
+                  formSelctorChange={ this.selctorChange }/>
               )
             }
             </FormItem>)
@@ -105,4 +111,21 @@ class Inquiry extends Component {
   }
 }
 
-export default Form.create({})(Inquiry)
+const InquiryForm =  Form.create({})(Inquiry)
+
+
+
+function mapStateToProps (state) {
+  return {
+    loginNameList: state.getIn(['base', 'baseCustomersList']),
+    businessTypeList: state.getIn(['base', 'baseBusinessTypesList']),
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+  }
+    
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InquiryForm)

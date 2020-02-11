@@ -31,7 +31,6 @@ class NavLeft extends Component {
   }
 
   handleClick = (item, trueUrl) => {
-    console.log(item)
     let { getMenuItemAction, history } = this.props
     getMenuItemAction(item)
     history.push({ pathname: `/${trueUrl}`})
