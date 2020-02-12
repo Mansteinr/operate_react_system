@@ -12,18 +12,23 @@ const { Option } = Select
 
 class Selector extends Component{
 
-  handleChange = (value) => {
-    let { id, formSelctorChange,
+  handleChange = (value, option) => {
+    let {
+      id,
+      formSelctorChange,
+      getBaseServicesAction,
       changeBaseCustomersListAction,
-      getBaseServicesAction
     } = this.props
-    formSelctorChange(id, value)
     if (id === 'businessType') {
       changeBaseCustomersListAction(value)
+      formSelctorChange(id, value)
     } else if (id === 'loginName') {
       getBaseServicesAction({
-        customerId: value
+        customerId : value
       })
+      formSelctorChange(id, option.props['data-key'])
+    } else if (id === 'serviceName') {
+      formSelctorChange(id, value)
     }
   }
 
@@ -31,10 +36,7 @@ class Selector extends Component{
   filterOption = (input, option) => {
     if (!option) return
     let text = option.props.title.trim().toLowerCase(), searchValue = input.trim().toLowerCase()
-    console.log(text)
     return text.indexOf(searchValue) >= 0 || pinyin.getFullChars(text).toLowerCase().indexOf(searchValue) >= 0 || pinyin.getCamelChars(text).toLowerCase().indexOf(searchValue) >= 0
-    // return  text.indexOf(input) >= 0 || text.indexOf(input) >= 0 
-    // return  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
 
   renderOption = (data) => {

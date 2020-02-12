@@ -38,10 +38,6 @@ class Inquiry extends Component {
     })
   }
 
-  onChange = (date, dateString) => {
-    // console.log(dateString, date)
-  }
-
   // 渲染查询条件
   initFormList = () => {
     const { getFieldDecorator } = this.props.form, // 解构
@@ -65,7 +61,6 @@ class Inquiry extends Component {
                     '最近三个月': [moment(+new Date() - 90 * 1000 * 24 * 3600), moment().endOf('month')],
                     '全部': [moment('2017-03-15'), moment()]
                   }}
-                  onChange={this.onChange}
                 />
               )
             }
@@ -90,6 +85,7 @@ class Inquiry extends Component {
                 <Select
                   data={ data }
                   isAll = { v.isAll || false }
+                  labelInValue = { v.labelInValue || false }
                   selectLable = { v.selectLable }
                   selectDefault = { v.selectDefault }
                   selectText = { v.selectText }
@@ -122,8 +118,6 @@ class Inquiry extends Component {
 
 const InquiryForm =  Form.create({})(Inquiry)
 
-
-
 function mapStateToProps (state) {
   return {
     loginNameList: state.getIn(['base', 'baseCustomersList']),
@@ -133,8 +127,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-  }
+  return {}
     
 }
 
