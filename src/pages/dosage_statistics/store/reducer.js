@@ -1,7 +1,9 @@
 
 import {
   GET_USAGEBYDAtELIST_ACTION,
-  GET_USAGEBYCUSTOMERLIST_ACTION
+  GET_USAGEBYCUSTOMERLIST_ACTION,
+  GET_BALANCESNAPSHOTLIST_ACTION,
+  GET_CHARGELOGLIST_ACTION,
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
@@ -21,6 +23,11 @@ export function dosageStatisticsReducer (state = defaultState, action) {
       return state.set('UsageByDateList', action.data)
     case GET_USAGEBYCUSTOMERLIST_ACTION:
       return state.set('UsageByCustomerList', action.data)
+    case GET_BALANCESNAPSHOTLIST_ACTION:
+      return state.set('BalanceSnapshotList', action.data)
+    case GET_CHARGELOGLIST_ACTION:
+      console.log(action.data, 'chargeLogListchargeLogListchargeLogListchargeLogListchargeLogList')
+      return state.set('chargeLogList', action.data)
 		default:
 			return state
 	}

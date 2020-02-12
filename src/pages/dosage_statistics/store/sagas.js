@@ -8,8 +8,18 @@
 import { put, takeEvery, fork } from 'redux-saga/effects'
 import API from '@/config'
 import Axios from '@/axios'
-import { getUsageByDateListAction, getUsageByCustomerListAction } from './actionCreators'
-import { GET_USAGEBYDATE_ACTION  , GET_USAGEBYCUSTOMER_ACTION } from './actionTypes'
+import {
+  getUsageByDateListAction,
+  getUsageByCustomerListAction,
+  getBalanceSnapshotListAction,
+  getChargeLogListAction
+} from './actionCreators'
+import {
+  GET_USAGEBYDATE_ACTION,
+  GET_USAGEBYCUSTOMER_ACTION,
+  GET_BALANCESNAPSHOT_ACTION,
+  GET_CHARGELOG_ACTION
+} from './actionTypes'
 
 function* getUsageByDateList (prama) {
   const res = yield Axios.ajax({
@@ -36,7 +46,35 @@ function* UsageByCustomer () {
   yield takeEvery(GET_USAGEBYCUSTOMER_ACTION, getUsageByCustomerList)
 }
 
+// 余额快照
+function* getBalanceSnapshotList (prama) {
+  const res = yield Axios.ajax({
+    url: API.downApi.getBalanceSnapshot,
+    data: prama.data
+  })
+  yield put(getBalanceSnapshotListAction(res.resData))
+}
+
+function* BalanceSnapshot () {
+  yield takeEvery(GET_BALANCESNAPSHOT_ACTION, getBalanceSnapshotList)
+}
+// 余额快照 充值记录
+function* getChargeLogList (prama) {
+  const res = yield Axios.ajax({
+    url: `${API.downApi.chargeLog}/${prama.data}`,
+    data: prama.data,
+    method: 'get'
+  })
+  yield put(getChargeLogListAction(res.resData))
+}
+
+function* chargeLog () {
+  yield takeEvery(GET_CHARGELOG_ACTION, getChargeLogList)
+}
+
 export const dosageStatisticsSagas = [
   fork(UsageByDate),
-  fork(UsageByCustomer)
+  fork(UsageByCustomer),
+  fork(BalanceSnapshot),
+  fork(chargeLog),
 ]

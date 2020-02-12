@@ -65,6 +65,7 @@ class Header extends Component {
     return (
       <Tabs
         hideAdd
+        className="header-tabs"
         onChange={this.onChange}
         activeKey={this.state.activeKey}
         type="editable-card"

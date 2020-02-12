@@ -25,10 +25,10 @@ export default class Admin extends Component {
           <Header  onClick={this.toggle}>
             <span className={!this.state.collapsed? `iconfont icon-tubiaozhizuomoban` : 'iconfont icon-tubiaozhizuomoban active'}></span>
           </Header>
-          <NavLeft></NavLeft>
+          <NavLeft/>
         </Sider>
         <Layout>
-          <CustomerHeader></CustomerHeader>
+          <CustomerHeader/>
           <Content>
             {/* 路由 对应的是router.js中的结构 */}
             {this.props.children}

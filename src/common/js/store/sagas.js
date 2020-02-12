@@ -40,7 +40,6 @@ function* getCustomer () {
 }
 
 function* getServiceList (prama) {
-  console.log(prama, 'pramapramapramapramaprama')
   const res = yield Axios.ajax({
     url: API.upApi[prama.data && prama.data.customerId ? 'hasServices' : 'services'],
     data: prama.data

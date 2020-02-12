@@ -17,7 +17,7 @@ import {
 
 class queryUsage extends Component{
  
-    // 查询表单
+  // 查询表单
   formList = [{
     type: 'DateRange',
     label: '选择日期',
@@ -53,13 +53,13 @@ class queryUsage extends Component{
     placeholder: '请选择接口类型'
   }]
   
-     // 确认提交表单数据 子组件传递上来的
+  // 确认提交表单数据 子组件传递上来的
   handleFilter = (params) => {
     this.props.getUsageByDateAction(params)
   }
 
    // 渲染dom
-   renderUsageByDateChart = () => {
+  renderUsageByDateChart = () => {
     let option = {
       title: '总体情况-按日期统计',
       xAxisData: [],
@@ -88,66 +88,66 @@ class queryUsage extends Component{
   }
 
     // 渲染dom
-    renderUsageByDateTable = () => {
-      const data = this.props.UsageByDateList,
-        columns = [{
-          title: '使用日期',
-          dataIndex: 'dayTime',
-          render: (value, record, index) => {
-            return renderTableFooter({
-              value: value,
-              data,
-              index,
-              firstColumns: '总计',
-              target: 'dayTime'
-            })
-          }
-        }, {
-          title: '共计使用量',
-          dataIndex: 'usedCount',
-          sorter: (a, b) => {
-            return sortOrderTable(a, b, 'usedCount')
-          },
-          render: (value, record, index) => {
-            return renderTableFooter({
-              value,
-              data,
-              index,
-              target: 'usedCount'
-            })
-          }
-        }, {
-          title: '计费使用量',
-          dataIndex: 'downChargedCount',
-          sorter: (a, b) => {
-            return sortOrderTable(a, b, 'downChargedCount')
-          },
-          render: (value, record, index) => {
-            return renderTableFooter({
-              value,
-              data,
-              index,
-              target: 'downChargedCount'
-            })
-          }
-        }, {
-          title: '消费金额',
-          dataIndex: 'downCost',
-          sorter: (a, b) => {
-            return sortOrderTable(a, b, 'downCost')
-          },
-          render: (value, record, index) => {
-            return renderTableFooter({
-              value,
-              data,
-              index,
-              target: 'downCost',
-              toFixed: 4
-            })
-          }
-        }]
-      return <TableUI rowKey={'dayTime'} dataSource={ data } columns={ columns } />
-    }
+  renderUsageByDateTable = () => {
+    const data = this.props.UsageByDateList,
+    columns = [{
+      title: '使用日期',
+      dataIndex: 'dayTime',
+      render: (value, record, index) => {
+        return renderTableFooter({
+          value: value,
+          data,
+          index,
+          firstColumns: '总计',
+          target: 'dayTime'
+        })
+      }
+    }, {
+      title: '共计使用量',
+      dataIndex: 'usedCount',
+      sorter: (a, b) => {
+        return sortOrderTable(a, b, 'usedCount')
+      },
+      render: (value, record, index) => {
+        return renderTableFooter({
+          value,
+          data,
+          index,
+          target: 'usedCount'
+        })
+      }
+    }, {
+      title: '计费使用量',
+      dataIndex: 'downChargedCount',
+      sorter: (a, b) => {
+        return sortOrderTable(a, b, 'downChargedCount')
+      },
+      render: (value, record, index) => {
+        return renderTableFooter({
+          value,
+          data,
+          index,
+          target: 'downChargedCount'
+        })
+      }
+    }, {
+      title: '消费金额',
+      dataIndex: 'downCost',
+      sorter: (a, b) => {
+        return sortOrderTable(a, b, 'downCost')
+      },
+      render: (value, record, index) => {
+        return renderTableFooter({
+          value,
+          data,
+          index,
+          target: 'downCost',
+          toFixed: 4
+        })
+      }
+    }]
+    return <TableUI rowKey={'dayTime'} dataSource={ data } columns={ columns } />
+  }
   
   render () {
     const { UsageByDateList } = this.props
@@ -157,7 +157,7 @@ class queryUsage extends Component{
           <InquiryUI formList={ this.formList } filterSubmit={ this.handleFilter } />
         </div>
         <div className="card-space">
-        <ContnentUI
+          <ContnentUI
             data={ UsageByDateList }
             renderChartFun={ this.renderUsageByDateChart }
             renderTableFun={ this.renderUsageByDateTable } />
@@ -196,9 +196,8 @@ function mapDispatchToProps(dispatch) {
     },
     getUsageByDateAction:  (data) => {
       dispatch(getUsageByDateAction(data))
-    },
+    }
   }
-    
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(queryUsage)

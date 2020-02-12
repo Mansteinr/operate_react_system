@@ -33,6 +33,7 @@ class Inquiry extends Component {
   }
 
   selctorChange = (key, data) => {
+    console.log(key, data, 'key, datakey, data')
     this.props.form.setFieldsValue({
       [key]: data
     })
@@ -68,7 +69,6 @@ class Inquiry extends Component {
           
         } else if (v.type === 'Select') {
           let data = this.props[`${v.field}List`] || []
-
           if (v.isAll) {
             data = [...[{
               [ v.selectText ]: '全部',

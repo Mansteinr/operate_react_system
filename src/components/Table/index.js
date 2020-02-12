@@ -23,7 +23,10 @@ export default class TableUI extends Component {
           }
         }}
 
-        rowKey={ `${this.props.rowKey}` }
+        rowKey={(record) => {
+          // 防止rowKey有重复的
+          return `${record[this.props.rowKey]}${Math.random()}`
+        } }
         columns={ this.props.columns }
         dataSource={ this.props.dataSource }
       />

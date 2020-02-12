@@ -70,6 +70,7 @@ class Selector extends Component{
 
 function mapStateToProps (state) {
   return {
+    // serviceNameList: state.getIn(['base', 'baseServiceList']),
     loginNameList: state.getIn(['base', 'baseCustomersList']),
     businessTypeList: state.getIn(['base', 'baseBusinessTypesList']),
   }
