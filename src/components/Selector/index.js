@@ -29,8 +29,12 @@ class Selector extends Component{
 
   // 筛选
   filterOption = (input, option) => {
-    if(!option) return
-    return  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    if (!option) return
+    let text = option.props.title.trim().toLowerCase(), searchValue = input.trim().toLowerCase()
+    console.log(text)
+    return text.indexOf(searchValue) >= 0 || pinyin.getFullChars(text).toLowerCase().indexOf(searchValue) >= 0 || pinyin.getCamelChars(text).toLowerCase().indexOf(searchValue) >= 0
+    // return  text.indexOf(input) >= 0 || text.indexOf(input) >= 0 
+    // return  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
 
   renderOption = (data) => {
@@ -39,7 +43,7 @@ class Selector extends Component{
       optionList = []
     
     data.map(v => {
-      optionList.push(<Option title={ `${v[selectText]}(${v[selectLable] ||  v[selectDefault] })` } key ={ v[selectDefault] } value={ v[selectDefault] || v[selectLable] }> { v[selectText] } </Option>)
+      optionList.push(<Option data-key={`${v[selectLable] ||  v[selectDefault] }`} title={ `${v[selectText]}(${v[selectLable] ||  v[selectDefault] })` } key ={ v[selectDefault] } value={v[selectDefault]||v[selectLable]}>{v[selectText]}</Option>)
     })
     return optionList
   }

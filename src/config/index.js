@@ -51,7 +51,7 @@ const api = {
     projectchoose: apiFormat('boss2-0-web/rbac-web/choose.html', 'rbacweb', mode === 'production' ? 'https' : 'http'),
     loginchannel: apiFormat('boss2-0-web/rbac-web/loginChannel.html', 'rbacweb', mode === 'production' ? 'https' : 'http'),
     imageapi: baseConfig[mode].imageapi,
-    localMTK: '3e49c529-a493-4827-953a-c565b6f885b8'
+    localMTK: '4c392788-2815-4a9f-979b-ffb6b914f15b'
   },
   upApi: {
     /*！能力域api*/
