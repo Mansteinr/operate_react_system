@@ -11,12 +11,14 @@ import Axios from '@/axios'
 import {
   getBalanceSnapshotListAction,
   getChargeLogListAction,
-  getOutServiceChargeInfoBySupplierListAction
+  getOutServiceChargeInfoBySupplierListAction,
+  getUsageByNameListAction
 } from './actionCreators'
 import {
   GET_BALANCESNAPSHOT_ACTION,
   GET_CHARGELOG_ACTION,
-  GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION
+  GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION,
+  GET_USAGEBUNAME_ACTION
 } from './actionTypes'
 
 // 余额快照
@@ -59,8 +61,22 @@ function* getOutServiceChargeInfoBySupplierList (prama) {
 function* getOutServiceChargeInfoBySupplier () {
   yield takeEvery(GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION, getOutServiceChargeInfoBySupplierList)
 }
+
+// 按供客户分析
+function* getUsageBtyNameList (prama) {
+  const res = yield Axios.ajax({
+    url: API.downApi.UsageByName,
+    data: prama.data
+  })
+  yield put(getUsageByNameListAction(res.resData))
+}
+
+function* getUsageBtyName () {
+  yield takeEvery(GET_USAGEBUNAME_ACTION, getUsageBtyNameList)
+}
 export const dosageStatisticsSagas = [
   fork(BalanceSnapshot),
   fork(chargeLog),
   fork(getOutServiceChargeInfoBySupplier),
+  fork(getUsageBtyName),
 ]

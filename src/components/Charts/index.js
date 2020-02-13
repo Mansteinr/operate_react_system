@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
-import { setLineData, renderChart } from '../../common/js/myCharts'
+import { setLineData, renderChart } from '@/common/js/myCharts'
 export default class Charts extends Component {
 
   componentDidMount () {
     // 绘制图表
     renderChart(this.refs.chart, setLineData(this.props.option))
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // 绘制图表
-    return  renderChart(this.refs.chart, setLineData(this.props.option))
   }
 
   render() {

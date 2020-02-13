@@ -201,6 +201,81 @@ export function setLineData(opt) {
   return options
 }
 
+export function setRadiiData (title, tipTitle, obj) {
+  var legendData = [], seriesData = [];
+  for (var key in obj) {
+    legendData.push(key);
+    var _obj = {};
+    _obj.value = obj[key];
+    _obj.name = key;
+    seriesData.push(_obj);
+  }
+  var option = {
+    title: {
+      text: title,
+      x: 'center'
+    },
+    tooltip: {
+      trigger: 'item',
+      bordeRadius: 4,
+      borderWidth: 1,
+      borderColor: 'rgba(0,0,0,0.2)',
+      backgroundColor: 'rgba(255,255,255,0.9)',
+      padding: 0,
+      formatter: function (params) {
+        let color = "#757b90";
+        var a = ''
+        a += "<div style='background-color:" + color + ";padding: 5px 10px;border:0;marging-top:1px;text-align:center;color:white;font-size: 14px;'>" + params.seriesName + "</div>";
+        a += "<div style='padding:5px;color:#36383c;font-size: 14px;'>";
+        a += "<span style='margin-right:5px;display: inline-block;display: inline-block; height:10px;width: 10px;border: 2px solid " + params.color + ";border-radius: 50%;'/></span>" + params.name + "  :  " + (Number.isInteger(params.value) ? params.value : Math.round(params.value * 100) / 100) + "(" + params.percent + "%)";
+        a += "</div>";
+        return a;
+      },
+      textStyle: {
+        fontSize: 15,
+        color: "#fff",
+      },
+      axisPointer: {
+        lineStyle: {
+          color: '#00c1de'
+        }
+      }
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      data: legendData,
+      itemStyle: {
+        normal: {
+          opacity: 0.5
+        }
+      }
+    },
+    toolbox: toolbox,
+    series: [{
+      name: tipTitle,
+      type: 'pie',
+      radius: ['40%', '70%'],
+      center: ['50%', '60%'],
+      data: seriesData,
+      itemStyle: {
+        emphasis: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        }
+      }
+    }],
+    color: ['rgba(0, 175, 159,.5)', 'rgba(41, 168, 227,.5)', 'rgba(53, 117, 88,.5)', 'rgba(221, 129, 187,.5)', 'rgba(120, 208, 123,.5)', 'rgba(119, 146, 202,.5)', 'rgba(155, 141, 175,.5)', 'rgba(215, 191, 110,.5)', 'rgba(125, 193, 213,.5)', 'rgba(133, 137, 184,.5)']
+  };
+
+  if (window.innerWidth < 480) {
+    delete option.legend;
+    delete option.toolbox;
+  }
+  return option;
+}
+
 export function renderChart(container, option) {
   var myChart = echarts.init(container),
     DOMs = document.getElementsByClassName('card-content')

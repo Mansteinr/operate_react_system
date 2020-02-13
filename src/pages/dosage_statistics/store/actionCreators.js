@@ -6,7 +6,9 @@ import {
   GET_CHARGELOG_ACTION,
   GET_CHARGELOGLIST_ACTION,
   GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION,
-  GET_OUTSERVICECHARGEINFOBYSUPPLIERLIST_ACTION
+  GET_OUTSERVICECHARGEINFOBYSUPPLIERLIST_ACTION,
+  GET_USAGEBUNAME_ACTION,
+  GET_USAGEBUNAMELIST_ACTION
 } from './actionTypes'
 
 // 余额快照
@@ -49,6 +51,20 @@ export const getOutServiceChargeInfoBySupplierAction = (data) => {
 export const getOutServiceChargeInfoBySupplierListAction = (data) => {
   return {
     type: GET_OUTSERVICECHARGEINFOBYSUPPLIERLIST_ACTION,
+    data
+  }
+}
+// 按供客户分析
+export const getUsageByNameAction = (data) => {
+  return {
+    type: GET_USAGEBUNAME_ACTION,
+    data
+  }
+}
+
+export const getUsageByNameListAction = (data) => {
+  return {
+    type: GET_USAGEBUNAMELIST_ACTION,
     data
   }
 }

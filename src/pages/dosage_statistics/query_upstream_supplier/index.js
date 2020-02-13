@@ -181,7 +181,6 @@ class queryUpstreamSupplier extends Component{
       })
      }
     option.xAxisData = nuqinexFild
-    console.log(option, finalArr,'optionoptionoptionoptionoptionoptionoptionoption')
     return <Charts option={option} />
   }
 

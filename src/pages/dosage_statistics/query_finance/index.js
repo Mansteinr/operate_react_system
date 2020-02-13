@@ -28,9 +28,9 @@ class queryFinance extends Component{
       type: 'Select',
       mode: '',
       isAll: false,
-      notRequestService: true,
       label: '客户名称',
       field: 'loginName',
+      notRequestService: true,
       selectDefault: 'loginName',
       selectText: 'customerName',
       placeholder: '请选择客户名称'
@@ -164,7 +164,6 @@ class queryFinance extends Component{
 
   render () {
     let { BalanceSnapshotList, chargeLogList } = this.props
-    console.log(this.state, 'BalanceSnapshotListBalanceSnapshotListBalanceSnapshotList')
     return (
       <Fragment>
         <div className="card-space">
