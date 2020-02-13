@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
+import Charts from '@/components/Charts'
 import TableUI from '@/components/Table'
 import InquiryUI from '@/components/Inquiry'
 import ContnentUI from '@/components/Content'
 import React, { Component, Fragment } from 'react'
 import { renderTableFooter, sortOrderTable } from '@/utils'
 import {
-  getBalanceSnapshotAction,
-  getChargeLogAction
+  getOutServiceChargeInfoBySupplierAction
 } from '@/pages/dosage_statistics/store/actionCreators'
 import {
   getSupplierAction
@@ -33,91 +33,189 @@ class queryUpstreamSupplier extends Component{
 
   // 确认提交表单数据 子组件传递上来的
   handleFilter = (params) => {
-    let { getBalanceSnapshotAction, getChargeLogAction } = this.props, loginName = params.loginName
-    
-    params.loginNames = [params.loginName]
-    delete params.loginName
-    getBalanceSnapshotAction(params)
-    getChargeLogAction(loginName)
+    let { getOutServiceChargeInfoBySupplierAction } = this.props
+    getOutServiceChargeInfoBySupplierAction(params)
   }
 
-  renderBalanceSnapshotTable = () => {
-    const data = this.props.BalanceSnapshotList,
+  renderChargeInfoBySupplierTable = () => {
+    let data = this.props.dayCompanyList,
       columns = [{
-        title: '时间',
-        dataIndex: 'dateTime',
+        title: '供应商名称',
+        dataIndex: 'company',
         render: (value, record, index) => {
           return renderTableFooter({
             value: value,
             data,
             index,
             firstColumns: '总计',
+            target: 'company'
+          })
+        }
+      }, {
+        title: '时间',
+        dataIndex: 'dayTime',
+        sorter: (a, b) => {
+          return sortOrderTable(a, b, 'dayTime')
+        },
+        render: (value, record, index) => {
+          return renderTableFooter({
+            value: value,
+            data,
+            index,
+            firstColumns: '-',
             target: 'dayTime'
           })
         }
       }, {
-        title: '余额',
-        dataIndex: 'balance',
+        title: '服务名称',
+        dataIndex: 'serviceNameZh',
         sorter: (a, b) => {
-          return sortOrderTable(a, b, 'balance')
+          return sortOrderTable(a, b, 'serviceNameZh')
         },
         render: (value, record, index) => {
           return renderTableFooter({
-            value: value,
+            value: `${value}(${record.serviceName})`,
             data,
             index,
-            target: 'balance'
+            firstColumns: '-',
+            target: 'serviceNameZh'
           })
         }
       }, {
-        title: '差额',
-        dataIndex: 'diffValue',
+        title: '调用条数',
+        dataIndex: 'usedCount',
         sorter: (a, b) => {
-          return sortOrderTable(a, b, 'diffValue')
+          return sortOrderTable(a, b, 'usedCount')
         },
         render: (value, record, index) => {
           return renderTableFooter({
             value: value,
             data,
             index,
-            target: 'diffValue'
+            target: 'usedCount'
+          })
+        }
+      }, {
+        title: '计费调用量',
+        dataIndex: 'chargeUsedCount',
+        sorter: (a, b) => {
+          return sortOrderTable(a, b, 'chargeUsedCount')
+        },
+        render: (value, record, index) => {
+          return renderTableFooter({
+            value: value,
+            data,
+            index,
+            target: 'chargeUsedCount'
+          })
+        }
+      }, {
+        title: '不计费调用量',
+        dataIndex: '',
+        sorter: (a, b) => {
+          return sortOrderTable(a, b, 'chargeUsedCount')
+        },
+        render: (value, record, index) => {
+          return record.usedCount - value
+        }
+      }, {
+        title: '小视入账',
+        dataIndex: 'cost',
+        sorter: (a, b) => {
+          return sortOrderTable(a, b, 'cost')
+        },
+        render: (value, record, index) => {
+          return renderTableFooter({
+            value: value,
+            data,
+            index,
+            target: 'cost'
           })
         }
       }]
     return <TableUI rowKey={'dateTime'} dataSource={ data } columns={ columns } />
   }
 
-  renderChargeLogTable = () => {
-    const data = this.props.chargeLogList,
+  renderChargeInfoBySupplierChart = () => {
+    let data = this.props.dayCompanyList,
+    option = {
+      title: '总体情况-按日期统计',
+      xAxisData: [],
+      series: []
+    }, xFiled = {}, finalArr = {} // 将所有的服务名都存储在该对象中
+    // 组装参数
+    data.forEach(v => {
+      if (!finalArr[v.serviceName]) { // 检测该服务名是否已经存储在finalArr中 否则存  反之不存
+        finalArr[v.serviceName] = {
+          name: v.serviceNameZh,
+          dataArr: []
+        }
+      }
+      if(xFiled[v.dayTime]) { // 如果日期存在 则将对应的服务名机器对应的使用量生产key value
+        xFiled[v.dayTime][v.serviceName] = v.usedCount
+      } else {
+        xFiled[v.dayTime] = {} // //如果日期不存在  则生成一个空对象 
+        xFiled[v.dayTime][v.serviceName] = v.usedCount // 再将对应的服务名及对应的使用量生成key value
+      }
+     
+    })
+
+    let nuqinexFild = [] // 去重x轴
+
+    for (let k in xFiled) { // 循环xFiled中的每一项 
+      nuqinexFild.push(k)
+      for (let k1 in finalArr) { // 循环finalArr中的每一项 
+        if (xFiled[k][k1]) { 
+          finalArr[k1].dataArr.push(xFiled[k][k1])
+        } else {
+           finalArr[k1].dataArr.push(0)
+        }
+      }
+    }
+    
+    for (let key in finalArr) {
+      option.series.push({
+        name: finalArr[key].name,
+        type: 'line',
+        data: finalArr[key].dataArr
+      })
+     }
+    option.xAxisData = nuqinexFild
+    console.log(option, finalArr,'optionoptionoptionoptionoptionoptionoptionoption')
+    return <Charts option={option} />
+  }
+
+  renderServiceBySupplierTable = () => {
+    let data = this.props.serviceCompanyList,
       columns = [{
-        title: '充值时间',
-        dataIndex: 'dateTime',
-        sorter: (a, b) => {
-          return sortOrderTable(a, b, 'dateTime')
+        title: '供应商名称',
+        dataIndex: 'company'
+      }, {
+        title: '服务名称',
+        dataIndex: 'serviceNameZh',
+        render: (value, record, index) => {
+          return `${value}(${record['serviceName']})`
         }
       }, {
-        title: '当前余额',
-        dataIndex: 'curBalance',
+        title: '调用总量（条）',
+        dataIndex: 'usedCount',
         sorter: (a, b) => {
-          return sortOrderTable(a, b, 'curBalance')
+          return sortOrderTable(a, b, 'usedCount')
         }
       }, {
-        title: '实充金额',
-        dataIndex: 'actualRechargeAmount',
+        title: '计费调用量（条）',
+        dataIndex: 'chargeUsedCount',
         sorter: (a, b) => {
-          return sortOrderTable(a, b, 'actualRechargeAmount')
+          return sortOrderTable(a, b, 'chargeUsedCount')
         }
       }, {
-        title: '附加充值金额',
-        dataIndex: 'extRechargeAmount',
-        sorter: (a, b) => {
-          return sortOrderTable(a, b, 'extRechargeAmount')
-        }
-      }, {
-        title: '包年包月充值金额',
-        dataIndex: 'packRechargeAmount',
+        title: '不计费调用量（条）',
+        dataIndex: '',
         sorter: (a, b) => {
           return sortOrderTable(a, b, 'packRechargeAmount')
+        },
+        render: (value, record, index) => {
+          return  record.usedCount - record.chargeUsedCount
         }
       }, {
         title: '充前金额',
@@ -137,12 +235,13 @@ class queryUpstreamSupplier extends Component{
         sorter: (a, b) => {
           return sortOrderTable(a, b, 'remark')
         }
-    }]
-    return <TableUI rowKey={'dateTime'} dataSource={ data } columns={ columns } />
+      }]
+    console.log('renderServiceBySupplierTablerenderServiceBySupplierTablerenderServiceBySupplierTablerenderServiceBySupplierTablerenderServiceBySupplierTable')
+    return <TableUI rowKey={'company'} dataSource={ data } columns={ columns } />
   }
 
   render () {
-    let { BalanceSnapshotList, chargeLogList } = this.props
+    const { dayCompanyList, serviceCompanyList } = this.props
     return (
       <Fragment>
         <div className="card-space">
@@ -150,15 +249,14 @@ class queryUpstreamSupplier extends Component{
         </div>
         <div className="card-space">
           <ContnentUI
-            title="余额快照"
-            data={ BalanceSnapshotList }
-            renderTableFun={ this.renderBalanceSnapshotTable } />
+            data={ dayCompanyList }
+            renderChartFun={ this.renderChargeInfoBySupplierChart }
+            renderTableFun={ this.renderChargeInfoBySupplierTable } />
         </div>
         <div className="card-space">
           <ContnentUI
-            title="充值记录"
-            data={ chargeLogList }
-            renderTableFun={ this.renderChargeLogTable } />
+            data={ serviceCompanyList }
+            renderTableFun={ this.renderServiceBySupplierTable } />
         </div>
       </Fragment>
     )
@@ -171,13 +269,16 @@ class queryUpstreamSupplier extends Component{
 
 function mapStateToProps (state) {
   return {
-    supplierList: state.getIn(['base', 'supplierList'])
+    supplierList: state.getIn(['base', 'supplierList']),
+    dayCompanyList: state.getIn(['dosageStatistics', 'outServiceChargeInfoBySupplierList', 'dayCompanyList']),
+    serviceCompanyList: state.getIn(['dosageStatistics', 'outServiceChargeInfoBySupplierList', 'serviceCompanyList'])
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getSupplierAction: () => dispatch(getSupplierAction())
+    getOutServiceChargeInfoBySupplierAction: (data) => dispatch(getOutServiceChargeInfoBySupplierAction(data)),
+    getSupplierAction: () => dispatch(getSupplierAction()),
   }
 }
 

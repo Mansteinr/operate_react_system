@@ -25,7 +25,7 @@ class oneClickLogin extends Component {
       columns = [{
         title: '客户名称',
         dataIndex: 'loginName'
-      },{
+      }, {
         title: '操作',
         render: (value, record, index) => <span onClick={() => this.handleClick(value)} className="span-link">详情</span>
       }]

@@ -9,42 +9,15 @@ import { put, takeEvery, fork } from 'redux-saga/effects'
 import API from '@/config'
 import Axios from '@/axios'
 import {
-  getUsageByDateListAction,
-  getUsageByCustomerListAction,
   getBalanceSnapshotListAction,
-  getChargeLogListAction
+  getChargeLogListAction,
+  getOutServiceChargeInfoBySupplierListAction
 } from './actionCreators'
 import {
-  GET_USAGEBYDATE_ACTION,
-  GET_USAGEBYCUSTOMER_ACTION,
   GET_BALANCESNAPSHOT_ACTION,
-  GET_CHARGELOG_ACTION
+  GET_CHARGELOG_ACTION,
+  GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION
 } from './actionTypes'
-
-function* getUsageByDateList (prama) {
-  const res = yield Axios.ajax({
-    url: API.downApi.UsageByDate,
-    data: prama.data
-  })
-  yield put(getUsageByDateListAction(res.resData))
-}
-
-function* getUsageByCustomerList (prama) {
-  const res = yield Axios.ajax({
-    url: API.downApi.UsageByCustomer,
-    data: prama.data
-  })
-  yield put(getUsageByCustomerListAction(res.resData))
-}
-
-
-// generator 函数
-function* UsageByDate () {
-  yield takeEvery(GET_USAGEBYDATE_ACTION, getUsageByDateList)
-}
-function* UsageByCustomer () {
-  yield takeEvery(GET_USAGEBYCUSTOMER_ACTION, getUsageByCustomerList)
-}
 
 // 余额快照
 function* getBalanceSnapshotList (prama) {
@@ -74,10 +47,20 @@ function* getChargeLogList (prama) {
 function* chargeLog () {
   yield takeEvery(GET_CHARGELOG_ACTION, getChargeLogList)
 }
+// 按供应商分析
+function* getOutServiceChargeInfoBySupplierList (prama) {
+  const res = yield Axios.ajax({
+    url: API.upApi.getOutServiceChargeInfoBySupplier,
+    data: prama.data
+  })
+  yield put(getOutServiceChargeInfoBySupplierListAction(res.resData))
+}
 
+function* getOutServiceChargeInfoBySupplier () {
+  yield takeEvery(GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION, getOutServiceChargeInfoBySupplierList)
+}
 export const dosageStatisticsSagas = [
-  fork(UsageByDate),
-  fork(UsageByCustomer),
   fork(BalanceSnapshot),
   fork(chargeLog),
+  fork(getOutServiceChargeInfoBySupplier),
 ]

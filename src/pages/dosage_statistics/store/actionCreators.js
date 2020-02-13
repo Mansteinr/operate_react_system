@@ -1,43 +1,13 @@
 // 纯函数 直接在组件中调用
 
 import {
-  GET_USAGEBYDAtELIST_ACTION,
-  GET_USAGEBYCUSTOMER_ACTION,
-  GET_USAGEBYDATE_ACTION,
-  GET_USAGEBYCUSTOMERLIST_ACTION,
   GET_BALANCESNAPSHOT_ACTION,
   GET_BALANCESNAPSHOTLIST_ACTION,
   GET_CHARGELOG_ACTION,
   GET_CHARGELOGLIST_ACTION,
+  GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION,
+  GET_OUTSERVICECHARGEINFOBYSUPPLIERLIST_ACTION
 } from './actionTypes'
-
-export const getUsageByDateListAction = (data) => {
-  return {
-    type: GET_USAGEBYDAtELIST_ACTION,
-    data
-  }
-}
-
-export const getUsageByCustomerListAction = (data) => {
-  return {
-    type: GET_USAGEBYCUSTOMERLIST_ACTION,
-    data
-  }
-}
-
-export const getUsageByCustomerAction = (data) => {
-  return {
-    type: GET_USAGEBYCUSTOMER_ACTION,
-    data
-  }
-}
-
-export const getUsageByDateAction = (data) => {
-  return {
-    type: GET_USAGEBYDATE_ACTION,
-    data
-  }
-}
 
 // 余额快照
 export const getBalanceSnapshotAction = (data) => {
@@ -64,6 +34,21 @@ export const getChargeLogAction = (data) => {
 export const getChargeLogListAction = (data) => {
   return {
     type: GET_CHARGELOGLIST_ACTION,
+    data
+  }
+}
+
+// 按供应商分析
+export const getOutServiceChargeInfoBySupplierAction = (data) => {
+  return {
+    type: GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION,
+    data
+  }
+}
+
+export const getOutServiceChargeInfoBySupplierListAction = (data) => {
+  return {
+    type: GET_OUTSERVICECHARGEINFOBYSUPPLIERLIST_ACTION,
     data
   }
 }

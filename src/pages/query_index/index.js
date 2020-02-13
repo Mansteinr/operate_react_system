@@ -140,7 +140,6 @@ class QueryIndex extends Component {
       }]
     return <TableUI rowKey={'dayTime'} dataSource={ data } columns={ columns } />
   }
-
   
   renderUsageByCustomerTable = () => {
     const data = this.props.UsageByCustomerList,
