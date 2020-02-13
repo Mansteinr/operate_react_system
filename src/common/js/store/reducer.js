@@ -3,7 +3,9 @@ import {
   GET_BASECURSTOMERSLIST_ACTION,
   GET_BASEBUSINESSTYPESLIST_ACTION,
   CHANGE_BASECURSTOMERSLIST_ACTION,
-  GET_BASESERVICESLIST_ACTION
+  GET_BASESERVICESLIST_ACTION,
+  GET_SUPPLIERLIST_ACTION,
+  CHANGE_DATERANGE_ACTION
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
@@ -24,6 +26,10 @@ export function baseReducer (state = defaultState, action) {
       return state.set('baseBusinessTypesList', action.data)
     case GET_BASESERVICESLIST_ACTION:
       return state.set('baseServiceList', action.data)
+    case GET_SUPPLIERLIST_ACTION:
+      return state.set('supplierList', action.data)
+    case CHANGE_DATERANGE_ACTION:
+      return state.set('changeDate', action.data)
     case CHANGE_BASECURSTOMERSLIST_ACTION:
       let data = state.getIn(['baseCustomersList']), arrData = []
       

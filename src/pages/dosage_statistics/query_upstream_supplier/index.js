@@ -9,33 +9,27 @@ import {
   getChargeLogAction
 } from '@/pages/dosage_statistics/store/actionCreators'
 import {
-  getBaseCustomersAction
+  getSupplierAction
 } from '@/common/js/store/actionCreators'
 
 
-class queryFinance extends Component{
+class queryUpstreamSupplier extends Component{
+
   // 查询表单
-  state = {
-    formList: [{
-      type: 'DateRange',
-      label: '选择日期',
-      field: 'DateRange',
-      placeholder: '请选择日期',
-      firstName: 'start',
-      lastName: 'end',
-      formatter: 'YYYY-MM-DD'
-    }, {
-      type: 'Select',
-      mode: '',
-      isAll: false,
-      notRequestService: true,
-      label: '客户名称',
-      field: 'loginName',
-      selectDefault: 'loginName',
-      selectText: 'customerName',
-      placeholder: '请选择客户名称'
-    }]
-  }
+  formList = [{
+    type: 'DateRange',
+    label: '选择日期',
+    field: 'DateRange',
+    placeholder: '请选择日期',
+    firstName: 'start',
+    lastName: 'end',
+    formatter: 'YYYY-MM-DD'
+  }, {
+    type: 'Select',
+    label: '供应商名称',
+    field: 'companyName',
+    placeholder: '请选择供应商名称'
+  }]
 
   // 确认提交表单数据 子组件传递上来的
   handleFilter = (params) => {
@@ -44,9 +38,7 @@ class queryFinance extends Component{
     params.loginNames = [params.loginName]
     delete params.loginName
     getBalanceSnapshotAction(params)
-    if (!this.state.formList[1].isAll) {
-      getChargeLogAction(loginName)
-    }
+    getChargeLogAction(loginName)
   }
 
   renderBalanceSnapshotTable = () => {
@@ -149,26 +141,12 @@ class queryFinance extends Component{
     return <TableUI rowKey={'dateTime'} dataSource={ data } columns={ columns } />
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    if (nextProps.changeDate) {
-      if (nextProps.changeDate[0] === nextProps.changeDate[1]) {
-        nextState.formList[1].mode = 'multiple'
-        nextState.formList[1].isAll = true
-      } else {
-        nextState.formList[1].mode = ''
-        nextState.formList[1].isAll = false
-      }
-    }
-    return true
-  }
-
   render () {
     let { BalanceSnapshotList, chargeLogList } = this.props
-    console.log(this.state, 'BalanceSnapshotListBalanceSnapshotListBalanceSnapshotList')
     return (
       <Fragment>
         <div className="card-space">
-          <InquiryUI formList={ this.state.formList } filterSubmit={ this.handleFilter } />
+          <InquiryUI formList={ this.formList } filterSubmit={ this.handleFilter } />
         </div>
         <div className="card-space">
           <ContnentUI
@@ -176,7 +154,7 @@ class queryFinance extends Component{
             data={ BalanceSnapshotList }
             renderTableFun={ this.renderBalanceSnapshotTable } />
         </div>
-        <div className="card-space" style={{display: this.state.formList[1].isAll ? 'none' : 'block'}}>
+        <div className="card-space">
           <ContnentUI
             title="充值记录"
             data={ chargeLogList }
@@ -187,24 +165,20 @@ class queryFinance extends Component{
   }
 
   componentDidMount () {
-    this.props.getBaseCustomersAction()
+    this.props.getSupplierAction()
   }
 }
 
 function mapStateToProps (state) {
   return {
-    BalanceSnapshotList: state.getIn(['dosageStatistics', 'BalanceSnapshotList']),
-    chargeLogList: state.getIn(['dosageStatistics', 'chargeLogList']),
-    changeDate: state.getIn(['base', 'changeDate']),
+    supplierList: state.getIn(['base', 'supplierList'])
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getBaseCustomersAction: () => dispatch(getBaseCustomersAction()),
-    getBalanceSnapshotAction: (data) => dispatch(getBalanceSnapshotAction(data)),
-    getChargeLogAction: (data) => dispatch(getChargeLogAction(data)),
+    getSupplierAction: () => dispatch(getSupplierAction())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(queryFinance)
+export default connect(mapStateToProps, mapDispatchToProps)(queryUpstreamSupplier)

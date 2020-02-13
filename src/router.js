@@ -11,6 +11,7 @@ import oneClickLoginAdd from './pages/one_click_login/add' //  一键登录新�
 // 用量统计
 import queryUsage from './pages/dosage_statistics/query_usage' // 客户用量统计页面
 import queryFinance from './pages/dosage_statistics/query_finance' // 余额快照
+import queryUpstreamSupplier from './pages/dosage_statistics/query_upstream_supplier' // 按供应商分析
 
 import NotMatch from './pages/notMatch'
 import Demo from './pages/demo'
@@ -31,6 +32,7 @@ export default class Router extends React.Component {
                 <Route path="/oneClickLoginAdd/:id" component={ oneClickLoginAdd }></Route>
                 <Route path="/query_usage" component={ queryUsage }></Route>
                 <Route path="/query_finance" component={ queryFinance }></Route>
+                <Route path="/query_upstream_supplier" component={ queryUpstreamSupplier }></Route>
                 <Route path="/demo" component={ Demo }></Route>
                 <Route component={NotMatch}></Route>
               </Switch>

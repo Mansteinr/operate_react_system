@@ -15,6 +15,8 @@ class Selector extends Component{
   handleChange = (value, option) => {
     let {
       id,
+      mode,
+      notRequestService,
       formSelctorChange,
       getBaseServicesAction,
       changeBaseCustomersListAction,
@@ -23,10 +25,16 @@ class Selector extends Component{
       changeBaseCustomersListAction(value)
       formSelctorChange(id, value)
     } else if (id === 'loginName') {
-      getBaseServicesAction({
-        customerId : value
-      })
-      formSelctorChange(id, option.props['data-key'])
+      if (!notRequestService) {
+        getBaseServicesAction({
+          customerId : value
+        })
+      }
+      if (mode) {
+        formSelctorChange(id, value)
+      } else {
+        formSelctorChange(id, option.props['data-key'])
+      }
     } else if (id === 'serviceName') {
       formSelctorChange(id, value)
     }
@@ -45,19 +53,21 @@ class Selector extends Component{
       optionList = []
     
     data.map(v => {
-      optionList.push(<Option data-key={`${v[selectLable] ||  v[selectDefault] }`} title={ `${v[selectText]}(${v[selectLable] ||  v[selectDefault] })` } key ={ v[selectDefault] } value={v[selectDefault]||v[selectLable]}>{v[selectText]}</Option>)
+      optionList.push(<Option data-key={`${v[selectLable] ||  v[selectDefault] || v }`} title={ `${v[selectText]}(${v[selectLable] ||  v[selectDefault] || v })` } key ={ v[selectDefault] || v } value={ v[selectDefault] || v[selectLable] || v}>{ v[selectText] || v }</Option>)
     })
     return optionList
   }
 
   render () {
-    let { data, showSearch, selectDefault } = this.props
-    
+    let { data, showSearch, selectDefault, mode } = this.props
+
     return (
       <Select
+        mode={mode}
+        maxTagCount = { 1 }
         onChange={this.handleChange}
-        key = { data[0] ? data[0][selectDefault] : '' }
-        defaultValue= { data[0] ? data[0][selectDefault] : '' }
+        key = { data[0] ? ( data[0][selectDefault] ? data[0][selectDefault] : data[0]) : '' }
+        defaultValue= { data[0] ? ( data[0][selectDefault] ? data[0][selectDefault] : data[0]) : '' }
         showSearch = { showSearch || true }
         optionFilterProp="children"
         filterOption={ (input, option) => this.filterOption(input, option) }
@@ -68,20 +78,15 @@ class Selector extends Component{
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    // serviceNameList: state.getIn(['base', 'baseServiceList']),
-    loginNameList: state.getIn(['base', 'baseCustomersList']),
-    businessTypeList: state.getIn(['base', 'baseBusinessTypesList']),
-  }
-}
+// function mapStateToProps (state) {
+//   return {}
+// }
 
 function mapDispatchToProps(dispatch) {
   return {
     changeBaseCustomersListAction: data => dispatch(changeBaseCustomersListAction(data)),
     getBaseServicesAction: data => dispatch(getBaseServicesAction(data)),
   }
-    
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Selector)
+export default connect(null, mapDispatchToProps)(Selector)

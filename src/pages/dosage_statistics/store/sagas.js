@@ -48,6 +48,9 @@ function* UsageByCustomer () {
 
 // 余额快照
 function* getBalanceSnapshotList (prama) {
+  if (prama.data.loginNames.length === 1 && prama.data.loginNames[0] === '') {
+    prama.data.loginNames = []
+  }
   const res = yield Axios.ajax({
     url: API.downApi.getBalanceSnapshot,
     data: prama.data

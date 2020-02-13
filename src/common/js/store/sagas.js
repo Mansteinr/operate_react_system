@@ -7,14 +7,16 @@ import Axios from '@/axios'
 import {
   getBaseCustomersListAction,
   getBaseBusinessTypesListAction,
-  getBaseServicesListAction
+  getBaseServicesListAction,
+  getSupplierListAction
 } from './actionCreators'
 import {
   GET_BASECURSTOMERS_ACTION,
   GET_BASEBUSINESSTYPES_ACTION,
-  GET_BASESERVICES_ACTION
+  GET_BASESERVICES_ACTION,
+  GET_SUPPLIER_ACTION
 } from './actionTypes'
-
+// 获取行业类型
 function* getbusinessTypesList (prama) {
   const res = yield Axios.ajax({
     url: API.upApi.businessTypes,
@@ -26,7 +28,7 @@ function* getbusinessTypesList (prama) {
 function* getBusinessType () {
   yield takeEvery(GET_BASEBUSINESSTYPES_ACTION, getbusinessTypesList)
 }
-
+// 客户列表
 function* getCustomerList (prama) {
   const res = yield Axios.ajax({
     url: API.upApi.customers,
@@ -38,7 +40,7 @@ function* getCustomerList (prama) {
 function* getCustomer () {
   yield takeEvery(GET_BASECURSTOMERS_ACTION, getCustomerList)
 }
-
+// 服务列表
 function* getServiceList (prama) {
   const res = yield Axios.ajax({
     url: API.upApi[prama.data && prama.data.customerId ? 'hasServices' : 'services'],
@@ -51,8 +53,22 @@ function* getService () {
   yield takeEvery(GET_BASESERVICES_ACTION, getServiceList)
 }
 
+// 供应商列表
+function* getSupplierList () {
+  const res = yield Axios.ajax({
+    url: API.upApi.companys,
+    data: []
+  })
+  yield put(getSupplierListAction(res.resData))
+}
+
+function* getSuppliers() {
+  yield takeEvery(GET_SUPPLIER_ACTION, getSupplierList)
+}
+
 export const baseSagas = [
   fork(getCustomer),
   fork(getBusinessType),
   fork(getService),
+  fork(getSuppliers),
 ]

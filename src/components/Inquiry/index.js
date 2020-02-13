@@ -4,6 +4,9 @@ import Select from '../Selector'
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { Form, Button, DatePicker } from 'antd'
+import {
+  changeDateRangeAction
+} from '@/common/js/store/actionCreators'
 
 let FormItem = Form.Item, { RangePicker } = DatePicker
 class Inquiry extends Component {
@@ -33,10 +36,15 @@ class Inquiry extends Component {
   }
 
   selctorChange = (key, data) => {
-    console.log(key, data, 'key, datakey, data')
     this.props.form.setFieldsValue({
       [key]: data
     })
+  }
+
+  // 日期变化
+
+  changeDateRange = (date,dateString) => {
+    this.props.changeDateRangeAction(dateString)
   }
 
   // 渲染查询条件
@@ -55,6 +63,7 @@ class Inquiry extends Component {
               })(
                 <RangePicker
                   disabledDate={v.disabledDate || this.disabledDate} // 禁选日期
+                  onChange = { this.changeDateRange }
                   ranges={{ // 快捷键设置
                     '最近一个星期': [moment(+new Date() - 7 * 1000 * 24 * 3600), moment()],
                     '最近一个月': [moment(+new Date() - 30 * 1000 * 24 * 3600), moment()],
@@ -73,7 +82,7 @@ class Inquiry extends Component {
             data = [...[{
               [ v.selectText ]: '全部',
               [ v.selectLable ]: '',
-              [ v.selectDefault ]: '',
+              [ v.selectDefault ]: ''
             }], ...data]
           }
 
@@ -84,16 +93,18 @@ class Inquiry extends Component {
               })(
                 <Select
                   data={ data }
+                  mode = { v.mode }
+                  showSearch={ v.showSearch }
                   isAll = { v.isAll || false }
-                  labelInValue = { v.labelInValue || false }
+                  selectText = { v.selectText }
                   selectLable = { v.selectLable }
                   selectDefault = { v.selectDefault }
-                  selectText = { v.selectText }
-                  showSearch={ v.showSearch }
-                  formSelctorChange={ this.selctorChange }/>
+                  formSelctorChange={this.selctorChange}
+                  notRequestService = { v.notRequestService }
+                  labelInValue = { v.labelInValue || false }/>
               )
             }
-            </FormItem>)
+          </FormItem>)
         }
       })
     }
@@ -123,11 +134,14 @@ function mapStateToProps (state) {
     loginNameList: state.getIn(['base', 'baseCustomersList']),
     businessTypeList: state.getIn(['base', 'baseBusinessTypesList']),
     serviceNameList: state.getIn(['base', 'baseServiceList']),
+    companyNameList: state.getIn(['base', 'supplierList']),
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return {}
+  return {
+    changeDateRangeAction: (data) => dispatch(changeDateRangeAction(data))
+  }
     
 }
 
