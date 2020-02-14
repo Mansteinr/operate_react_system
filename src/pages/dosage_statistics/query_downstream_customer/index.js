@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import Charts from '@/components/Charts'
 import TableUI from '@/components/Table'
 import InquiryUI from '@/components/Inquiry'
 import ContnentUI from '@/components/Content'
@@ -94,7 +95,23 @@ class queryDownStreamCustomer extends Component{
     return <TableUI rowKey={'serviceNameZh'} dataSource={ data } columns={ columns } />
   }
   renderUsedCountChart = () => {
+    let data = this.props.UsageByNameList, pieCount = {}, option = {}
+    data.sort((a, b) => {
+      return -(a.downChargedCount - b.downChargedCount)
+    })
 
+    data.map((v, k) => {
+      if (k < 10) {
+        pieCount[v.serviceNameZh] = v.downChargedCount
+      }
+    })
+    option = {
+      type: 'setRadiiData',
+      title: 'Top10各服务计费调用数量占比',
+      tipTitle: '计费调用数量',
+      obj: pieCount
+    }
+    return <Charts option={option} />
   }
   renderDownChargedCountTable = () => {
     let data = this.props.UsageByNameList,
@@ -130,7 +147,23 @@ class queryDownStreamCustomer extends Component{
 
   }
   renderDownChargedCountChart = () => {
+    let data = this.props.UsageByNameList, pieCharge = {}, option = {}
+    data.sort((a, b) => {
+      return -(a.downCost - b.downCost)
+    })
 
+    data.map((v, k) => {
+      if (k < 10) {
+        pieCharge[v.serviceNameZh] = v.downCost
+      }
+    })
+    option = {
+      type: 'setRadiiData',
+      title: 'Top10各服务调用金额占比',
+      tipTitle: '调用金额',
+      obj: pieCharge
+    }
+    return <Charts option={option} />
   }
   render () {
     let { UsageByNameList } = this.props

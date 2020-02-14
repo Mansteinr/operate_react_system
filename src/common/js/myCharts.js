@@ -201,18 +201,19 @@ export function setLineData(opt) {
   return options
 }
 
-export function setRadiiData (title, tipTitle, obj) {
-  var legendData = [], seriesData = [];
-  for (var key in obj) {
-    legendData.push(key);
-    var _obj = {};
-    _obj.value = obj[key];
-    _obj.name = key;
-    seriesData.push(_obj);
+export function setRadiiData (opt) {
+// export function setRadiiData (title, tipTitle, obj) {
+  var legendData = [], seriesData = []
+  for (var key in opt.obj) {
+    legendData.push(key)
+    var _obj = {}
+    _obj.value = opt.obj[key]
+    _obj.name = key
+    seriesData.push(_obj)
   }
   var option = {
     title: {
-      text: title,
+      text: opt.title,
       x: 'center'
     },
     tooltip: {
@@ -233,7 +234,7 @@ export function setRadiiData (title, tipTitle, obj) {
       },
       textStyle: {
         fontSize: 15,
-        color: "#fff",
+        color: "#fff"
       },
       axisPointer: {
         lineStyle: {
@@ -253,7 +254,7 @@ export function setRadiiData (title, tipTitle, obj) {
     },
     toolbox: toolbox,
     series: [{
-      name: tipTitle,
+      name: opt.tipTitle,
       type: 'pie',
       radius: ['40%', '70%'],
       center: ['50%', '60%'],
@@ -270,10 +271,10 @@ export function setRadiiData (title, tipTitle, obj) {
   };
 
   if (window.innerWidth < 480) {
-    delete option.legend;
-    delete option.toolbox;
+    delete option.legend
+    delete option.toolbox
   }
-  return option;
+  return option
 }
 
 export function renderChart(container, option) {
