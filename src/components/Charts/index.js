@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { setLineData, renderChart, setRadiiData } from '@/common/js/myCharts'
+import { setLineData, renderChart, setRadiiData, setColumnData } from '@/common/js/myCharts'
 
 export default class Charts extends Component {
   componentDidMount () {
     if (this.props.option.type === 'setRadiiData') {
       renderChart(this.refs.chart, setRadiiData(this.props.option))
+    } else if (this.props.option.type === 'setColumnData') {
+      renderChart(this.refs.chart, setColumnData(this.props.option))
     } else {
       renderChart(this.refs.chart, setLineData(this.props.option))
     }

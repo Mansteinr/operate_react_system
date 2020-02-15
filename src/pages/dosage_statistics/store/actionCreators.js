@@ -8,7 +8,9 @@ import {
   GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION,
   GET_OUTSERVICECHARGEINFOBYSUPPLIERLIST_ACTION,
   GET_USAGEBUNAME_ACTION,
-  GET_USAGEBUNAMELIST_ACTION
+  GET_USAGEBUNAMELIST_ACTION,
+  GET_SERVICECHARGEINFO_ACTION,
+  GET_SERVICECHARGEINFOLIST_ACTION,
 } from './actionTypes'
 
 // 余额快照
@@ -65,6 +67,20 @@ export const getUsageByNameAction = (data) => {
 export const getUsageByNameListAction = (data) => {
   return {
     type: GET_USAGEBUNAMELIST_ACTION,
+    data
+  }
+}
+// 按服务分析 getOutServiceChargeInfo
+export const geServiceChargeInfoAction = (data) => {
+  return {
+    type: GET_SERVICECHARGEINFO_ACTION,
+    data
+  }
+}
+
+export const getServiceChargeInfoListAction = (data) => {
+  return {
+    type: GET_SERVICECHARGEINFOLIST_ACTION,
     data
   }
 }

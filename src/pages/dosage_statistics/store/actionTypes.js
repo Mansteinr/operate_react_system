@@ -7,3 +7,6 @@ export const GET_OUTSERVICECHARGEINFOBYSUPPLIER_ACTION = 'get_OutServiceChargeIn
 export const GET_OUTSERVICECHARGEINFOBYSUPPLIERLIST_ACTION = 'get_OutServiceChargeInfoBySupplierList_action'
 export const GET_USAGEBUNAME_ACTION = 'get_UsageByName_action'
 export const GET_USAGEBUNAMELIST_ACTION = 'get_UsageByNameList_action'
+export const GET_SERVICECHARGEINFO_ACTION = 'get_ServiceChargeInfo_action'
+export const GET_SERVICECHARGEINFOLIST_ACTION = 'get_ServiceChargeInfoList_action'
+

@@ -43,7 +43,7 @@ function* getCustomer () {
 // 服务列表
 function* getServiceList (prama) {
   const res = yield Axios.ajax({
-    url: API.upApi[prama.data && prama.data.customerId ? 'hasServices' : 'services'],
+    url: API.upApi[prama ? (prama.data && prama.data.customerId ? 'hasServices' : 'services') : 'services'],
     data: prama.data
   })
   yield put(getBaseServicesListAction(res.resData))

@@ -124,7 +124,7 @@ let color = ['rgba(44,181,171, 1)', 'rgba(44,181,171,.3)', 'rgba(145,191,93,1)',
       },
     }
   }
-export function setLineData(opt) {
+export function setLineData(opt) { // 折现图
   let legendData = [], // 说明图例
     series = [],
     arrLength = opt.series.length > 15 ? 15 : opt.series.length // 防止有些组件中渲染折线图过多
@@ -201,7 +201,7 @@ export function setLineData(opt) {
   return options
 }
 
-export function setRadiiData (opt) {
+export function setRadiiData (opt) { // 扇形
 // export function setRadiiData (title, tipTitle, obj) {
   var legendData = [], seriesData = []
   for (var key in opt.obj) {
@@ -275,6 +275,54 @@ export function setRadiiData (opt) {
     delete option.toolbox
   }
   return option
+}
+
+export function setColumnData (opt) { // 条形图
+  var legendData = []
+  var arrLength = opt.series.length > 21 ? 20 : opt.series.length;
+  for (var i = 0; i < arrLength; i++) {
+    legendData.push(opt.series[i].name)
+  }
+  var option = {
+    title: {
+      text: opt.title,
+      subtext: opt.subTitle,
+      left: opt.subTitle ? 'center' : '1%',
+      top: opt.subTitle ? '10' : '-1%',
+      textStyle: {
+        fontSize: 16,
+        fontWeight: "normal",
+        fontFamily: "微软雅黑",
+        color: "#36383c"
+      },
+      subtextStyle: {
+        color: 'black' // 副标题文字颜色
+      }
+    },
+    legend: Object.assign(legend, { data: legendData }),
+    color: color,
+    tooltip: tooltip,
+    grid: {
+      show: true,
+      left: '7%',
+      top: opt.subTitle ? 70 : 34,
+      bottom: 100,
+      right: "3%",
+      borderWidth: 0,
+    },
+    toolbox: toolbox,
+    xAxis: [Object.assign(xAxis, { data: opt.xAxisData })],
+    yAxis: yAxis,
+    series: opt.series
+  }
+  if (opt.xAxisData.length > 20) {
+    option.dataZoom = dataBar
+    option.dataZoom[0].bottom = 35
+    option.grid.bottom = 70 + Math.ceil(legendData.length / 8) * 20
+  } else {
+    option.grid.bottom = 100
+  }
+  return option;
 }
 
 export function renderChart(container, option) {

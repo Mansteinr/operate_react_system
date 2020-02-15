@@ -3,7 +3,8 @@ import {
   GET_BALANCESNAPSHOTLIST_ACTION,
   GET_CHARGELOGLIST_ACTION,
   GET_OUTSERVICECHARGEINFOBYSUPPLIERLIST_ACTION,
-  GET_USAGEBUNAMELIST_ACTION
+  GET_USAGEBUNAMELIST_ACTION,
+  GET_SERVICECHARGEINFOLIST_ACTION
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
@@ -35,6 +36,13 @@ export function dosageStatisticsReducer (state = defaultState, action) {
       })
     case GET_USAGEBUNAMELIST_ACTION:
       return state.set('UsageByNameList', action.data)
+    case GET_SERVICECHARGEINFOLIST_ACTION:
+      return state.merge({
+        ServiceChargeInfoList: {
+          companyList: action.data.companyList,
+          customerList: action.data.customerList
+        }
+      })
 		default:
 			return state
 	}
