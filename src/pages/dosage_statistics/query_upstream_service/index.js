@@ -150,7 +150,6 @@ class queryUpstreamService extends Component {
       type: 'bar',
       data: []
       }]
-    debugger
     customerList.map(v => {
       xAxisData.push(v.loginName)
       series[0].data.push(v.cost)
