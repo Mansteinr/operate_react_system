@@ -10,7 +10,8 @@ import {
   GET_BASESERVICESLIST_ACTION,
   GET_SUPPLIER_ACTION,
   GET_SUPPLIERLIST_ACTION,
-  CHANGE_DATERANGE_ACTION
+  CHANGE_DATERANGE_ACTION,
+  DOWNFILE_ACTION
 } from './actionTypes'
 
 // 行业类型
@@ -81,6 +82,13 @@ export const getSupplierListAction = (data) => {
 export const changeDateRangeAction = (data) => {
   return {
     type: CHANGE_DATERANGE_ACTION,
+    data
+  }
+}
+// 下载文件
+export const downFileAction = (data) => {
+  return {
+    type: DOWNFILE_ACTION,
     data
   }
 }

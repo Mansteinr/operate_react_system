@@ -4,6 +4,7 @@
 import { put, takeEvery, fork } from 'redux-saga/effects'
 import API from '@/config'
 import Axios from '@/axios'
+import $downFile from '@/axios/downFile'
 import {
   getBaseCustomersListAction,
   getBaseBusinessTypesListAction,
@@ -14,7 +15,8 @@ import {
   GET_BASECURSTOMERS_ACTION,
   GET_BASEBUSINESSTYPES_ACTION,
   GET_BASESERVICES_ACTION,
-  GET_SUPPLIER_ACTION
+  GET_SUPPLIER_ACTION,
+  DOWNFILE_ACTION
 } from './actionTypes'
 // 获取行业类型
 function* getbusinessTypesList (prama) {
@@ -65,10 +67,19 @@ function* getSupplierList () {
 function* getSuppliers() {
   yield takeEvery(GET_SUPPLIER_ACTION, getSupplierList)
 }
+// 下载文件
+function* getDownFile (opt) {
+  yield $downFile(opt.data)
+}
+
+function* getFiles() {
+  yield takeEvery(DOWNFILE_ACTION, getDownFile)
+}
 
 export const baseSagas = [
   fork(getCustomer),
   fork(getBusinessType),
   fork(getService),
   fork(getSuppliers),
+  fork(getFiles),
 ]

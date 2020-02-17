@@ -28,7 +28,7 @@ class queryUpstreamService extends Component {
     mode: 'multiple',
     label: '接口类型',
     field: 'serviceName',
-    selectDefault: 'serviceName',
+    selectLable: 'serviceName',
     selectText: 'serviceNameZh',
     placeholder: '请选择接口类型'
   }]

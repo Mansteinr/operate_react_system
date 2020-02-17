@@ -9,4 +9,5 @@ export const CHANGE_BASECURSTOMERSLIST_ACTION = 'change_basecustomerslist_action
 export const GET_SUPPLIER_ACTION = 'change_supplier_action'
 export const GET_SUPPLIERLIST_ACTION = 'change_supplierList_action'
 export const CHANGE_DATERANGE_ACTION = 'change_dateRange_action'
+export const DOWNFILE_ACTION = 'downFile_action'
 

@@ -21,23 +21,17 @@ class Selector extends Component{
       getBaseServicesAction,
       changeBaseCustomersListAction,
     } = this.props
+    console.log(value)
     if (id === 'businessType') {
       changeBaseCustomersListAction(value)
-      formSelctorChange(id, value)
     } else if (id === 'loginName') {
       if (!notRequestService) {
         getBaseServicesAction({
-          customerId : value
+          customerId : option['data-key']
         })
       }
-      if (mode) {
-        formSelctorChange(id, value)
-      } else {
-        formSelctorChange(id, option.props['data-key'])
-      }
-    } else if (id === 'serviceName') {
-      formSelctorChange(id, value)
     }
+    formSelctorChange(id, value)
   }
 
   // 筛选
@@ -53,21 +47,20 @@ class Selector extends Component{
       optionList = []
     
     data.map(v => {
-      optionList.push(<Option data-key={`${v[selectLable] ||  v[selectDefault] || v }`} title={ `${v[selectText]}(${v[selectLable] ||  v[selectDefault] || v })` } key ={ v[selectDefault] || v } value={ v[selectDefault] || v[selectLable] || v}>{ v[selectText] || v }</Option>)
+      optionList.push(<Option data-key={`${v[selectDefault] ||  v[selectLable] || v }`}  title={ `${v[selectText]}(${v[selectLable] || v })` } key ={ v[selectLable] || v } value={ v[selectLable] || v}>{ v[selectText] || v }</Option>)
     })
     return optionList
   }
 
   render () {
-    let { data, showSearch, selectDefault, mode } = this.props
-
+    let { data, showSearch, selectLable, mode } = this.props
     return (
       <Select
         mode={mode}
         maxTagCount = { 1 }
         onChange={this.handleChange}
-        key = { data[0] ? ( data[0][selectDefault] ? data[0][selectDefault] : data[0]) : '' }
-        defaultValue= { data[0] ? ( data[0][selectDefault] ? data[0][selectDefault] : data[0]) : '' }
+        key = { data[0] ? ( data[0][selectLable] ? data[0][selectLable] : data[0]) : '' }
+        defaultValue= { data[0] ? ( data[0][selectLable] ? data[0][selectLable] : data[0]) : '' }
         showSearch = { showSearch || true }
         optionFilterProp="children"
         filterOption={ (input, option) => this.filterOption(input, option) }

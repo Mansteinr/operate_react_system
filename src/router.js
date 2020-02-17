@@ -14,6 +14,7 @@ import queryFinance from './pages/dosage_statistics/query_finance' // 余额快�
 import queryUpstreamSupplier from './pages/dosage_statistics/query_upstream_supplier' // 按供应商分析
 import queryDownstreamCustomer from './pages/dosage_statistics/query_downstream_customer' // 下游客户分析
 import queryUpstreamService from './pages/dosage_statistics/query_upstream_service' // 按服务分析
+import queryUpstreamServiceByDay from './pages/dosage_statistics/query_upstream_serviceByDay' // 按日服务分析
 
 import NotMatch from './pages/notMatch'
 import Demo from './pages/demo'
@@ -37,6 +38,7 @@ export default class Router extends React.Component {
                 <Route path="/query_upstream_supplier" component={ queryUpstreamSupplier }></Route>
                 <Route path="/query_downstream_customer" component={ queryDownstreamCustomer }></Route>
                 <Route path="/query_upstream_service" component={ queryUpstreamService }></Route>
+                <Route path="/query_upstream_serviceByData" component={ queryUpstreamServiceByDay }></Route>
                 <Route path="/demo" component={ Demo }></Route>
                 <Route component={NotMatch}></Route>
               </Switch>

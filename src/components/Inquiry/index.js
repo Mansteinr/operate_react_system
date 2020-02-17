@@ -89,7 +89,7 @@ class Inquiry extends Component {
           formItemList.push(<FormItem label={v.label} key={v.field}>
             {
               getFieldDecorator( `${v.field}` , {
-                initialValue:  data[0] ? data[0][v.selectDefault] : ''
+                initialValue:  data[0] ? data[0][v.selectLable] : ''
               })(
                 <Select
                   data={ data }

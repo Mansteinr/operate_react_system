@@ -31,7 +31,7 @@ class queryFinance extends Component{
       label: '客户名称',
       field: 'loginName',
       notRequestService: true,
-      selectDefault: 'loginName',
+      selectLable: 'loginName',
       selectText: 'customerName',
       placeholder: '请选择客户名称'
     }]
