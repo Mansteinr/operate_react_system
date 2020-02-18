@@ -9,14 +9,16 @@ import {
   getBaseCustomersListAction,
   getBaseBusinessTypesListAction,
   getBaseServicesListAction,
-  getSupplierListAction
+  getSupplierListAction,
+  getParamsByServiceNameListAction
 } from './actionCreators'
 import {
   GET_BASECURSTOMERS_ACTION,
   GET_BASEBUSINESSTYPES_ACTION,
   GET_BASESERVICES_ACTION,
   GET_SUPPLIER_ACTION,
-  DOWNFILE_ACTION
+  DOWNFILE_ACTION,
+  GET_PARAMSBYSERVICENAME_ACTION
 } from './actionTypes'
 // 获取行业类型
 function* getbusinessTypesList (prama) {
@@ -76,10 +78,25 @@ function* getFiles() {
   yield takeEvery(DOWNFILE_ACTION, getDownFile)
 }
 
+// 根据服务名查询参数
+function* getQueryParamsName (data) {
+  const res = yield Axios.ajax({
+    url: API.paramsApi.queryParamsByServiceName,
+    data: data.data
+  })
+  yield put(getParamsByServiceNameListAction(res.resData))
+}
+
+function* getQueryParamsNameList () {
+  console.log(9090)
+  yield takeEvery(GET_PARAMSBYSERVICENAME_ACTION, getQueryParamsName)
+}
+
 export const baseSagas = [
   fork(getCustomer),
   fork(getBusinessType),
   fork(getService),
   fork(getSuppliers),
   fork(getFiles),
+  fork(getQueryParamsNameList)
 ]

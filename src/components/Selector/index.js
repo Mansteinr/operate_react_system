@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import {
   changeBaseCustomersListAction,
-  getBaseServicesAction
+  getBaseServicesAction,
+  getParamsByServiceNameAction,
 } from '@/common/js/store/actionCreators'
 
 const { Option } = Select
@@ -15,19 +16,29 @@ class Selector extends Component{
   handleChange = (value, option) => {
     let {
       id,
-      mode,
+      isCollapse,
       notRequestService,
       formSelctorChange,
       getBaseServicesAction,
+      getParamsByServiceNameAction,
       changeBaseCustomersListAction,
     } = this.props
-    console.log(value)
+
     if (id === 'businessType') {
       changeBaseCustomersListAction(value)
     } else if (id === 'loginName') {
       if (!notRequestService) {
         getBaseServicesAction({
-          customerId : option['data-key']
+          customerId : option.props['data-key']
+        })
+      }
+    } else if (id === 'serviceName') {
+      console.log(isCollapse, 'isCollapseisCollapseisCollapse')
+      if (isCollapse) {
+        getParamsByServiceNameAction({
+          serviceName : value,
+          serviceId : option.props['data-key'],
+          serviceNameCh : option.props['children'].trim()
         })
       }
     }
@@ -71,15 +82,18 @@ class Selector extends Component{
   }
 }
 
-// function mapStateToProps (state) {
-//   return {}
-// }
+function mapStateToProps (state) {
+  return {
+    isCollapse: state.getIn(['operation', 'isCollapse']),
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   return {
     changeBaseCustomersListAction: data => dispatch(changeBaseCustomersListAction(data)),
     getBaseServicesAction: data => dispatch(getBaseServicesAction(data)),
+    getParamsByServiceNameAction: data => dispatch(getParamsByServiceNameAction(data)),
   }
 }
 
-export default connect(null, mapDispatchToProps)(Selector)
+export default connect(mapStateToProps, mapDispatchToProps)(Selector)

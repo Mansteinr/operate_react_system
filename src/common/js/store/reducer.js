@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 
 import {
   GET_BASECURSTOMERSLIST_ACTION,
@@ -5,7 +6,8 @@ import {
   CHANGE_BASECURSTOMERSLIST_ACTION,
   GET_BASESERVICESLIST_ACTION,
   GET_SUPPLIERLIST_ACTION,
-  CHANGE_DATERANGE_ACTION
+  CHANGE_DATERANGE_ACTION,
+  GET_PARAMSBYSERVICENAMELIST_ACTION
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
@@ -43,6 +45,9 @@ export function baseReducer (state = defaultState, action) {
         })
       }
       return state.set('baseCustomersList', arrData)
+    case GET_PARAMSBYSERVICENAMELIST_ACTION:
+        let list = action.data.paramNameBeans ? action.data.paramNameBeans : []
+        return state.set('getParamsByServiceNameList', list)
 		default:
 			return state
 	}

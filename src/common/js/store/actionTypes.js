@@ -10,4 +10,6 @@ export const GET_SUPPLIER_ACTION = 'change_supplier_action'
 export const GET_SUPPLIERLIST_ACTION = 'change_supplierList_action'
 export const CHANGE_DATERANGE_ACTION = 'change_dateRange_action'
 export const DOWNFILE_ACTION = 'downFile_action'
+export const GET_PARAMSBYSERVICENAME_ACTION = 'getParamsByServiceName_action'
+export const GET_PARAMSBYSERVICENAMELIST_ACTION = 'getSeviceNamePramasList_action'
 

@@ -120,6 +120,26 @@
           .ant-form-item-control-wrapper{
             width: 70%;
           }
+          .ant-form-item-children{
+            display: block;
+            width: 100%;
+            .ant-time-picker,
+            .ant-calendar-picker{
+              width: 100%;
+            }
+          }
+        }
+        .param-wrapper{
+          margin-left: 10px;
+          .param-item{
+            height: 0;
+            overflow: hidden;
+            transition: all .6s;
+            &.active{
+              height: 120px;
+              overflow: auto;
+            }
+          }
         }
       }
 

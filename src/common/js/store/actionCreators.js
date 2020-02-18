@@ -11,7 +11,9 @@ import {
   GET_SUPPLIER_ACTION,
   GET_SUPPLIERLIST_ACTION,
   CHANGE_DATERANGE_ACTION,
-  DOWNFILE_ACTION
+  DOWNFILE_ACTION,
+  GET_PARAMSBYSERVICENAME_ACTION,
+  GET_PARAMSBYSERVICENAMELIST_ACTION,
 } from './actionTypes'
 
 // 行业类型
@@ -62,14 +64,12 @@ export const getBaseServicesListAction = (data) => {
     data
   }
 }
-
 // 供应商名称
 export const getSupplierAction = (data) => {
   return {
     type: GET_SUPPLIER_ACTION
   }
 }
-
 // 供应商名称列表
 export const getSupplierListAction = (data) => {
   return {
@@ -77,7 +77,6 @@ export const getSupplierListAction = (data) => {
     data
   }
 }
-
 // 日期切换
 export const changeDateRangeAction = (data) => {
   return {
@@ -89,6 +88,21 @@ export const changeDateRangeAction = (data) => {
 export const downFileAction = (data) => {
   return {
     type: DOWNFILE_ACTION,
+    data
+  }
+}
+
+// 服务名切换jua
+export const getParamsByServiceNameAction = (data) => {
+  return {
+    type: GET_PARAMSBYSERVICENAME_ACTION,
+    data
+  }
+}
+// 
+export const getParamsByServiceNameListAction = (data) => {
+  return {
+    type: GET_PARAMSBYSERVICENAMELIST_ACTION,
     data
   }
 }
