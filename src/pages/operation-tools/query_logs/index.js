@@ -13,13 +13,10 @@ import {
 } from '@/common/js/store/actionCreators'
 
 import {
-  getUsageByDateAction
-} from '@/pages/query_index/store/actionCreators'
+  getQueryLogsAction
+} from '@/pages/operation-tools/store/actionCreators'
 
 class queryLogs extends Component{
-  state = {
-    renderParamList: []
-  }
   // 查询表单
   formList = [{
     type: 'DatePicker',
@@ -69,6 +66,28 @@ class queryLogs extends Component{
   
   // 确认提交表单数据 子组件传递上来的
   handleFilter = (params) => {
+    let option = {
+      start: params.day + ' ' + params.start,
+      end: params.day + ' ' + params.end,
+      serviceName: params.serviceName,
+      params: {}
+    }
+    if (params.lowerCostTime) {
+      option.lowerCostTime = params.lowerCostTime
+    }
+    if (params.upperCostTime) {
+      option.upperCostTime = params.upperCostTime
+    }
+    // for (let k in params) {
+    document.querySelectorAll('.param-wrapper input').forEach(v => {
+      if(v.id === 'lowerCostTime' || v.id === 'upperCostTime') return
+      option.params[v.id] = v.value.trim()
+    })
+    this.props.getQueryLogsAction(option)
+    // }
+    console.log(document.querySelectorAll('.param-wrapper input'))
+
+   
     console.log(params)
   }
   
@@ -114,6 +133,9 @@ function mapDispatchToProps(dispatch) {
     },
     getBaseServicesAction:  () => {
       dispatch(getBaseServicesAction())
+    },
+    getQueryLogsAction:  (data) => {
+      dispatch(getQueryLogsAction(data))
     }
   }
 }
