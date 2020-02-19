@@ -1,6 +1,6 @@
 
 /*默认使用协议*/
-const protocol = 'http', mode = 'production',
+const protocol = 'http', mode = 'test',
       baseConfig = {
   protocols: {
     http: 'http://',
@@ -51,7 +51,7 @@ const api = {
     projectchoose: apiFormat('boss2-0-web/rbac-web/choose.html', 'rbacweb', mode === 'production' ? 'https' : 'http'),
     loginchannel: apiFormat('boss2-0-web/rbac-web/loginChannel.html', 'rbacweb', mode === 'production' ? 'https' : 'http'),
     imageapi: baseConfig[mode].imageapi,
-    localMTK: '2629e598-9793-44ab-a6da-6e85580aba02'
+    localMTK: 'cca52d56-9766-4b06-a875-fc5d7cb7ab4b'
   },
   upApi: {
     /*！能力域api*/

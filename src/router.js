@@ -15,6 +15,7 @@ import queryUpstreamSupplier from './pages/dosage_statistics/query_upstream_supp
 import queryDownstreamCustomer from './pages/dosage_statistics/query_downstream_customer' // 下游客户分析
 import queryUpstreamService from './pages/dosage_statistics/query_upstream_service' // 按服务分析
 import queryUpstreamServiceByDay from './pages/dosage_statistics/query_upstream_serviceByDay' // 按日服务分析
+import configureinterfaceParameter from './pages/configuration_management/configureinterface_parameter' // 配置管理
 
 // 运维工具
 import queryLogs from './pages/operation-tools/query_logs' // 查询日志
@@ -43,6 +44,7 @@ export default class Router extends React.Component {
                 <Route path="/query_upstream_service" component={ queryUpstreamService }></Route>
                 <Route path="/query_upstream_serviceByData" component={ queryUpstreamServiceByDay }></Route>
                 <Route path="/query_logs" component={ queryLogs }></Route>
+                <Route path="/interface_parameter_maintenance" component={ configureinterfaceParameter }></Route>
                 <Route path="/demo" component={ Demo }></Route>
                 <Route component={NotMatch}></Route>
               </Switch>

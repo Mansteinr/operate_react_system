@@ -7,6 +7,7 @@ import { queryIndexSagas } from '@/pages/query_index/store' // 总量统计
 import { oneClickLoginSagas } from '@/pages/one_click_login/store' // 一键登录
 import { dosageStatisticsSagas } from '@/pages/dosage_statistics/store' // 用量统计
 import { operationSagas } from '@/pages/operation-tools/store' // 用量统计
+import { configurationSagas } from '@/pages/configuration_management/store' // 配置管理
 
 
 export default function* sagas() {
@@ -17,5 +18,6 @@ export default function* sagas() {
     ...oneClickLoginSagas,
     ...dosageStatisticsSagas,
     ...operationSagas,
+    ...configurationSagas,
   ])
 }

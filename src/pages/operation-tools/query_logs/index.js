@@ -127,8 +127,8 @@ class queryLogs extends Component{
           if (k !== 'guid' && k !== 'image' && k !== 'shaName' && k !== 'shaMobile') {
             spanList.push(<span key={Math.random()} title={`${k}: ${value[k]}`} className="param-item">{`${k}: ${value[k]}`}</span>)
           }
-          }
-          return spanList
+        }
+        return spanList
       }
     }, {
       title: '耗时(ms)',
