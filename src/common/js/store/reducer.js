@@ -7,7 +7,8 @@ import {
   GET_BASESERVICESLIST_ACTION,
   GET_SUPPLIERLIST_ACTION,
   CHANGE_DATERANGE_ACTION,
-  GET_PARAMSBYSERVICENAMELIST_ACTION
+  GET_PARAMSBYSERVICENAMELIST_ACTION,
+  GET_GUIDRESULT_ACTION
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
@@ -47,7 +48,9 @@ export function baseReducer (state = defaultState, action) {
       return state.set('baseCustomersList', arrData)
     case GET_PARAMSBYSERVICENAMELIST_ACTION:
         let list = action.data.paramNameBeans ? action.data.paramNameBeans : []
-        return state.set('getParamsByServiceNameList', list)
+      return state.set('getParamsByServiceNameList', list)
+    case GET_GUIDRESULT_ACTION:
+        return state.set('guidResult', action.data)
 		default:
 			return state
 	}

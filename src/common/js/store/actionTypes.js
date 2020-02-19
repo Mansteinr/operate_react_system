@@ -12,4 +12,6 @@ export const CHANGE_DATERANGE_ACTION = 'change_dateRange_action'
 export const DOWNFILE_ACTION = 'downFile_action'
 export const GET_PARAMSBYSERVICENAME_ACTION = 'getParamsByServiceName_action'
 export const GET_PARAMSBYSERVICENAMELIST_ACTION = 'getSeviceNamePramasList_action'
+export const GET_GUID_ACTION = 'get_guid_action'
+export const GET_GUIDRESULT_ACTION = 'get_guidResult_action'
 

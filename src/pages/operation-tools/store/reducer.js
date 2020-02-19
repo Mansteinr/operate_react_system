@@ -1,6 +1,7 @@
 
 import {
-  IS_COLLAPSE_ACTION
+  IS_COLLAPSE_ACTION,
+  GET_QUERYLOGSLIST_ACTION,
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
@@ -15,6 +16,8 @@ export function operationReducer (state = defaultState, action) {
 	switch (action.type) {
     case IS_COLLAPSE_ACTION:
       return state.set('isCollapse', action.data)
+    case GET_QUERYLOGSLIST_ACTION:
+      return state.set('logsList', action.data)
 		default:
 			return state
 	}

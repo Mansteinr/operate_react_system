@@ -33,7 +33,6 @@ class Selector extends Component{
         })
       }
     } else if (id === 'serviceName') {
-      console.log(isCollapse, 'isCollapseisCollapseisCollapse')
       if (isCollapse) {
         getParamsByServiceNameAction({
           serviceName : value,

@@ -235,7 +235,6 @@ class queryUpstreamSupplier extends Component{
           return sortOrderTable(a, b, 'remark')
         }
       }]
-    console.log('renderServiceBySupplierTablerenderServiceBySupplierTablerenderServiceBySupplierTablerenderServiceBySupplierTablerenderServiceBySupplierTable')
     return <TableUI rowKey={'company'} dataSource={ data } columns={ columns } />
   }
 

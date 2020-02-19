@@ -100,10 +100,11 @@ class queryDownStreamCustomer extends Component{
       return -(a.downChargedCount - b.downChargedCount)
     })
 
-    data.map((v, k) => {
+    data.map((v, k) =>  {
       if (k < 10) {
         pieCount[v.serviceNameZh] = v.downChargedCount
       }
+      return pieCount
     })
     option = {
       type: 'setRadiiData',
@@ -143,7 +144,6 @@ class queryDownStreamCustomer extends Component{
       }
     }]
     return <TableUI rowKey={'serviceNameZh'} dataSource={ data } columns={ columns } />
- 
 
   }
   renderDownChargedCountChart = () => {
@@ -156,6 +156,7 @@ class queryDownStreamCustomer extends Component{
       if (k < 10) {
         pieCharge[v.serviceNameZh] = v.downCost
       }
+      return pieCharge
     })
     option = {
       type: 'setRadiiData',

@@ -14,6 +14,8 @@ import {
   DOWNFILE_ACTION,
   GET_PARAMSBYSERVICENAME_ACTION,
   GET_PARAMSBYSERVICENAMELIST_ACTION,
+  GET_GUID_ACTION,
+  GET_GUIDRESULT_ACTION
 } from './actionTypes'
 
 // 行业类型
@@ -103,6 +105,21 @@ export const getParamsByServiceNameAction = (data) => {
 export const getParamsByServiceNameListAction = (data) => {
   return {
     type: GET_PARAMSBYSERVICENAMELIST_ACTION,
+    data
+  }
+}
+
+
+export const getGuidResultAction = (data) => {
+  return {
+    type: GET_GUIDRESULT_ACTION,
+    data
+  }
+}
+// 查询guid
+export const getGuidAction = (data) => {
+  return {
+    type: GET_GUID_ACTION,
     data
   }
 }

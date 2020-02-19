@@ -41,7 +41,6 @@ class queryUpstreamServiceByDay extends Component {
   }]
 
   handleFilter = (param) => {
-    console.log(param)
     let opt = {}
     if (param.serviceName === '') {
       opt = {
@@ -54,12 +53,10 @@ class queryUpstreamServiceByDay extends Component {
         method: 'post',
         url: API.upApi.getOutServiceChargeInfoByDay,
         data: param
-      }
-      // delete param.serviceName   
+      } 
        param.serviceNames.splice(0, 1)
       delete param.serviceName
     }
-    // return
     this.props.downFileAction(opt)
   }
 
