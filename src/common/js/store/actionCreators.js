@@ -15,7 +15,11 @@ import {
   GET_PARAMSBYSERVICENAME_ACTION,
   GET_PARAMSBYSERVICENAMELIST_ACTION,
   GET_GUID_ACTION,
-  GET_GUIDRESULT_ACTION
+  GET_GUIDRESULT_ACTION,
+  GET_VERIFYCODE_ACTION,
+  GET_VERIFYCODEIMAGE_ACTION,
+  DO_LOGIN_ACTION,
+  CONFIRM_LANDING_ACTION
 } from './actionTypes'
 
 // 行业类型
@@ -120,6 +124,33 @@ export const getGuidResultAction = (data) => {
 export const getGuidAction = (data) => {
   return {
     type: GET_GUID_ACTION,
+    data
+  }
+}
+// 获取验证码
+export const getVerifyCodeAction = (data) => {
+  return {
+    type: GET_VERIFYCODE_ACTION,
+    data
+  }
+}
+
+export const getVerifyCodeImageAction = (data) => {
+  return {
+    type: GET_VERIFYCODEIMAGE_ACTION,
+    data
+  }
+}
+// 登陆
+export const doLoginAction = (data) => {
+  return {
+    type: DO_LOGIN_ACTION,
+    data
+  }
+}
+export const confirmLandingAction = (data) => {
+  return {
+    type: CONFIRM_LANDING_ACTION,
     data
   }
 }

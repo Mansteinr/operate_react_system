@@ -252,7 +252,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(getUsageByCustomerAction(data))
     }
   }
-    
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(QueryIndex)

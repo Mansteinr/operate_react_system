@@ -11,7 +11,10 @@ import {
   getBaseServicesListAction,
   getSupplierListAction,
   getParamsByServiceNameListAction,
-  getGuidResultAction
+  getGuidResultAction,
+  getVerifyCodeImageAction,
+  doLoginAction,
+  confirmLandingAction
 } from './actionCreators'
 import {
   GET_BASECURSTOMERS_ACTION,
@@ -20,7 +23,9 @@ import {
   GET_SUPPLIER_ACTION,
   DOWNFILE_ACTION,
   GET_PARAMSBYSERVICENAME_ACTION,
-  GET_GUID_ACTION
+  GET_GUID_ACTION,
+  GET_VERIFYCODE_ACTION,
+  DO_LOGIN_ACTION
 } from './actionTypes'
 // 获取行业类型
 function* getbusinessTypesList (prama) {
@@ -107,7 +112,34 @@ function* getGuid (data) {
 function* getGuidFork () {
   yield takeEvery(GET_GUID_ACTION, getGuid)
 }
+// 获取验证码
+function* getVerifyCode (data) {
+  const res = yield Axios.ajax({
+    url: API.base.getVerifyCode,
+    data: {
+      guid: data.data
+    },
+    method: 'get'
+  })
+  yield put(getVerifyCodeImageAction(res.resData))
+}
 
+function* getVerifyCodeFork () {
+  yield takeEvery(GET_VERIFYCODE_ACTION, getVerifyCode)
+}
+// 登陆
+function* doLogin (data) {
+  const res = yield Axios.ajax({
+    url: API.base.login,
+    data: data.data
+  })
+  localStorage.setItem('mtk', res.resData.mtk)
+  yield put(confirmLandingAction(res.resData))
+}
+
+function* doLoginFork () {
+  yield takeEvery(DO_LOGIN_ACTION, doLogin)
+}
 export const baseSagas = [
   fork(getCustomer),
   fork(getBusinessType),
@@ -116,4 +148,6 @@ export const baseSagas = [
   fork(getFiles),
   fork(getQueryParamsNameList),
   fork(getGuidFork),
+  fork(getVerifyCodeFork),
+  fork(doLoginFork),
 ]

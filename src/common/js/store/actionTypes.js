@@ -14,4 +14,8 @@ export const GET_PARAMSBYSERVICENAME_ACTION = 'getParamsByServiceName_action'
 export const GET_PARAMSBYSERVICENAMELIST_ACTION = 'getSeviceNamePramasList_action'
 export const GET_GUID_ACTION = 'get_guid_action'
 export const GET_GUIDRESULT_ACTION = 'get_guidResult_action'
+export const GET_VERIFYCODE_ACTION = 'get_VerifyCode_action'
+export const GET_VERIFYCODEIMAGE_ACTION = 'get_VerifyCodeImage_action'
+export const DO_LOGIN_ACTION = 'do_login_action'
+export const CONFIRM_LANDING_ACTION = 'confirm_landing_action'
 
