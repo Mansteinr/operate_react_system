@@ -1,15 +1,42 @@
 
-import { Button } from 'antd'
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import TableUI from '@/components/Table'
 import ContnentUI from '@/components/Content'
+import { Button, Modal,Row, Col, Checkbox } from 'antd'
 import { getAllServiceNameParamsAction } from '../store/actionCreators'
+import './index.less'
 
 class configureinterfaceParameter extends Component {
+  state = {
+    visible: false,
+    checkedOption: [],
+    serviceName: '',
+    paramNameBeans: []
+  }
+
+  handleOk = e => {
+    this.setState({
+      visible: false
+    })
+  }
+
+  handleCancel = e => {
+    this.setState({
+      visible: false
+    })
+  }
+
+  showModal = (value) => {
+    this.setState({
+      visible: true,
+      serviceName: value.serviceName,
+      paramNameBeans: value.paramNameBeans
+    })
+  }
 
   handleDelete = value => {
-    
+    this.showModal(value)
   }
 
   // 渲染dom
@@ -18,18 +45,20 @@ class configureinterfaceParameter extends Component {
       columns = [{
         title: '服务名',
         dataIndex: 'serviceName',
-        render: (value, record, index) => `${value}(${record.serviceNameCh})`
+        render: (value, record, index) => {
+          return record.paramNameBeans.length <= 4 ? `${value} (${record.serviceNameCh||'--'})` : <span key={Math.random()} className="span-link">{`${ value }: ${ record.serviceNameCh||'--' }`}</span>
+        }
       },{
         title: '参数',
         dataIndex: 'paramNameBeans',
         render: (value, record, index) => {
           let spanList = []
           if (value && value.length) {
-            value.forEach(v => {
+            value.forEach((v, k) => {
               spanList.push(<span key={Math.random()} className="param-item">{`${v.paramNameCh}: ${v.paramName}`}</span>)
             })
           }
-          return spanList
+          return <div className="param-item-wrapper">{spanList}</div>
         }
       }, {
         title: '操作',
@@ -44,6 +73,11 @@ class configureinterfaceParameter extends Component {
     
   }
 
+  onChange = (value) => {
+    this.setState({
+      checkedOption: value
+    })
+  }
   render() {
     const { allServiceNameParamsList } = this.props
     return (
@@ -55,8 +89,41 @@ class configureinterfaceParameter extends Component {
           title = '一键登录管理 '
           data={ allServiceNameParamsList }
           renderTableFun={ this.renderConfigureinterfaceParameterTable } />
+           <Modal
+            title="Basic Modal"
+            className="config-modal"
+            visible={this.state.visible}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+          >
+            <Row>
+              <Col span={6}>服务名称：</Col>
+              <Col span={12}>{ this.state.serviceName }</Col>
+            </Row>
+            <Row>
+              <Col span={6}>参数：</Col>
+              <Col span={12}>
+                <Checkbox.Group style={{ width: '100%' }} onChange={ this.onChange} >
+                  { 
+                    this.state.paramNameBeans.map(v => {
+                      return  <Checkbox checked value={`${ v.paramName }_${ v.paramNameCh || '-' }`}>{v.paramNameCh}</Checkbox>
+                    })
+                  }
+                </Checkbox.Group>
+              </Col>
+            </Row>
+          </Modal>
       </div>
     )
+  }
+
+  shouldComponentUpdate(nextProps,nextState) {
+    if(nextProps.deleteServiceNameParamFlag) {
+      this.props.getAllServiceNameParamsAction()
+      return true
+    } else {
+      return false //这样就避免了在input框输入的过程中，反复渲染子组件（即执行render函数），从而提高了效率。
+    }
   }
 
     // // 确认提交表单数据 子组件传递上来的
@@ -68,13 +135,15 @@ class configureinterfaceParameter extends Component {
 
 function mapStateToProps (state) {
   return {
-    allServiceNameParamsList: state.getIn(['configuration', 'allServiceNameParamsList'])
+    allServiceNameParamsList: state.getIn(['configuration', 'allServiceNameParamsList']),
+    deleteServiceNameParamFlag: state.getIn(['configuration', 'deleteServiceNameParamFlag']),
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllServiceNameParamsAction: () => dispatch(getAllServiceNameParamsAction())
+    getAllServiceNameParamsAction: () => dispatch(getAllServiceNameParamsAction()),
+    deleteServiceNameAndParamAjaxAction: (data) => dispatch(deleteServiceNameAndParamAjaxAction(data)),
   }
     
 }

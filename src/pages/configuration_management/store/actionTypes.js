@@ -1,4 +1,7 @@
 
 export const GET_ALLSERVICENAMEPARAMS_ACTION = 'get_allServiceNameParams_action'
 export const GET_ALLSERVICENAMEPARAMSLIST_ACTION = 'get_allServiceNameParamsList_action'
+export const DELETE_SERVICENAMEANDPAEAM_ACTION = 'delete_ServiceNameAndParam_action'
+export const DELETE_SERVICENAMEANDPAEAMAJAX_ACTION = 'delete_ServiceNameAndParamAjax_action'
+
 

@@ -1,12 +1,14 @@
 
 import {
-  GET_ALLSERVICENAMEPARAMSLIST_ACTION
+  GET_ALLSERVICENAMEPARAMSLIST_ACTION,
+  DELETE_SERVICENAMEANDPAEAMAJAX_ACTION
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
   allServiceNameParamsList: [],
+  deleteServiceNameParamFlag: false
 })
 
 // reducer 可以接受state，但是绝不能修改state
@@ -15,6 +17,8 @@ export function configurationReducer (state = defaultState, action) {
 	switch (action.type) {
     case GET_ALLSERVICENAMEPARAMSLIST_ACTION:
       return state.set('allServiceNameParamsList', action.data)
+    case DELETE_SERVICENAMEANDPAEAMAJAX_ACTION:
+      return state.set('deleteServiceNameParamFlag', action)
 		default:
 			return state
 	}

@@ -142,12 +142,10 @@ class Inquiry extends Component {
               getFieldDecorator(`${v.field}`, {
                 initialValue: v.initialValue ? moment(v.initialValue, 'HH:mm:ss') : moment(new Date(), 'HH:mm:ss')
               })(
-                <TimePicker
-                onChange={this.changeDateRange}
-                />
+                <TimePicker onChange={this.changeDateRange}/>
               )
             }
-            </FormItem>)
+          </FormItem>)
         }
       })
     }
