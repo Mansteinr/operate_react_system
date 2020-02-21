@@ -4,7 +4,9 @@ import React, { Component } from 'react'
 import TableUI from '@/components/Table'
 import ContnentUI from '@/components/Content'
 import { Button, Modal,Row, Col, Checkbox } from 'antd'
-import { getAllServiceNameParamsAction } from '../store/actionCreators'
+import { 
+  getAllServiceNameParamsAction,
+  deleteServiceNameAndParamAjaxAction } from '../store/actionCreators'
 import './index.less'
 
 class configureinterfaceParameter extends Component {
@@ -15,13 +17,13 @@ class configureinterfaceParameter extends Component {
     paramNameBeans: []
   }
 
-  handleOk = e => {
+  handleOk = value=> {
     this.setState({
       visible: false
     })
   }
 
-  handleCancel = e => {
+  handleCancel = value => {
     this.setState({
       visible: false
     })
@@ -120,10 +122,9 @@ class configureinterfaceParameter extends Component {
   shouldComponentUpdate(nextProps,nextState) {
     if(nextProps.deleteServiceNameParamFlag) {
       this.props.getAllServiceNameParamsAction()
-      return true
-    } else {
-      return false //这样就避免了在input框输入的过程中，反复渲染子组件（即执行render函数），从而提高了效率。
+      this.props.deleteServiceNameAndParamAjaxAction()
     }
+    return true
   }
 
     // // 确认提交表单数据 子组件传递上来的
