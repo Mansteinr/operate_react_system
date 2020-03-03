@@ -29,7 +29,7 @@ class NavLeft extends Component {
       })
     }
   }
-
+  // 引用withRouter之后 可以使用this.props.history
   handleClick = (item, trueUrl) => {
     let { getMenuItemAction, history } = this.props
     getMenuItemAction(item)
@@ -132,5 +132,5 @@ const mapDispatchToProps=(dispatch)=>{
   }
 }
 
-// withRouter之后就可以用this.props.location.pathname
+
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavLeft))
