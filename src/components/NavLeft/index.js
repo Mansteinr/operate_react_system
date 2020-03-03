@@ -132,5 +132,5 @@ const mapDispatchToProps=(dispatch)=>{
   }
 }
 
-
+// withRouter之后就可以用this.props.location.pathname
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavLeft))

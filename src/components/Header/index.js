@@ -20,7 +20,7 @@ class Header extends Component {
     _this = this
   }
 
-
+  // withRouter之后才能用this.props.history
   onChange = activeKey => {
     this.setState({ activeKey })
     this.props.history.push({
@@ -96,7 +96,6 @@ function mapStateToProps (state) {
       activeKey:`${menuActive.key}@${menuActive.url}`
     })
   }
-    
   return {
     menuActive
   }
