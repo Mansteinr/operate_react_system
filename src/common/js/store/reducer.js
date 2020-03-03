@@ -8,13 +8,19 @@ import {
   GET_SUPPLIERLIST_ACTION,
   CHANGE_DATERANGE_ACTION,
   GET_PARAMSBYSERVICENAMELIST_ACTION,
-  GET_GUIDRESULT_ACTION
+  GET_GUIDRESULT_ACTION,
+  GET_VERIFYCODEIMAGE_ACTION,
+  CONFIRM_LANDING_ACTION
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
-  customersList: []
+  supplierList: [],
+  confirmLand: false,
+  baseServiceList: [],
+  baseCustomersList: [],
+  baseBusinessTypesList: []
 })
 
 // 
@@ -47,10 +53,17 @@ export function baseReducer (state = defaultState, action) {
       }
       return state.set('baseCustomersList', arrData)
     case GET_PARAMSBYSERVICENAMELIST_ACTION:
-        let list = action.data.paramNameBeans ? action.data.paramNameBeans : []
+      let list = action.data.paramNameBeans ? action.data.paramNameBeans : []
       return state.set('getParamsByServiceNameList', list)
     case GET_GUIDRESULT_ACTION:
-        return state.set('guidResult', action.data)
+      return state.set('guidResult', action.data)
+    case GET_VERIFYCODEIMAGE_ACTION:
+      return state.merge({
+        uuid: action.data.uuid,
+        vcode: action.data.vcode
+      })
+    case CONFIRM_LANDING_ACTION:
+      return state.set('confirmLand', action.data.success)
 		default:
 			return state
 	}

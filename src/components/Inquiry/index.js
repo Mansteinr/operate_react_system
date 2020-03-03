@@ -28,18 +28,18 @@ class Inquiry extends Component {
         fieldsValue[v.firstName] = fieldsValue[v.type][0].format(v.formatter)
         fieldsValue[v.lastName] = fieldsValue[v.type][1].format(v.formatter)
         delete fieldsValue[v.type]
+      } else {
+        if (fieldsValue.end) {
+          fieldsValue.end = moment(fieldsValue.end).format('HH:mm:ss')
+        }
+        if (fieldsValue.start) {
+          fieldsValue.start = moment(fieldsValue.start).format('HH:mm:ss')
+        }
+        if (fieldsValue.day) {
+          fieldsValue.day = moment(fieldsValue.day).format('YYYY-MM-DD')
+        }
       }
     })
-
-    if (fieldsValue.end) {
-      fieldsValue.end = moment(fieldsValue.end).format('HH:mm:ss')
-    }
-    if (fieldsValue.start) {
-      fieldsValue.start = moment(fieldsValue.start).format('HH:mm:ss')
-    }
-    if (fieldsValue.day) {
-      fieldsValue.day = moment(fieldsValue.day).format('YYYY-MM-DD')
-    }
     this.props.filterSubmit(fieldsValue)
   }
 
@@ -50,7 +50,6 @@ class Inquiry extends Component {
 
   handleCollapse = () => {
     let { isCollapse, getIsCollapseAction } = this.props
-    console.log(isCollapse)
     getIsCollapseAction(!isCollapse)
   }
 
@@ -143,12 +142,10 @@ class Inquiry extends Component {
               getFieldDecorator(`${v.field}`, {
                 initialValue: v.initialValue ? moment(v.initialValue, 'HH:mm:ss') : moment(new Date(), 'HH:mm:ss')
               })(
-                <TimePicker
-                onChange={this.changeDateRange}
-                />
+                <TimePicker onChange={this.changeDateRange}/>
               )
             }
-            </FormItem>)
+          </FormItem>)
         }
       })
     }
