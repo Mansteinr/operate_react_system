@@ -132,5 +132,6 @@ const mapDispatchToProps=(dispatch)=>{
   }
 }
 
+// connect react-redux的内容
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavLeft))
