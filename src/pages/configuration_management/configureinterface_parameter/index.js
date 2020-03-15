@@ -1,9 +1,12 @@
 
+/**
+ * 接口参数维护页面
+ */
 import { connect } from 'react-redux'
-import React, { Component } from 'react'
 import TableUI from '@/components/Table'
 import ContnentUI from '@/components/Content'
-import { Button, Modal,Row, Col, Checkbox } from 'antd'
+import React, { Component, Fragment } from 'react'
+import { Button, Modal,Row, Col, Checkbox, Popconfirm } from 'antd'
 import { 
   getAllServiceNameParamsAction,
   deleteServiceNameAndParamAjaxAction } from '../store/actionCreators'
@@ -11,42 +14,65 @@ import './index.less'
 
 class configureinterfaceParameter extends Component {
   state = {
-    visible: false,
+    looKVisible: false,
+    deleteVisible: false,
     checkedOption: [],
-    serviceName: '',
-    paramNameBeans: []
+    LookObj: {},
+    deleteObj: {},
+    checkedList: []
+  }
+  /**
+   * 预览
+   */
+  // 弹框 确定
+
+  // 取消弹框
+  handleLooKCancel = value => {
+    this.setState({
+      looKVisible: false
+    })
   }
 
-  handleOk = value=> {
-    let option = {
-      serviceName: this.state.serviceName
-    },paramNameBeans = []
+  handleLook(value) {
+    if(value.paramNameBeans.length <= 4) return
+    this.setState({
+      looKVisible: true,
+      LookObj: value
+    })
+  }
 
-    this.state.paramNameBeans.map
+  /**
+   * 删除
+   */
+
+  handleDelete(value) {
+    let data = []
+    if(value.paramNameBeans.length) {
+      value.paramNameBeans.forEach(v => {
+        data.push(v.paramName)
+      })
+    }
+    console.log(data, 'data')
+    this.setState({
+      deleteVisible: true,
+      deleteObj: value,
+      checkedList: data
+    }, () => {
+      console.log(this.state.checkedList, data)
+    })
     
+    
+    
+  }
+  handleDeleteOk = () =>{
+    
+  }
+  handleDeleteCancel = () =>{
     this.setState({
-      visible: false
+      deleteVisible: false
+
     })
   }
-
-  handleCancel = value => {
-    this.setState({
-      visible: false
-    })
-  }
-
-  showModal = (value) => {
-    this.setState({
-      visible: true,
-      serviceName: value.serviceName,
-      paramNameBeans: value.paramNameBeans
-    })
-  }
-
-  handleDelete = value => {
-    this.showModal(value)
-  }
-
   // 渲染dom
   renderConfigureinterfaceParameterTable = () => {
     let data = this.props.allServiceNameParamsList,
@@ -54,7 +80,7 @@ class configureinterfaceParameter extends Component {
         title: '服务名',
         dataIndex: 'serviceName',
         render: (value, record, index) => {
-          return record.paramNameBeans.length <= 4 ? `${value} (${record.serviceNameCh||'--'})` : <span key={Math.random()} className="span-link">{`${ value }: ${ record.serviceNameCh||'--' }`}</span>
+          return record.paramNameBeans.length <= 4 ? `${value} (${record.serviceNameCh||'--'})` : <span key={Math.random()} onClick={() => this.handleLook(record)} className="span-link">{`${ value }  (${ record.serviceNameCh||'--' })`}</span>
         }
       },{
         title: '参数',
@@ -70,7 +96,7 @@ class configureinterfaceParameter extends Component {
         }
       }, {
         title: '操作',
-        render: (value, record, index) => <span onClick={() => this.handleDelete(value)} className="span-link">删除</span>
+        render: (value, record, index) => <span onClick={() => this.handleDelete(value)} className="span-link">删除</span> 
       }]
 
     return <TableUI rowKey={'serviceNameCh'} dataSource={ data } columns={ columns } />
@@ -78,7 +104,6 @@ class configureinterfaceParameter extends Component {
 
   // 新增
   addFun = () => {
-    
   }
 
   onChange = (value) => {
@@ -86,41 +111,90 @@ class configureinterfaceParameter extends Component {
       checkedOption: value
     })
   }
+
   render() {
     const { allServiceNameParamsList } = this.props
     return (
       <div className="card-space">
         <div className="button-group">
-          <Button onClick={ () => this.addFun() } type="primary">新增</Button>
+          <Button onClick={ this.addFun } type="primary">新增</Button>
         </div>
         <ContnentUI
-          title = '一键登录管理 '
+          title = '接口参数维护 '
           data={ allServiceNameParamsList }
           renderTableFun={ this.renderConfigureinterfaceParameterTable } />
            <Modal
-            title="Basic Modal"
+            title = '预览'
             className="config-modal"
-            visible={this.state.visible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
+            visible={ this.state.looKVisible }
+            onCancel={ this.handleLooKCancel }
+            onOk = { this.handleLooKCancel }
           >
-            <Row>
-              <Col span={6}>服务名称：</Col>
-              <Col span={12}>{ this.state.serviceName }</Col>
-            </Row>
-            <Row>
-              <Col span={6}>参数：</Col>
-              <Col span={12}>
-                <Checkbox.Group style={{ width: '100%' }} onChange={ this.onChange} >
+             <Row> 
+                <Col span={4}>服务名称：</Col>
+                <Col span={16}>{ this.state.LookObj.serviceName }</Col>
+              </Row>
+              <Row>
+                <Col span={4}>参数：</Col>
+                <Col span={16}>
                   { 
-                    this.state.paramNameBeans.map(v => {
-                      return  <Checkbox checked value={`${ v.paramName }_${ v.paramNameCh || '-' }`}>{v.paramNameCh}</Checkbox>
+                    this.state.LookObj.paramNameBeans && this.state.LookObj.paramNameBeans.map(v => {
+                      return  <div className="param-wrapper" title={`${v.paramNameCh}:${v.paramName}`} key={v.paramName}>
+                              <span className="param-item">{v.paramNameCh}</span> <span className="param-item"> {v.paramName}</span>
+                          </div>
                     })
                   }
-                </Checkbox.Group>
-              </Col>
-            </Row>
+                </Col>
+              </Row>
           </Modal>
+          <Modal
+            title = '删除'
+            className="config-modal"
+            visible={ this.state.deleteVisible }
+            onOk={ this.handleDeleteOk }
+            onCancel={ this.handleDeleteCancel }
+          >
+             <Row> 
+                <Col span={6}>服务名称：</Col>
+                <Col span={12}>{ this.state.deleteObj.serviceName }</Col>
+              </Row>
+              <Row>
+                <Col span={6}>参数：</Col>
+                <Col span={12}>
+                  <Checkbox.Group  defaultValue={this.state.checkedList} className="params-config" style={{ width: '100%' }} onChange={ this.onChange} >
+                    { 
+                      this.state.deleteObj.paramNameBeans && this.state.deleteObj.paramNameBeans.map(v => {
+                        return  <Checkbox key={`${ v.paramName }_${ v.paramNameCh || '-' }`} value={v.paramName}>{v.paramNameCh} : {v.paramName}</Checkbox>
+                      })
+                    }
+                  </Checkbox.Group>
+                </Col>
+              </Row>
+          </Modal>
+          {/* <Modal
+            title = '新增'
+            className="config-modal"
+            visible={ this.state.visible }
+            onOk={ this.handleOk }
+            onCancel={ this.handleCancel }
+          >
+             <Row> 
+                <Col span={6}>服务名称：</Col>
+                <Col span={12}>{ this.state.serviceName }</Col>
+              </Row>
+              <Row>
+                <Col span={6}>参数：</Col>
+                <Col span={12}>
+                  <Checkbox.Group style={{ width: '100%' }} onChange={ this.onChange} >
+                    { 
+                      this.state.paramNameBeans.map(v => {
+                        return  <Checkbox checked value={`${ v.paramName }_${ v.paramNameCh || '-' }`}>{v.paramNameCh}</Checkbox>
+                      })
+                    }
+                  </Checkbox.Group>
+                </Col>
+              </Row> */}
+          {/* </Modal> */}
       </div>
     )
   }

@@ -20,18 +20,12 @@ export default class Content extends Component {
           </Tabs>
         )
       } else if (renderChartFun) {
-
         return <div> {renderChartFun()} </div>
-        
       } else if (renderTableFun) {
-
         return <div> {renderTableFun()} </div>
-        
       }
     } else if (renderDomFun) {
-
       return <div> {renderDomFun()} </div>
-      
     } else {
       return <Empty/>
     }
