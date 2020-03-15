@@ -9,17 +9,16 @@ import React, { Component, Fragment } from 'react'
 import { Button, Modal,Row, Col, Checkbox, Popconfirm } from 'antd'
 import { 
   getAllServiceNameParamsAction,
-  deleteServiceNameAndParamAjaxAction } from '../store/actionCreators'
+  deleteServiceNameAndParamAction } from '../store/actionCreators'
 import './index.less'
 
 class configureinterfaceParameter extends Component {
   state = {
-    looKVisible: false,
-    deleteVisible: false,
-    checkedOption: [],
     LookObj: {},
     deleteObj: {},
-    checkedList: []
+    checkedList: [],
+    looKVisible: false,
+    deleteVisible: false,
   }
   /**
    * 预览
@@ -49,28 +48,33 @@ class configureinterfaceParameter extends Component {
     let data = []
     if(value.paramNameBeans.length) {
       value.paramNameBeans.forEach(v => {
-        data.push(v.paramName)
+        data.push(`${ v.paramName }_${ v.paramNameCh || '-' }`)
       })
     }
-    console.log(data, 'data')
     this.setState({
-      deleteVisible: true,
       deleteObj: value,
-      checkedList: data
-    }, () => {
-      console.log(this.state.checkedList, data)
+      checkedList: data,
+      deleteVisible: true
     })
-    
-    
-    
   }
   handleDeleteOk = () =>{
-    
+    let paramNameBeans = [], { checkedList, deleteObj } = this.state
+
+    if(checkedList.length) {
+      checkedList.forEach(v => {
+        paramNameBeans.push({
+          paramName: v.split('_')[0],
+          paramNameCh: v.split('_')[1]
+        })
+      })
+    }
+    deleteObj.paramNameBeans = paramNameBeans
+    console.log(deleteObj)
+    this.props.deleteServiceNameAndParamAction(deleteObj)
   }
   handleDeleteCancel = () =>{
     this.setState({
       deleteVisible: false
-
     })
   }
   // 渲染dom
@@ -108,7 +112,7 @@ class configureinterfaceParameter extends Component {
 
   onChange = (value) => {
     this.setState({
-      checkedOption: value
+      checkedList: value
     })
   }
 
@@ -156,15 +160,15 @@ class configureinterfaceParameter extends Component {
           >
              <Row> 
                 <Col span={6}>服务名称：</Col>
-                <Col span={12}>{ this.state.deleteObj.serviceName }</Col>
+                <Col span={12}>{ this.state.deleteObj.serviceName } - { this.state.deleteObj.serviceNameCh }</Col>
               </Row>
               <Row>
                 <Col span={6}>参数：</Col>
                 <Col span={12}>
-                  <Checkbox.Group  defaultValue={this.state.checkedList} className="params-config" style={{ width: '100%' }} onChange={ this.onChange} >
+                  <Checkbox.Group value={ this.state.checkedList } className="params-config" style={{ width: '100%' }} onChange={ this.onChange } >
                     { 
                       this.state.deleteObj.paramNameBeans && this.state.deleteObj.paramNameBeans.map(v => {
-                        return  <Checkbox key={`${ v.paramName }_${ v.paramNameCh || '-' }`} value={v.paramName}>{v.paramNameCh} : {v.paramName}</Checkbox>
+                        return  <Checkbox key={`${ v.paramName }_${ v.paramNameCh || '-' }`} value={`${ v.paramName }_${ v.paramNameCh || '-' }`}>{v.paramNameCh} : {v.paramName}</Checkbox>
                       })
                     }
                   </Checkbox.Group>
@@ -199,10 +203,11 @@ class configureinterfaceParameter extends Component {
     )
   }
 
-  shouldComponentUpdate(nextProps,nextState) {
-    if(nextProps.deleteServiceNameParamFlag) {
-      this.props.getAllServiceNameParamsAction()
-      this.props.deleteServiceNameAndParamAjaxAction()
+  shouldComponentUpdate(nextState, nextProsp) {
+    if(this.state.deleteVisible && this.props.deleteServiceNameParamFlag) {
+      this.setState({
+        deleteVisible: false
+      })
     }
     return true
   }
@@ -217,14 +222,14 @@ class configureinterfaceParameter extends Component {
 function mapStateToProps (state) {
   return {
     allServiceNameParamsList: state.getIn(['configuration', 'allServiceNameParamsList']),
-    deleteServiceNameParamFlag: state.getIn(['configuration', 'deleteServiceNameParamFlag']),
+    deleteServiceNameParamFlag: state.getIn(['configuration', 'deleteServiceNameParamFlag'])
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getAllServiceNameParamsAction: () => dispatch(getAllServiceNameParamsAction()),
-    deleteServiceNameAndParamAjaxAction: (data) => dispatch(deleteServiceNameAndParamAjaxAction(data)),
+    deleteServiceNameAndParamAction: (data) => dispatch(deleteServiceNameAndParamAction(data)),
   }
     
 }

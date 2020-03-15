@@ -18,7 +18,7 @@ export function configurationReducer (state = defaultState, action) {
     case GET_ALLSERVICENAMEPARAMSLIST_ACTION:
       return state.set('allServiceNameParamsList', action.data)
     case DELETE_SERVICENAMEANDPAEAMAJAX_ACTION:
-      return state.set('deleteServiceNameParamFlag', action)
+      return state.set('deleteServiceNameParamFlag', action.data)
 		default:
 			return state
 	}

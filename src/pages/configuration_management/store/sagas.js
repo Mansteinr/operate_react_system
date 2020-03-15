@@ -1,10 +1,12 @@
 
 import API from '@/config'
 import Axios from '@/axios'
+import { message } from 'antd'
 import { put, takeEvery, fork } from 'redux-saga/effects'
 import { 
-  getAllServiceNameParamsListAction,
-  deleteServiceNameAndParamAjaxAction
+  getAllServiceNameParamsAction,
+  deleteServiceNameAndParamAjaxAction,
+  getAllServiceNameParamsListAction
  } from './actionCreators'
 import { 
   GET_ALLSERVICENAMEPARAMS_ACTION,
@@ -25,17 +27,28 @@ function* getAllServiceNameParamsListFork () {
 }
 // 删除服务和参数
 function* deleteServiceNameAndParam (prama) {
-  let data = false
-  if(prama) {
-    const res = yield Axios.ajax({
-      url: API.paramsApi.deleteByServiceNameAndParamName,
-      data: prama.data
-    })
-    res.resCode === 1 ? (data = true) : (data = false)
-  } else {
-    data = false
+  try{
+    let data = false
+    if(prama) {
+      const res = yield Axios.ajax({
+        url: API.paramsApi.deleteByServiceNameAndParamName,
+        data: prama.data
+      })
+      if(res.resCode) {
+        data = true
+      }
+      message.success(res.resMsg[0].msgText)
+      yield put(deleteServiceNameAndParamAjaxAction(data))
+      yield put(getAllServiceNameParamsAction())
+    } else {
+      data = false
+      message.warning('缺少参数')
+    }
   }
-  yield put(deleteServiceNameAndParamAjaxAction(data))
+  catch(err) {
+    message.error(err.message)
+  }
+  
 }
 
 // generator 函数
