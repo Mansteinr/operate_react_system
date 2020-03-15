@@ -35,7 +35,6 @@ function* deleteServiceNameAndParam (prama) {
   } else {
     data = false
   }
-  
   yield put(deleteServiceNameAndParamAjaxAction(data))
 }
 

@@ -18,6 +18,12 @@ class configureinterfaceParameter extends Component {
   }
 
   handleOk = value=> {
+    let option = {
+      serviceName: this.state.serviceName
+    },paramNameBeans = []
+
+    this.state.paramNameBeans.map
+    
     this.setState({
       visible: false
     })
