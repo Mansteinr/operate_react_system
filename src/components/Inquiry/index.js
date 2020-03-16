@@ -13,7 +13,6 @@ import {
 
 let FormItem = Form.Item, { RangePicker } = DatePicker
 class Inquiry extends Component {
-
   // 禁选日期
   disabledDate(current) {
     return current > moment() || current < moment('2017-03-15')

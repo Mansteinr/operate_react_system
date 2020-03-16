@@ -10,7 +10,8 @@ import {
   GET_PARAMSBYSERVICENAMELIST_ACTION,
   GET_GUIDRESULT_ACTION,
   GET_VERIFYCODEIMAGE_ACTION,
-  CONFIRM_LANDING_ACTION
+  CONFIRM_LANDING_ACTION,
+  GET_ALL_PARAM_AJAX_ACTION
 } from './actionTypes'
 
 import { fromJS } from 'immutable'
@@ -64,6 +65,8 @@ export function baseReducer (state = defaultState, action) {
       })
     case CONFIRM_LANDING_ACTION:
       return state.set('confirmLand', action.data.success)
+    case GET_ALL_PARAM_AJAX_ACTION:
+      return state.set('allParamList', action.data)
 		default:
 			return state
 	}

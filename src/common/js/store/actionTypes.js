@@ -19,3 +19,8 @@ export const GET_VERIFYCODEIMAGE_ACTION = 'get_VerifyCodeImage_action'
 export const DO_LOGIN_ACTION = 'do_login_action'
 export const CONFIRM_LANDING_ACTION = 'confirm_landing_action'
 
+
+// 获取所有的参数
+export const GET_ALL_PARAM_ACTION = 'get_all_param_action'
+export const GET_ALL_PARAM_AJAX_ACTION = 'get_all_param_ajax_action'
+

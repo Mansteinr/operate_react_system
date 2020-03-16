@@ -21,7 +21,7 @@ class Selector extends Component{
       formSelctorChange,
       getBaseServicesAction,
       getParamsByServiceNameAction,
-      changeBaseCustomersListAction,
+      changeBaseCustomersListAction
     } = this.props
 
     if (id === 'businessType') {
@@ -41,7 +41,10 @@ class Selector extends Component{
         })
       }
     }
-    formSelctorChange(id, value)
+    if(formSelctorChange) {
+      formSelctorChange(id, value, option)
+    }
+    
   }
 
   // 筛选
@@ -66,7 +69,7 @@ class Selector extends Component{
     let { data, showSearch, selectLable, mode } = this.props
     return (
       <Select
-        mode={mode}
+        mode={ mode }
         maxTagCount = { 1 }
         onChange={this.handleChange}
         key = { data[0] ? ( data[0][selectLable] ? data[0][selectLable] : data[0]) : '' }

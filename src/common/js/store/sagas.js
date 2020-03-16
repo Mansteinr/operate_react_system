@@ -13,8 +13,8 @@ import {
   getParamsByServiceNameListAction,
   getGuidResultAction,
   getVerifyCodeImageAction,
-  doLoginAction,
-  confirmLandingAction
+  confirmLandingAction,
+  getAllParamAjaxAction
 } from './actionCreators'
 import {
   GET_BASECURSTOMERS_ACTION,
@@ -25,7 +25,8 @@ import {
   GET_PARAMSBYSERVICENAME_ACTION,
   GET_GUID_ACTION,
   GET_VERIFYCODE_ACTION,
-  DO_LOGIN_ACTION
+  DO_LOGIN_ACTION,
+  GET_ALL_PARAM_ACTION
 } from './actionTypes'
 // 获取行业类型
 function* getbusinessTypesList (prama) {
@@ -140,6 +141,29 @@ function* doLogin (data) {
 function* doLoginFork () {
   yield takeEvery(DO_LOGIN_ACTION, doLogin)
 }
+// 获取所有的参数
+function* getAllParamFun (data) {
+  const res = yield Axios.ajax({
+    url: API.paramsApi.getParam,
+    data: data.data,
+    method: 'get'
+  })
+
+  let newArray = []
+  if(res.resData.paramInfos.length) {
+    newArray = res.resData.paramInfos.map(v => {
+      return {
+        paramNameEn :`${v.paramNameEn}_${v.paramNameCn}`,
+        paramNameCn: v.paramNameCn
+      }
+    })
+  }
+  yield put(getAllParamAjaxAction(newArray))
+}
+
+function* getAllParamFork () {
+  yield takeEvery(GET_ALL_PARAM_ACTION, getAllParamFun)
+}
 export const baseSagas = [
   fork(getCustomer),
   fork(getBusinessType),
@@ -150,4 +174,5 @@ export const baseSagas = [
   fork(getGuidFork),
   fork(getVerifyCodeFork),
   fork(doLoginFork),
+  fork(getAllParamFork),
 ]

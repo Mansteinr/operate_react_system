@@ -4,7 +4,9 @@ import {
   GET_ALLSERVICENAMEPARAMS_ACTION,
   GET_ALLSERVICENAMEPARAMSLIST_ACTION,
   DELETE_SERVICENAMEANDPAEAM_ACTION,
-  DELETE_SERVICENAMEANDPAEAMAJAX_ACTION
+  DELETE_SERVICENAMEANDPAEAMAJAX_ACTION,
+  ADD_PARAM_ACTION,
+  ADD_PARAM_AJAX_ACTION,
 } from './actionTypes'
 
 // 获取所有的服务和参数
@@ -33,6 +35,19 @@ export const deleteServiceNameAndParamAction = (data) => {
 export const deleteServiceNameAndParamAjaxAction = (data) => {
   return {
     type: DELETE_SERVICENAMEANDPAEAMAJAX_ACTION,
+    data
+  }
+}
+// 新增服务参数
+export const addParamAction = (data) => {
+  return {
+    type: ADD_PARAM_ACTION,
+    data
+  }
+}
+export const addParamAjaxAction = (data) => {
+  return {
+    type: ADD_PARAM_AJAX_ACTION,
     data
   }
 }

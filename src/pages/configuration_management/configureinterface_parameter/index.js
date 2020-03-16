@@ -2,24 +2,35 @@
 /**
  * 接口参数维护页面
  */
+
 import { connect } from 'react-redux'
 import TableUI from '@/components/Table'
 import ContnentUI from '@/components/Content'
-import React, { Component, Fragment } from 'react'
-import { Button, Modal,Row, Col, Checkbox, Popconfirm } from 'antd'
+import React, { Component } from 'react'
+import { Button, Modal,Row, Col, Checkbox } from 'antd'
+import { addParamAction } from '../store/actionCreators'
 import { 
   getAllServiceNameParamsAction,
   deleteServiceNameAndParamAction } from '../store/actionCreators'
 import './index.less'
+import {
+  getBaseServicesAction,
+  getAllParamAction
+} from '@/common/js/store/actionCreators'
+
+import Select from '@/components/Selector'
 
 class configureinterfaceParameter extends Component {
   state = {
     LookObj: {},
     deleteObj: {},
     checkedList: [],
+    addVisible: false,
     looKVisible: false,
     deleteVisible: false,
+    addParamObj: {}
   }
+
   /**
    * 预览
    */
@@ -77,6 +88,11 @@ class configureinterfaceParameter extends Component {
       deleteVisible: false
     })
   }
+
+  /***
+   * 新增
+   */
+
   // 渲染dom
   renderConfigureinterfaceParameterTable = () => {
     let data = this.props.allServiceNameParamsList,
@@ -108,14 +124,74 @@ class configureinterfaceParameter extends Component {
 
   // 新增
   addFun = () => {
+    this.setState({
+      addVisible: true
+    })
   }
+  handleAddOk = () => {
+    let { addParamObj } = this.state, { allParamList, serviceNameList } = this.props
 
+    if(!addParamObj.serviceName  && addParamObj.paramNameBeans) {
+      this.setState({ addParamObj :{...this.state.addParamObj, ...{
+        serviceName: serviceNameList[0].serviceName,
+        serviceNameZh: serviceNameList[0].serviceNameZh
+      }}}, () => {
+        this.props.addParamAction(addParamObj)
+      })
+    }
+    if(!addParamObj.paramNameBeans && addParamObj.serviceName) {
+      let paramNameBeans = []
+      paramNameBeans.push({
+        paramNameCh: allParamList[0].paramNameCn,
+        paramName: allParamList[0].paramNameEn
+      })
+      this.setState({addParamObj: {...this.state.addParamObj, ...{
+        paramNameBeans
+      }}}, () => {
+        this.props.addParamAction(addParamObj)
+      })
+    }
+    
+  }
+  handleAddCancel = () => {
+    this.setState({
+      addVisible: false
+    })
+  }
   onChange = (value) => {
     this.setState({
       checkedList: value
     })
   }
-
+  selctorServiceChange = (key, data, option) => {
+    this.setState({
+      addParamObj: {...this.state.addParamObj, ...{
+        serviceName: data,
+        serviceNameCh: option.props.children
+      }}
+    }, () => {
+      console.log(this.state.addParamObj)
+    })
+    
+  }
+  selctorParmChange = (key, data, option) => {
+    let paramNameBeans = []
+    if(data.length) {
+      data.forEach(v => {
+        paramNameBeans.push({
+          paramName: v.split('_')[0],
+          paramNameCh: v.split('_')[1],
+        })
+      })
+    }
+    this.setState({
+      addParamObj: {...this.state.addParamObj, ...{
+        paramNameBeans: paramNameBeans
+      }}
+    }, () => {
+      console.log(this.state.addParamObj)
+    })
+  }
   render() {
     const { allServiceNameParamsList } = this.props
     return (
@@ -175,30 +251,38 @@ class configureinterfaceParameter extends Component {
                 </Col>
               </Row>
           </Modal>
-          {/* <Modal
+          <Modal
             title = '新增'
             className="config-modal"
-            visible={ this.state.visible }
-            onOk={ this.handleOk }
-            onCancel={ this.handleCancel }
+            visible={ this.state.addVisible }
+            onOk={ this.handleAddOk }
+            onCancel={ this.handleAddCancel }
           >
-             <Row> 
-                <Col span={6}>服务名称：</Col>
-                <Col span={12}>{ this.state.serviceName }</Col>
+              <Row> 
+                <Col span={4}>服务名称：</Col>
+                
+                <Col span={16}>
+                  <Select
+                    selectLable = 'serviceName'
+                    selectText = 'serviceNameZh'
+                    data = { this.props.serviceNameList }
+                    formSelctorChange={ this.selctorServiceChange }
+                  />
+                </Col>
               </Row>
               <Row>
-                <Col span={6}>参数：</Col>
-                <Col span={12}>
-                  <Checkbox.Group style={{ width: '100%' }} onChange={ this.onChange} >
-                    { 
-                      this.state.paramNameBeans.map(v => {
-                        return  <Checkbox checked value={`${ v.paramName }_${ v.paramNameCh || '-' }`}>{v.paramNameCh}</Checkbox>
-                      })
-                    }
-                  </Checkbox.Group>
+                <Col span={4}>参数：</Col>
+                <Col span={16}>
+                <Select
+                    mode = 'multiple'
+                    selectLable = 'paramNameEn'
+                    selectText = 'paramNameCn'
+                    data = { this.props.allParamList }
+                    formSelctorChange={ this.selctorParmChange }
+                  />
                 </Col>
-              </Row> */}
-          {/* </Modal> */}
+              </Row>
+           </Modal>
       </div>
     )
   }
@@ -209,18 +293,29 @@ class configureinterfaceParameter extends Component {
         deleteVisible: false
       })
     }
+    if(this.state.deleteVisible && this.props.addServiceNameParamFlag) {
+      this.setState({
+        addVisible: false
+      })
+    }
     return true
   }
 
     // // 确认提交表单数据 子组件传递上来的
   componentDidMount () {
-    this.props.getAllServiceNameParamsAction()
+    const { getAllServiceNameParamsAction, getBaseServicesAction, getAllParamAction } = this.props
+    getAllServiceNameParamsAction()
+    getBaseServicesAction()
+    getAllParamAction()
   }
 
 }
 
 function mapStateToProps (state) {
   return {
+    allParamList: state.getIn(['base', 'allParamList']),
+    serviceNameList: state.getIn(['base', 'baseServiceList']),
+    addServiceNameParamFlag: state.getIn(['configuration', 'addServiceNameParamFlag']),
     allServiceNameParamsList: state.getIn(['configuration', 'allServiceNameParamsList']),
     deleteServiceNameParamFlag: state.getIn(['configuration', 'deleteServiceNameParamFlag'])
   }
@@ -228,6 +323,9 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    addParamAction: () => dispatch(addParamAction()),
+    getAllParamAction: () => dispatch(getAllParamAction()),
+    getBaseServicesAction: () => dispatch(getBaseServicesAction()),
     getAllServiceNameParamsAction: () => dispatch(getAllServiceNameParamsAction()),
     deleteServiceNameAndParamAction: (data) => dispatch(deleteServiceNameAndParamAction(data)),
   }

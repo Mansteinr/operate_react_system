@@ -19,7 +19,9 @@ import {
   GET_VERIFYCODE_ACTION,
   GET_VERIFYCODEIMAGE_ACTION,
   DO_LOGIN_ACTION,
-  CONFIRM_LANDING_ACTION
+  CONFIRM_LANDING_ACTION,
+  GET_ALL_PARAM_ACTION,
+  GET_ALL_PARAM_AJAX_ACTION
 } from './actionTypes'
 
 // 行业类型
@@ -151,6 +153,19 @@ export const doLoginAction = (data) => {
 export const confirmLandingAction = (data) => {
   return {
     type: CONFIRM_LANDING_ACTION,
+    data
+  }
+}
+
+// 获取所有的参数
+export const getAllParamAction = (data) => {
+  return {
+    type: GET_ALL_PARAM_ACTION
+  }
+}
+export const getAllParamAjaxAction = (data) => {
+  return {
+    type: GET_ALL_PARAM_AJAX_ACTION,
     data
   }
 }
