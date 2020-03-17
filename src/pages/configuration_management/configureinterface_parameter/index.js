@@ -5,8 +5,8 @@
 
 import { connect } from 'react-redux'
 import TableUI from '@/components/Table'
-import ContnentUI from '@/components/Content'
 import React, { Component } from 'react'
+import ContnentUI from '@/components/Content'
 import { Button, Modal,Row, Col, Checkbox } from 'antd'
 import { addParamAction } from '../store/actionCreators'
 import { 
@@ -21,14 +21,18 @@ import {
 import Select from '@/components/Selector'
 
 class configureinterfaceParameter extends Component {
+
+  addParamObj  = {
+    paramNameBeans: []
+  }
+
   state = {
     LookObj: {},
     deleteObj: {},
     checkedList: [],
     addVisible: false,
     looKVisible: false,
-    deleteVisible: false,
-    addParamObj: {}
+    deleteVisible: false
   }
 
   /**
@@ -129,29 +133,22 @@ class configureinterfaceParameter extends Component {
     })
   }
   handleAddOk = () => {
-    let { addParamObj } = this.state, { allParamList, serviceNameList } = this.props
+    let { allParamList, serviceNameList } = this.props
 
-    if(!addParamObj.serviceName  && addParamObj.paramNameBeans) {
-      this.setState({ addParamObj :{...this.state.addParamObj, ...{
-        serviceName: serviceNameList[0].serviceName,
-        serviceNameZh: serviceNameList[0].serviceNameZh
-      }}}, () => {
-        this.props.addParamAction(addParamObj)
-      })
+    if(!this.addParamObj.serviceName) {
+      this.addParamObj.serviceName = serviceNameList[0].serviceName
+      this.addParamObj.serviceNameZh = serviceNameList[0].serviceNameZh
     }
-    if(!addParamObj.paramNameBeans && addParamObj.serviceName) {
+    if(!this.addParamObj.paramNameBeans) {
       let paramNameBeans = []
       paramNameBeans.push({
         paramNameCh: allParamList[0].paramNameCn,
         paramName: allParamList[0].paramNameEn
       })
-      this.setState({addParamObj: {...this.state.addParamObj, ...{
-        paramNameBeans
-      }}}, () => {
-        this.props.addParamAction(addParamObj)
-      })
+      this.addParamObj.paramNameBeans = paramNameBeans
     }
-    
+    console.log(this.addParamObj)
+    this.props.addParamAction(this.addParamObj)
   }
   handleAddCancel = () => {
     this.setState({
@@ -164,14 +161,8 @@ class configureinterfaceParameter extends Component {
     })
   }
   selctorServiceChange = (key, data, option) => {
-    this.setState({
-      addParamObj: {...this.state.addParamObj, ...{
-        serviceName: data,
-        serviceNameCh: option.props.children
-      }}
-    }, () => {
-      console.log(this.state.addParamObj)
-    })
+    this.addParamObj.serviceName = data
+    this.addParamObj.serviceNameCh = option.props.children
     
   }
   selctorParmChange = (key, data, option) => {
@@ -184,13 +175,7 @@ class configureinterfaceParameter extends Component {
         })
       })
     }
-    this.setState({
-      addParamObj: {...this.state.addParamObj, ...{
-        paramNameBeans: paramNameBeans
-      }}
-    }, () => {
-      console.log(this.state.addParamObj)
-    })
+    this.addParamObj.paramNameBeans = paramNameBeans
   }
   render() {
     const { allServiceNameParamsList } = this.props
@@ -293,7 +278,7 @@ class configureinterfaceParameter extends Component {
         deleteVisible: false
       })
     }
-    if(this.state.deleteVisible && this.props.addServiceNameParamFlag) {
+    if(this.state.addVisible && this.props.addServiceNameParamFlag) {
       this.setState({
         addVisible: false
       })
@@ -323,7 +308,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addParamAction: () => dispatch(addParamAction()),
+    addParamAction: (data) => dispatch(addParamAction(data)),
     getAllParamAction: () => dispatch(getAllParamAction()),
     getBaseServicesAction: () => dispatch(getBaseServicesAction()),
     getAllServiceNameParamsAction: () => dispatch(getAllServiceNameParamsAction()),

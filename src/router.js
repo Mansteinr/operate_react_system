@@ -20,6 +20,9 @@ import configureinterfaceParameter from './pages/configuration_management/config
 // 运维工具
 import queryLogs from './pages/operation-tools/query_logs' // 查询日志
 
+// 安全中心
+import sensitiveWord from './pages/security/sensitive_word'
+
 import NotMatch from './pages/notMatch'
 import Demo from './pages/demo'
 
@@ -45,6 +48,7 @@ export default class Router extends React.Component {
                 <Route path="/query_upstream_serviceByData" component={ queryUpstreamServiceByDay }></Route>
                 <Route path="/query_logs" component={ queryLogs }></Route>
                 <Route path="/interface_parameter_maintenance" component={ configureinterfaceParameter }></Route>
+                <Route path="/sensitive_word" component={ sensitiveWord }></Route>
                 <Route path="/demo" component={ Demo }></Route>
                 <Route component={NotMatch}></Route>
               </Switch>

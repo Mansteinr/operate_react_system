@@ -8,6 +8,7 @@ import { oneClickLoginSagas } from '@/pages/one_click_login/store' // 一键登�
 import { dosageStatisticsSagas } from '@/pages/dosage_statistics/store' // 用量统计
 import { operationSagas } from '@/pages/operation-tools/store' // 用量统计
 import { configurationSagas } from '@/pages/configuration_management/store' // 配置管理
+import { securitySagas } from '@/pages/security/store' // 配置管理
 
 
 export default function* sagas() {
@@ -19,5 +20,6 @@ export default function* sagas() {
     ...dosageStatisticsSagas,
     ...operationSagas,
     ...configurationSagas,
+    ...securitySagas,
   ])
 }
