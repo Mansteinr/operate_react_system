@@ -1,20 +1,40 @@
-git add .
-git commit -m "update"
+  #### git remote rm origin
 
-提交到github、
+  然后，再关联GitHub的远程库：git remote add github git@github.com:chloneda/demo.git
+  然后，再关联码云的远程库：git remote add gitee git@gitee.com:chloneda/demo.git
 
-git push github master
-
-提交到码云、
-git push gitee master
+  ### 查看远程库
+    git remote -v查看远程库信息：
 
 
-# 从github拉取更新
-git pull github
+      gitee   git@gitee.com:chloneda/demo.git (fetch)
+      gitee   git@gitee.com:chloneda/demo.git (push)
+      github  git@github.com:chloneda/demo.git (fetch)
+      github  git@github.com:chloneda/demo.git (push)
 
-# 从gitee拉取更新
-git pull gitee
+      可以看到两个远程库，说明配置生效了
 
+  #### 上传代码
+
+    git add .
+    git commit -m "update"
+
+
+  #### 提交到github
+
+    git push github master
+
+  #### 提交到github
+
+    git push gitee master
+
+  #### 更新代码
+
+    # 从github拉取更新
+    git pull github
+
+    # 从gitee拉取更新
+    git pull gitee
 
 
 

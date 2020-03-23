@@ -1,6 +1,6 @@
 import interfaceApi from './interface.json'
 /*默认使用协议*/
-const protocol = 'http', mode = 'test',
+const protocol = 'http', mode = 'production',
       baseConfig = {
   protocols: {
     http: 'http://',
